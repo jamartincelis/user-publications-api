@@ -1,4 +1,4 @@
-version: "3"
+version: '3'
 
 services:
     pfm_api:
@@ -8,8 +8,8 @@ services:
         # command: python manage.py test
         volumes:
             - .:/code
-        expose:
-            - 8000
+        ports:
+            - '8000:8000'
         env_file:
             - local.env
         depends_on:
@@ -29,10 +29,3 @@ services:
         command: redis-server
         expose:
             - 6379
-    pfm_nginx:
-        container_name: pfm_nginx
-        build: ./nginx
-        ports:
-            - '80:80'
-        depends_on:
-            - pfm_api
