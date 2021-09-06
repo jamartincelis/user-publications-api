@@ -1,0 +1,25 @@
+version: "3"
+
+services:
+    pfm:
+        container_name: pfm
+        build: .
+        command: python manage.py runserver 0.0.0.0:8000
+        # command: python manage.py test
+        volumes:
+            - .:/code
+        ports:
+            - '8000:8000'
+        env_file:
+            - local.env
+        depends_on:
+            - db
+    db:
+        container_name: db
+        image: postgres:12
+        environment:
+            POSTGRES_PASSWORD: pass
+            POSTGRES_USER: django
+            POSTGRES_DB: db
+        expose:
+           - 5432
