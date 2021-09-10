@@ -5,8 +5,7 @@ services:
         container_name: pfm_api
         build: .
         command: >
-            bash -c "python manage.py makemigrations 
-            && python manage.py migrate
+            bash -c "python manage.py migrate
             && python manage.py loaddata user/fixtures/users.yaml 
             && python manage.py loaddata catalog/fixtures/codetype.yaml
             && python manage.py loaddata catalog/fixtures/accounts_types.yaml
@@ -30,8 +29,8 @@ services:
             POSTGRES_PASSWORD: pass
             POSTGRES_USER: django
             POSTGRES_DB: pfm_db
-        expose:
-           - 5432
+        ports:
+            - '5433:5432'           
     pfm_redis:
         image: "redis:alpine"
         command: redis-server

@@ -9,7 +9,7 @@ class Transaction(models.Model):
     amount              = models.DecimalField(decimal_places=2, max_digits=30, blank=True, null=True)
     description         = models.CharField(max_length=100, blank=True, null=True)
     transaction_date    = models.DateTimeField()
-    user                = models.ForeignKey(User, models.DO_NOTHING, blank=True, null=True)
+    user                = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user_transactions')
     category            = models.ForeignKey(Code, models.DO_NOTHING, blank=True, null=True)
     
     class Meta:

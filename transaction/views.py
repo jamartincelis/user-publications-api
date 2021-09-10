@@ -1,25 +1,17 @@
 from transaction.models import Transaction
 from transaction.serializers import TransactionSerializer
-from rest_framework import generics
-from rest_framework.decorators import authentication_classes, permission_classes
- 
-@authentication_classes([])
-@permission_classes([])
-class TransactionList(generics.ListCreateAPIView):
-    """
-    Permite listar y crear transacciones.
-    """
-    serializer_class = TransactionSerializer
-        
-    def get_queryset(self):
-        """
-        Se realizan los filtros de acuerdo a los parámetros ingresados
-        """        
-        queryset = Transaction.objects.all()
-        return queryset
-    
-    
-class TransactionDetail(generics.RetrieveUpdateDestroyAPIView):
+from rest_framework.generics import RetrieveUpdateDestroyAPIView
+from rest_framework.response import Response 
+from rest_framework.decorators import api_view
+
+@api_view(['GET'])
+def transaction_list(request, user):
+    if request.method == 'GET':
+        budgets = Transaction.objects.filter(user=user)
+        serializer = TransactionSerializer(budgets, many=True)
+        return Response(serializer.data)    
+
+class TransactionDetail(RetrieveUpdateDestroyAPIView):
     """
     Permite retornar, actualizar o borrar una Transaccion.
     """

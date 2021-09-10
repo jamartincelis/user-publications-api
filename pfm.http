@@ -10,7 +10,8 @@ http://localhost:8000/catalog/list/
 http://localhost:8000/catalog/account_status/
 
 # budget
-http://localhost:8000/budget/
+#http://localhost:8000/budget/
+http://localhost:8000/budgets/user/479ec168013945d0b7042bc4e5d0c4fb/budget/45a80dbbea714ce390b3-6761bcbf365c/
 
 # transaction
 http://localhost:8000/transaction/

@@ -3,6 +3,6 @@ from . import views
 
 app_name = "transaction"
 urlpatterns = [
-    path('', views.TransactionList.as_view(), name='budgets'),
-    path('<int:pk>/', views.TransactionDetail.as_view()),
+    path('', views.transaction_list),
+    path('<str:pk>/', views.TransactionDetail.as_view()),
 ]
