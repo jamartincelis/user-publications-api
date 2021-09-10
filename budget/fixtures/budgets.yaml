@@ -1,0 +1,13 @@
+- model: 'budget.Budget'
+  fields:
+    id: '64aad0df2597443a90527be5a283ab7d'
+    budget_date: '2021-09-09T13:20:30-06:00'
+    user: '0390a508dba54344b77f93e1227d42f4'
+    category: '9abd4759-ab14-4e09-adc2-9c5dea1041b1' # Entretenimiento
+
+- model: 'budget.Budget'
+  fields:
+    id: '45a80dbbea714ce390b36761bcbf365c'
+    budget_date: '2021-09-09T13:20:30-06:00'
+    user: '479ec168013945d0b7042bc4e5d0c4fb'
+    category: '22118f55-e6a9-46b0-ae8f-a063dda396e0' # Shopping

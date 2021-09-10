@@ -1,0 +1,19 @@
+# Archivo usado por vscode-restclient 
+
+#catalog
+http://localhost:8000/catalog/codetypes_list/
+
+http://localhost:8000/catalog/codes_list
+
+http://localhost:8000/catalog/list/
+
+http://localhost:8000/catalog/account_status/
+
+# budget
+http://localhost:8000/budget/
+
+# transaction
+http://localhost:8000/transaction/
+
+#user
+http://localhost:8000/user/

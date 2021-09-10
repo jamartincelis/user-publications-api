@@ -1,0 +1,17 @@
+- model: 'transaction.Transaction'
+  fields:
+    id: 'a544274cd82343cb94cd0c96dcb4d4d4'
+    amount: 1000
+    description : Transaccion de prueba 1
+    transaction_date: '2021-09-09T13:20:30-06:00'
+    user: '0390a508dba54344b77f93e1227d42f4'
+    category: '9abd4759-ab14-4e09-adc2-9c5dea1041b1' # Entretenimiento
+
+- model: 'transaction.Transaction'
+  fields:
+    id: '68e187838b514618af8350c77f25871d'
+    amount: 1500
+    description: Transaccion de prueba 1
+    transaction_date: '2021-09-09T13:20:30-06:00'
+    user: '479ec168013945d0b7042bc4e5d0c4fb'
+    category: '22118f55-e6a9-46b0-ae8f-a063dda396e0' # Shopping

@@ -1,11 +1,19 @@
-version: '3'
+version: '3.3'
 
 services:
     pfm_api:
         container_name: pfm_api
         build: .
-        command: python manage.py runserver 0.0.0.0:8000
-        # command: python manage.py test
+        command: >
+            bash -c "python manage.py makemigrations 
+            && python manage.py migrate
+            && python manage.py loaddata user/fixtures/users.yaml 
+            && python manage.py loaddata catalog/fixtures/codetype.yaml
+            && python manage.py loaddata catalog/fixtures/accounts_types.yaml
+            && python manage.py loaddata catalog/fixtures/transactions_categories.yaml
+            && python manage.py loaddata transaction/fixtures/transactions.yaml
+            && python manage.py loaddata budget/fixtures/budgets.yaml
+            && python manage.py runserver 0.0.0.0:8000"        
         volumes:
             - .:/code
         ports:
