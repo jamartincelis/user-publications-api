@@ -1,6 +1,6 @@
 - model: 'catalog.CodeType'
   fields:
-    id: '6e44a51a-50e1-4128-88b9-43d8a8281b76'
+    id: '6e44a51a50e1412888b943d8a8281b76'
     name: 'account_type'
     description: 'Tipo de cuentas bancarias'
     updated_at: '2021-05-01T13:20:30-06:00'
@@ -8,7 +8,7 @@
   
 - model: 'catalog.CodeType'
   fields:
-    id: '1ec6a6b5-65d5-4a8c-85d0-4364c141aefd'
+    id: '1ec6a6b565d54a8c85d04364c141aefd'
     name: 'transaction_category'
     description: 'Categorías de transacciones'
     updated_at: '2021-05-01T13:20:30-06:00'
@@ -16,7 +16,7 @@
 
 - model: 'catalog.CodeType'
   fields:
-    id: 'f3886f14-ee18-4d0d-94ab-3d0f270b6498'
+    id: 'f3886f14ee184d0d94ab3d0f270b6498'
     name: 'account_status'
     description: 'Estado de la cuenta'
     updated_at: '2021-05-01T13:20:30-06:00'

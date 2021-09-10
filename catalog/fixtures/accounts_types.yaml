@@ -1,7 +1,7 @@
 - model: 'catalog.Code'
   fields:
-    id: 'afcc1b39-8887-4027-977d-5b1cbff2e533'
-    code_type: '6e44a51a-50e1-4128-88b9-43d8a8281b76'
+    id: 'afcc1b3988874027977d5b1cbff2e533'
+    code_type: '6e44a51a50e1412888b9-43d8a8281b76'
     name: 'visa'
     description: 'Visa'
     metadata:
@@ -11,8 +11,8 @@
 
 - model: 'catalog.Code'
   fields:
-    id: 'cc4af7e6-c59a-4f46-945a-fc0abb37673e'
-    code_type: '6e44a51a-50e1-4128-88b9-43d8a8281b76'
+    id: 'cc4af7e6c59a4f46945afc0abb37673e'
+    code_type: '6e44a51a50e1412888b9-43d8a8281b76'
     name: 'master_card'
     description: 'Master Card'
     metadata:

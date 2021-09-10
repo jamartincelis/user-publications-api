@@ -1,7 +1,7 @@
 - model: 'catalog.Code'
   fields:
-    id: '8576606a-4dc4-4a2e-8e1c-99792913228d'
-    code_type: '1ec6a6b5-65d5-4a8c-85d0-4364c141aefd'
+    id: '8576606a4dc44a2e8e1c99792913228d'
+    code_type: '1ec6a6b565d54a8c85d04364c141aefd'
     name: 'restaurante'
     description: 'Restaurantes'
     metadata:
@@ -11,8 +11,8 @@
 
 - model: 'catalog.Code'
   fields:
-    id: '22118f55-e6a9-46b0-ae8f-a063dda396e0'
-    code_type: '1ec6a6b5-65d5-4a8c-85d0-4364c141aefd'
+    id: '22118f55e6a946b0ae8fa063dda396e0'
+    code_type: '1ec6a6b565d54a8c85d04364c141aefd'
     name: 'shopping'
     description: 'Shopping'
     metadata:
@@ -22,8 +22,8 @@
 
 - model: 'catalog.Code'
   fields:
-    id: '9abd4759-ab14-4e09-adc2-9c5dea1041b1'
-    code_type: '1ec6a6b5-65d5-4a8c-85d0-4364c141aefd'
+    id: '9abd4759ab144e09adc29c5dea1041b1'
+    code_type: '1ec6a6b565d54a8c85d04364c141aefd'
     name: 'entretenimiento'
     description: 'Entretenimiento'
     metadata:
@@ -33,8 +33,8 @@
 
 - model: 'catalog.Code'
   fields:
-    id: 'fc40f044-92ed-4da4-a709-dd82bb70a52d'
-    code_type: '1ec6a6b5-65d5-4a8c-85d0-4364c141aefd'
+    id: 'fc40f04492ed4da4a709dd82bb70a52d'
+    code_type: '1ec6a6b565d54a8c85d04364c141aefd'
     name: 'donaciones'
     description: 'Donaciones'
     metadata:
@@ -44,8 +44,8 @@
 
 - model: 'catalog.Code'
   fields:
-    id: '45453d62-795f-4d7f-9494-953bb9665ed6'
-    code_type: '1ec6a6b5-65d5-4a8c-85d0-4364c141aefd'
+    id: '45453d62795f4d7f9494953bb9665ed6'
+    code_type: '1ec6a6b565d54a8c85d04364c141aefd'
     name: 'comida'
     description: 'Comida'
     metadata:

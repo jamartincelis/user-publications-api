@@ -6,6 +6,7 @@ from user.models import User
 
 class Budget(models.Model):
     id                  = models.UUIDField(default=uuid.uuid4, unique=True, primary_key=True)
+    amount              = models.DecimalField(decimal_places=2, max_digits=30, blank=True, null=True)
     budget_date         = models.DateTimeField()
     user                = models.ForeignKey(User, models.DO_NOTHING, blank=True, null=True)
     category            = models.ForeignKey(Code, models.DO_NOTHING, blank=True, null=True)

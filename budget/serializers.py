@@ -7,4 +7,4 @@ class BudgetSerializer(serializers.ModelSerializer):
     """
     class Meta:
         model = Budget
-        fields = ['id','budget_date','user','category'] 
+        fields = '__all__' 
