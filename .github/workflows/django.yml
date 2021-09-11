@@ -27,4 +27,4 @@ jobs:
         pip install -r requirements.txt
     - name: Run Tests
       run: |
-         docker exec -it pfm_api python manage.py test
+         python3 manage.py test
