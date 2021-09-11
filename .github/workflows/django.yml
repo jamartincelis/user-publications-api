@@ -28,5 +28,6 @@ jobs:
     - name: Run Tests
       env:
         DATABASE_URL: ${{ secrets.DATABASE_URL }}
+        TIME_ZONE: "America/Santiago"
       run: |
          python manage.py test
