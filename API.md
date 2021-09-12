@@ -37,11 +37,28 @@ curl --request GET \
   --url http://localhost:8000/catalog/account_status/
 ```
 
+## Acceder a los datos del usuario
+
+```bash
+curl --request GET \
+  --url http://localhost:8000/user/479ec168013945d0b7042bc4e5d0c4fb/
+```
+
+respuesta
+
+```json
+{
+    "id": "479ec168-0139-45d0-b704-2bc4e5d0c4fb",
+    "optional_id": "479ec168013945d0b7042bc4e5d0c4fb",
+    "email": "correo@correo.com"
+}
+```
+
 ## Obtener la lista de presupuestos del usuario
 
 ```bash
 curl --request GET \
-  --url http://localhost:8000/user/479ec168013945d0b7042bc4e5d0c4fb/budget/
+  --url http://localhost:8000/user/479ec168013945d0b7042bc4e5d0c4fb/budgets/
 ```
 
 respuesta
@@ -50,9 +67,20 @@ respuesta
 [
     {
         "id": "45a80dbb-ea71-4ce3-90b3-6761bcbf365c",
+        "category": {
+            "id": "22118f55-e6a9-46b0-ae8f-a063dda396e0",
+            "name": "shopping",
+            "description": "Shopping",
+            "metadata": {
+                "icon": "icon.png"
+            },
+            "created_at": "2021-05-01T15:20:30-04:00",
+            "updated_at": "2021-05-01T15:20:30-04:00",
+            "code_type": "1ec6a6b5-65d5-4a8c-85d0-4364c141aefd"
+        },
+        "amount": "2400.00",
         "budget_date": "2021-09-09T15:20:30-04:00",
-        "user": "479ec168-0139-45d0-b704-2bc4e5d0c4fb",
-        "category": "22118f55-e6a9-46b0-ae8f-a063dda396e0"
+        "user": "479ec168-0139-45d0-b704-2bc4e5d0c4fb"
     }
 ]
 ```
@@ -61,16 +89,27 @@ respuesta
 
 ```bash
 curl --request GET \
-  --url http://localhost:8000/user/479ec168013945d0b7042bc4e5d0c4fb/budget/45a80dbbea714ce390b3-6761bcbf365c/
+  --url http://localhost:8000/user/479ec168013945d0b7042bc4e5d0c4fb/budgets/45a80dbbea714ce390b3-6761bcbf365c/
 ```
 respuesta
 
 ```json
 {
     "id": "45a80dbb-ea71-4ce3-90b3-6761bcbf365c",
+    "category": {
+        "id": "22118f55-e6a9-46b0-ae8f-a063dda396e0",
+        "name": "shopping",
+        "description": "Shopping",
+        "metadata": {
+            "icon": "icon.png"
+        },
+        "created_at": "2021-05-01T15:20:30-04:00",
+        "updated_at": "2021-05-01T15:20:30-04:00",
+        "code_type": "1ec6a6b5-65d5-4a8c-85d0-4364c141aefd"
+    },
+    "amount": "2400.00",
     "budget_date": "2021-09-09T15:20:30-04:00",
-    "user": "479ec168-0139-45d0-b704-2bc4e5d0c4fb",
-    "category": "22118f55-e6a9-46b0-ae8f-a063dda396e0"
+    "user": "479ec168-0139-45d0-b704-2bc4e5d0c4fb"
 }
 ```
 
@@ -79,7 +118,7 @@ respuesta
 
 ```bash
 curl --request GET \
-  --url http://localhost:8000/user/479ec168013945d0b7042bc4e5d0c4fb/transaction/
+  --url http://localhost:8000/user/479ec168013945d0b7042bc4e5d0c4fb/transactions/
 ```
 
 respuesta
@@ -88,11 +127,21 @@ respuesta
 [
     {
         "id": "68e18783-8b51-4618-af83-50c77f25871d",
+        "category": {
+            "id": "22118f55-e6a9-46b0-ae8f-a063dda396e0",
+            "name": "shopping",
+            "description": "Shopping",
+            "metadata": {
+                "icon": "icon.png"
+            },
+            "created_at": "2021-05-01T15:20:30-04:00",
+            "updated_at": "2021-05-01T15:20:30-04:00",
+            "code_type": "1ec6a6b5-65d5-4a8c-85d0-4364c141aefd"
+        },
         "amount": "1500.00",
-        "description": "Transaccion de prueba 2",
+        "description": "Transaccion de prueba 1",
         "transaction_date": "2021-09-09T15:20:30-04:00",
-        "user": "479ec168-0139-45d0-b704-2bc4e5d0c4fb",
-        "category": "22118f55-e6a9-46b0-ae8f-a063dda396e0"
+        "user": "479ec168-0139-45d0-b704-2bc4e5d0c4fb"
     }
 ]
 ```
@@ -101,17 +150,27 @@ respuesta
 
 ```bash
 curl --request GET \
-  --url http://localhost:8000/user/479ec168013945d0b7042bc4e5d0c4fb/transaction/68e18783-8b51-4618-af83-50c77f25871d/
+  --url http://localhost:8000/user/479ec168013945d0b7042bc4e5d0c4fb/transactions/68e18783-8b51-4618-af83-50c77f25871d/
 ```
 respuesta
 
 ```json
 {
     "id": "68e18783-8b51-4618-af83-50c77f25871d",
+    "category": {
+        "id": "22118f55-e6a9-46b0-ae8f-a063dda396e0",
+        "name": "shopping",
+        "description": "Shopping",
+        "metadata": {
+            "icon": "icon.png"
+        },
+        "created_at": "2021-05-01T15:20:30-04:00",
+        "updated_at": "2021-05-01T15:20:30-04:00",
+        "code_type": "1ec6a6b5-65d5-4a8c-85d0-4364c141aefd"
+    },
     "amount": "1500.00",
-    "description": "Transaccion de prueba 2",
+    "description": "Transaccion de prueba 1",
     "transaction_date": "2021-09-09T15:20:30-04:00",
-    "user": "479ec168-0139-45d0-b704-2bc4e5d0c4fb",
-    "category": "22118f55-e6a9-46b0-ae8f-a063dda396e0"
+    "user": "479ec168-0139-45d0-b704-2bc4e5d0c4fb"
 }
 ```

@@ -1,6 +1,6 @@
 # Archivo usado por vscode-restclient 
 
-#catalog
+# Catalogos
 http://localhost:8000/catalog/codetypes_list/
 
 http://localhost:8000/catalog/codes_list
@@ -9,12 +9,13 @@ http://localhost:8000/catalog/list/
 
 http://localhost:8000/catalog/account_status/
 
-# budget
-#http://localhost:8000/budget/
-http://localhost:8000/budgets/user/479ec168013945d0b7042bc4e5d0c4fb/budget/45a80dbbea714ce390b3-6761bcbf365c/
+# Presupuestos
+http://localhost:8000/user/479ec168013945d0b7042bc4e5d0c4fb/budgets/
+http://localhost:8000/user/479ec168013945d0b7042bc4e5d0c4fb/budgets/45a80dbbea714ce390b3-6761bcbf365c/
 
-# transaction
-http://localhost:8000/transaction/
+# Transacciones
+http://localhost:8000/user/479ec168013945d0b7042bc4e5d0c4fb/transactions/68e18783-8b51-4618-af83-50c77f25871d/
+http://localhost:8000/user/479ec168013945d0b7042bc4e5d0c4fb/transactions/
 
-#user
-http://localhost:8000/user/
+# Usuarios
+http://localhost:8000/user/479ec168013945d0b7042bc4e5d0c4fb/
