@@ -5,4 +5,5 @@ app_name = "transaction"
 urlpatterns = [
     path('', views.TransactionList.as_view()),
     path('<str:pk>/', views.TransactionDetail.as_view()),
+    path('categories/<str:category>/', views.Category.as_view()),
 ]
