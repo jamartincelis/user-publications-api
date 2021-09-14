@@ -84,7 +84,17 @@ WSGI_APPLICATION = 'pfm.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-
+if TESTING:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': environ.get('DATABASE_NAME'),
+            'USER': environ.get('DATABASE_USER'),
+            'PASSWORD': environ.get('DATABASE_PASSWORD'),
+            'HOST': environ.get('DATABASE_HOST'),
+            'PORT': environ.get('DATABASE_PORT'),
+        }
+    }
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
