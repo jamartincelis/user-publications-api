@@ -5,7 +5,13 @@ on:
     branches: [ master ]
   pull_request:
     branches: [ master ]
-
+env:
+  DATABASE_NAME: pfm_db
+  DATABASE_USER: django
+  DATABASE_PASSWORD: pass
+  DATABASE_HOST: pfm_db
+  DATABASE_PORT: 5432
+  
 jobs:
   build:
 
@@ -15,6 +21,20 @@ jobs:
       matrix:
         python-version: [3.7, 3.8, 3.9]
 
+    services:
+      # Label used to access the service container
+      postgres:
+        # Docker Hub image
+        image: postgres
+        # Provide the password for postgres
+        env:
+          POSTGRES_PASSWORD: postgres
+        # Set health checks to wait until postgres has started
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
     steps:
     - uses: actions/checkout@v2
     - name: Set up Python ${{ matrix.python-version }}
@@ -27,7 +47,11 @@ jobs:
         pip install -r requirements.txt
     - name: Run Tests
       env:
-        DATABASE_URL: ${{ secrets.DATABASE_URL }}
         TIME_ZONE: "America/Santiago"
+        DATABASE_NAME: pfm_db
+        DATABASE_USER: django
+        DATABASE_PASSWORD: pass
+        DATABASE_HOST: postgres
+        DATABASE_PORT: 5432     
       run: |
          python manage.py test
