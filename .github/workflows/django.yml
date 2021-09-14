@@ -5,12 +5,6 @@ on:
     branches: [ master ]
   pull_request:
     branches: [ master ]
-env:
-  DATABASE_NAME: pfm_db
-  DATABASE_USER: django
-  DATABASE_PASSWORD: pass
-  DATABASE_HOST: pfm_db
-  DATABASE_PORT: 5432
   
 jobs:
   build:
