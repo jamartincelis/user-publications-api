@@ -85,7 +85,7 @@ respuesta
 ]
 ```
 
-## Obtener un presupuesto del usuario
+## Detalle del presupuesto del usuario.
 
 ```bash
 curl --request GET \
@@ -112,75 +112,41 @@ respuesta
     "user": "479ec168-0139-45d0-b704-2bc4e5d0c4fb"
 }
 ```
-
-## Obtener la lista de todas las transacciones del usuario.
-
+## Crear presupuesto. 
 
 ```bash
-curl --request GET \
-  --url http://localhost:8000/user/479ec168013945d0b7042bc4e5d0c4fb/transactions/
+curl --request POST \
+  --url http://localhost:8000/user/479ec168013945d0b7042bc4e5d0c4fb/budgets/ \
+  --header 'content-type: application/json' \
+  --data '{"amount": 3000,"budget_date": "2021-09-09T15:20:30-04:00","user": "479ec168-0139-45d0-b704-2bc4e5d0c4fb","category": "22118f55-e6a9-46b0-ae8f-a063dda396e0"}'
 ```
-
-respuesta
+respuesta 
 
 ```json
-[
-    {
-        "id": "68e18783-8b51-4618-af83-50c77f25871d",
-        "category": {
-            "id": "22118f55-e6a9-46b0-ae8f-a063dda396e0",
-            "name": "shopping",
-            "description": "Shopping",
-            "metadata": {
-                "icon": "icon.png"
-            },
-            "created_at": "2021-05-01T15:20:30-04:00",
-            "updated_at": "2021-05-01T15:20:30-04:00",
-            "code_type": "1ec6a6b5-65d5-4a8c-85d0-4364c141aefd"
-        },
-        "amount": "1500.00",
-        "description": "Transaccion de prueba 1",
-        "transaction_date": "2021-09-09T15:20:30-04:00",
-        "user": "479ec168-0139-45d0-b704-2bc4e5d0c4fb"
-    }
-]
+{
+  "id": "b4cb85bd-11e4-4ce7-9ef9-e0782cea58c1",
+  "category": {
+    "id": "22118f55-e6a9-46b0-ae8f-a063dda396e0",
+    "name": "shopping",
+    "description": "Shopping",
+    "metadata": {
+      "icon": "icon.png"
+    },
+    "created_at": "2021-05-01T15:20:30-04:00",
+    "updated_at": "2021-05-01T15:20:30-04:00",
+    "code_type": "1ec6a6b5-65d5-4a8c-85d0-4364c141aefd"
+  },
+  "amount": "3000.00",
+  "budget_date": "2021-09-09T15:20:30-04:00",
+  "user": "479ec168-0139-45d0-b704-2bc4e5d0c4fb"
+}
 ```
+
 ## Obtener las transacciones del usuario filtradas por mes. 
 
 ```bash
 curl --request GET \
   --url http://localhost:8000/user/479ec168013945d0b7042bc4e5d0c4fb/transactions/?date_month=2021-09
-```
-
-respuesta
-
-```json
-[
-    {
-        "id": "68e18783-8b51-4618-af83-50c77f25871d",
-        "category": {
-            "id": "22118f55-e6a9-46b0-ae8f-a063dda396e0",
-            "name": "shopping",
-            "description": "Shopping",
-            "metadata": {
-                "icon": "icon.png"
-            },
-            "created_at": "2021-05-01T15:20:30-04:00",
-            "updated_at": "2021-05-01T15:20:30-04:00",
-            "code_type": "1ec6a6b5-65d5-4a8c-85d0-4364c141aefd"
-        },
-        "amount": "1500.00",
-        "description": "Transaccion de prueba 1",
-        "transaction_date": "2021-09-09T15:20:30-04:00",
-        "user": "479ec168-0139-45d0-b704-2bc4e5d0c4fb"
-    }
-]
-```
-## Obtener las transacciones del usuario filtradas por categoría.
-
-```bash
-curl --request GET \
-  --url http://localhost:8000/user/479ec168013945d0b7042bc4e5d0c4fb/transactions/categories/22118f55-e6a9-46b0-ae8f-a063dda396e0/
 ```
 
 respuesta
@@ -240,7 +206,50 @@ respuesta
 ]
 ```
 
-## Obtener una transaccion del usuario
+## Asignar nota.
+
+```bash
+curl --request PATCH \
+  --url http://localhost:8000/user/479ec168013945d0b7042bc4e5d0c4fb/transactions/68e18783-8b51-4618-af83-50c77f25871d/ \
+  --header 'content-type: application/json' \
+  --data '{"user_note" : "Transaccion de prueba 3"}'
+```
+respuesta
+
+```json
+{
+  "id": "0b32a3b9-3396-4c19-b418-6236ab034a02",
+  "amount": "8000.00",
+  "description": "Prueba",
+  "transaction_date": "2021-09-13T12:56:00-04:00",
+  "user_note": "Transaccion de prueba 3",
+  "user": "479ec168-0139-45d0-b704-2bc4e5d0c4fb",
+  "category": "22118f55-e6a9-46b0-ae8f-a063dda396e0"
+}
+```
+## Asignar categoría.
+
+```bash
+curl --request PATCH \
+  --url http://localhost:8000/user/479ec168013945d0b7042bc4e5d0c4fb/transactions/0b32a3b9-3396-4c19-b418-6236ab034a02/ \
+  --header 'content-type: application/json' \
+  --data '{"category" : "22118f55-e6a9-46b0-ae8f-a063dda396e0"}'
+```
+respuesta
+
+```json
+{
+  "id": "0b32a3b9-3396-4c19-b418-6236ab034a02",
+  "amount": "8000.00",
+  "description": "Prueba",
+  "transaction_date": "2021-09-13T12:56:00-04:00",
+  "user_note": "Transaccion de prueba 3",
+  "user": "479ec168-0139-45d0-b704-2bc4e5d0c4fb",
+  "category": "22118f55-e6a9-46b0-ae8f-a063dda396e0"
+}
+```
+
+## Detalle de transaccion del usuario.
 
 ```bash
 curl --request GET \

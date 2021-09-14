@@ -11,6 +11,7 @@ class Transaction(models.Model):
     transaction_date    = models.DateTimeField()
     user                = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user_transactions')
     category            = models.ForeignKey(Code, models.DO_NOTHING, blank=True, null=True)
+    user_note           = models.CharField(max_length=100, blank=True, null=True)
     
     class Meta:
         managed = True
