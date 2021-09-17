@@ -309,8 +309,10 @@ respuesta
 ```
 ## Gasto total por categoría.
 
+```bash
 curl --request GET \
   --url 'http://localhost:8000/user/479ec168013945d0b7042bc4e5d0c4fb/transactions/summary/?date_month=2021-09' \
+```
 
   respuesta
 
