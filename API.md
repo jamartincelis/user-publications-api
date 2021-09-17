@@ -54,11 +54,41 @@ respuesta
 }
 ```
 
-## Obtener la lista de presupuestos del usuario
+## Obtener los presupuestos del usuario filtrados por mes.
 
 ```bash
 curl --request GET \
-  --url http://localhost:8000/user/479ec168013945d0b7042bc4e5d0c4fb/budgets/
+  --url 'http://localhost:8000/user/479ec168013945d0b7042bc4e5d0c4fb/budgets/?date_month=2021-09' \
+```
+
+respuesta
+
+```json
+[
+    {
+        "id": "45a80dbb-ea71-4ce3-90b3-6761bcbf365c",
+        "category": {
+            "id": "22118f55-e6a9-46b0-ae8f-a063dda396e0",
+            "name": "shopping",
+            "description": "Shopping",
+            "metadata": {
+                "icon": "icon.png"
+            },
+            "created_at": "2021-05-01T15:20:30-04:00",
+            "updated_at": "2021-05-01T15:20:30-04:00",
+            "code_type": "1ec6a6b5-65d5-4a8c-85d0-4364c141aefd"
+        },
+        "amount": "2400.00",
+        "budget_date": "2021-09-09T15:20:30-04:00",
+        "user": "479ec168-0139-45d0-b704-2bc4e5d0c4fb"
+    }
+]
+```
+## Obtener los presupuestos del usuario filtrados por categoría y por mes.
+
+```bash
+curl --request GET \
+  --url 'http://localhost:8000/user/479ec168013945d0b7042bc4e5d0c4fb/budgets/categories/22118f55-e6a9-46b0-ae8f-a063dda396e0/?date_month=2021-09' \
 ```
 
 respuesta
@@ -276,4 +306,25 @@ respuesta
     "transaction_date": "2021-09-09T15:20:30-04:00",
     "user": "479ec168-0139-45d0-b704-2bc4e5d0c4fb"
 }
+```
+## Gasto total por categoría.
+
+curl --request GET \
+  --url 'http://localhost:8000/user/479ec168013945d0b7042bc4e5d0c4fb/transactions/summary/?date_month=2021-09' \
+
+  respuesta
+
+```json
+[
+  {
+    "category": "22118f55-e6a9-46b0-ae8f-a063dda396e0",
+    "total_spend": 9500,
+    "num_transaction": 2
+  },
+  {
+    "category": "9abd4759-ab14-4e09-adc2-9c5dea1041b1",
+    "total_spend": 2000,
+    "num_transaction": 2
+  }
+]
 ```

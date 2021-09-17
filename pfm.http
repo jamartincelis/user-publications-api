@@ -10,8 +10,10 @@ http://localhost:8000/catalog/list/
 http://localhost:8000/catalog/account_status/
 
 # Presupuestos
-http://localhost:8000/user/479ec168013945d0b7042bc4e5d0c4fb/budgets/
+http://localhost:8000/user/479ec168013945d0b7042bc4e5d0c4fb/budgets/?date_month=2021-09
 http://localhost:8000/user/479ec168013945d0b7042bc4e5d0c4fb/budgets/45a80dbbea714ce390b3-6761bcbf365c/
+http://localhost:8000/user/479ec168013945d0b7042bc4e5d0c4fb/budgets/categories/22118f55-e6a9-46b0-ae8f-a063dda396e0/?date_month=2021-09
+
 
 POST http://localhost:8000/user/479ec168013945d0b7042bc4e5d0c4fb/budgets/ HTTP/1.1
 content-type: application/json
@@ -42,6 +44,9 @@ content-type: application/json
 {
     "category" : "22118f55-e6a9-46b0-ae8f-a063dda396e0"
 }
+
+#Gasto total
+http://localhost:8000/user/479ec168013945d0b7042bc4e5d0c4fb/transactions/summary/?date_month=2021-09
 
 # Usuarios
 http://localhost:8000/user/479ec168013945d0b7042bc4e5d0c4fb/
