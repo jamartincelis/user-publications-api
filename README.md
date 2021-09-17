@@ -24,6 +24,6 @@ docker exec -it pfm_api python manage.py createsuperuser
 
 ## Coopeuch Salud Financiera Api
 
-En el siguiente apartado, se puede ver la documentación de la api.
+Los enpoints se encuentran publicados en http://ec2-54-144-77-35.compute-1.amazonaws.com/. En el siguiente apartado, se puede ver la documentación de la api.
 
 [Coopeuch Salud Financiera Api](API.md)
