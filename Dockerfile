@@ -7,6 +7,7 @@ RUN apt update
 RUN mkdir /code
 WORKDIR /code
 ADD . /code/
+COPY ./init-user-db.sh /docker-entrypoint-initdb.d/init-user-db.sh
 
 #RUN pip install pipenv
 #RUN pipenv lock --requirements > requirements.txt
