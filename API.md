@@ -172,6 +172,103 @@ respuesta
 }
 ```
 
+## Balance Mensual del usuario. 
+
+```bash
+curl --request GET \
+  --url 'http://localhost:8000/user/479ec168013945d0b7042bc4e5d0c4fb/transactions/balance/?year=2021'
+```
+respuesta
+
+```json
+[
+    {
+        "month_name": "January",
+        "incomes": 2000,
+        "expenses": -2300,
+        "balance": -300,
+        "year": "2021"
+    },
+    {
+        "month_name": "February",
+        "incomes": 2400,
+        "expenses": 0,
+        "balance": 2400,
+        "year": "2021"
+    },
+    {
+        "month_name": "March",
+        "incomes": 2100,
+        "expenses": 0,
+        "balance": 2100,
+        "year": "2021"
+    },
+    {
+        "month_name": "April",
+        "incomes": 25000,
+        "expenses": -700,
+        "balance": 24300,
+        "year": "2021"
+    },
+    {
+        "month_name": "May",
+        "incomes": 210000,
+        "expenses": -17000,
+        "balance": 193000,
+        "year": "2021"
+    },
+    {
+        "month_name": "June",
+        "incomes": 1100,
+        "expenses": -170000,
+        "balance": -168900,
+        "year": "2021"
+    },
+    {
+        "month_name": "July",
+        "incomes": 21007,
+        "expenses": -17002,
+        "balance": 4005,
+        "year": "2021"
+    },
+    {
+        "month_name": "August",
+        "incomes": 1005,
+        "expenses": -700,
+        "balance": 305,
+        "year": "2021"
+    },
+    {
+        "month_name": "September",
+        "incomes": 2500,
+        "expenses": -2580,
+        "balance": -80,
+        "year": "2021"
+    },
+    {
+        "month_name": "October",
+        "incomes": 7100,
+        "expenses": -200,
+        "balance": 6900,
+        "year": "2021"
+    },
+    {
+        "month_name": "November",
+        "incomes": 2105,
+        "expenses": -800,
+        "balance": 1305,
+        "year": "2021"
+    },
+    {
+        "month_name": "December",
+        "incomes": 2100,
+        "expenses": -1800,
+        "balance": 300,
+        "year": "2021"
+    }
+]
+```
+
 ## Obtener las transacciones del usuario filtradas por mes. 
 
 ```bash

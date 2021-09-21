@@ -12,14 +12,18 @@ class BudgetTestCase(TestCase):
         'catalog/fixtures/transactions_categories.yaml',
         'budget/fixtures/budgets.yaml'
     ]
-
+    DATE_MONTH = "?date_month={}"
     URL_BASE = '/user/{}/budgets/'
     URL_DETAIL = URL_BASE + '{}/'
+    URL_DATE_MONTH = URL_BASE + DATE_MONTH
 
     def test_budgets_list(self):
         user_id = '0390a508-dba5-4344-b77f-93e1227d42f4'
-        budgets = Budget.objects.filter(user=user_id)
-        response = self.client.get(self.URL_BASE.format(user_id))
+        budgets = Budget.objects.filter(user=user_id,
+            budget_date__range=['2021-09-01', '2021-09-30']
+        )
+        date_month = "2021-09"
+        response = self.client.get(self.URL_DATE_MONTH.format(user_id,date_month))
         data = response.json()
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(budgets.count(), len(data))

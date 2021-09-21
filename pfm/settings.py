@@ -45,7 +45,8 @@ INSTALLED_APPS = [
     'budget',
     'catalog',
     'transaction',
-    'user'
+    'user',
+    'django_extensions',
 ]
 
 MIDDLEWARE = [

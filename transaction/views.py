@@ -1,10 +1,13 @@
+from query_raw.queries import BALANCE_MENSUAL
 from helpers.helpers import validate_date
 from transaction.models import Transaction
-from transaction.serializers import TransactionSerializer, TransactionDetailSerializer, TransactionSummarySerializer
+from transaction.serializers import MonthlyBalanceSerializer, TransactionSerializer, TransactionDetailSerializer, TransactionSummarySerializer
 from rest_framework.generics import RetrieveUpdateAPIView, ListAPIView
+from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from django.db.models import Sum, Count
+from django.db import connection
 
 class TransactionList(ListAPIView):
     """
@@ -62,7 +65,6 @@ class CategorySummary(ListAPIView):
     serializer_class = TransactionSummarySerializer
     
     def get(self, request, user):
-        print('llega')
         date = self.request.query_params.get('date_month')
         if not date:
             return Response({'400': "date_month it's required."}, status=status.HTTP_400_BAD_REQUEST)
@@ -74,5 +76,25 @@ class CategorySummary(ListAPIView):
             transaction_date__range=[date.start_of('month'), date.end_of('month')]
         ).values('category').order_by('category').annotate(total_spend=Sum('amount'),num_transaction=Count('category'))
 
+
         data = TransactionSummarySerializer(transactions, many=True)
         return Response(data=data.data, status=status.HTTP_200_OK)
+
+
+class MonthlyBalanceView(APIView):
+    """
+    Permite retornar el balance mensual del usuario.
+    """
+    def get(self, request, user):
+        year = self.request.query_params.get('year')
+        if not year:
+            return Response({'400': "year it's required."}, status=status.HTTP_400_BAD_REQUEST)
+        with connection.cursor() as cursor:
+            cursor.execute(BALANCE_MENSUAL, [year, user, year, user, year])            
+            columns = [desc[0] for desc in cursor.description]
+            datos = [
+                dict(zip(columns, row))
+                for row in cursor.fetchall()
+            ] 
+        results = MonthlyBalanceSerializer(datos, many=True).data
+        return Response(results)

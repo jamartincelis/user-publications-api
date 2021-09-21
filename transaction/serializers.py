@@ -26,3 +26,13 @@ class TransactionSummarySerializer(serializers.Serializer):
     category = serializers.UUIDField(read_only=False)
     total_spend = serializers.IntegerField()
     num_transaction = serializers.IntegerField()
+
+class MonthlyBalanceSerializer(serializers.Serializer):
+    """
+    Permite acceder al balance mensual por anio.
+    """
+    month_name = serializers.CharField()
+    incomes = serializers.IntegerField()
+    expenses = serializers.IntegerField()
+    balance = serializers.IntegerField()
+    year = serializers.CharField()

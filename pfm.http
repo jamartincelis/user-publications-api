@@ -48,5 +48,12 @@ content-type: application/json
 #Gasto total
 http://localhost:8000/user/479ec168013945d0b7042bc4e5d0c4fb/transactions/summary/?date_month=2021-09
 
+# Balance Mensual
+http://localhost:8000/user/479ec168013945d0b7042bc4e5d0c4fb/transactions/balance/?year=2021
+
 # Usuarios
 http://localhost:8000/user/479ec168013945d0b7042bc4e5d0c4fb/
+
+
+# Lista categoria
+http://localhost:8000/catalog/transaction_category/
