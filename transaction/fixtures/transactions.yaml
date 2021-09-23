@@ -342,6 +342,15 @@
 
 - model: 'transaction.Transaction'
   fields:
+    id: '24adcd58-38f8-4baa-9511-69e78cb0105e'
+    amount: -1
+    description : Transaccion de prueba 1
+    transaction_date: '2018-02-09T13:20:30-06:00'
+    user: '479ec168013945d0b7042bc4e5d0c4fb'
+    category: '9abd4759ab144e09adc29c5dea1041b1' # Entretenimiento
+
+- model: 'transaction.Transaction'
+  fields:
     id: '68e187838b514618af8360c77f25871d'
     amount: -1500
     description: Transaccion de prueba 1

@@ -127,7 +127,7 @@ class MonthlyBalanceView(APIView):
             'incomes': incomes,
             'expenses': expenses,
             'balance': incomes + expenses,
-            'disabled': True if (data['incomes'] and data['expenses']) is None else False
+            'disabled': True if (data['incomes'] or data['expenses']) is None else False
         }
 
     def get(self, request, user):
