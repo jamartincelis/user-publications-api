@@ -117,15 +117,28 @@ class MonthlyBalanceView(APIView):
     """
     Permite retornar el balance mensual del usuario.
     """
+
+    def month_params(self, data, date):
+        incomes = 0.0 if data['incomes'] is None else data['incomes']
+        expenses = 0.0 if data['expenses'] is None else data['expenses']
+        return {
+            'year': date.year,
+            'month': months_dict[date.month],
+            'incomes': incomes,
+            'expenses': expenses,
+            'balance': incomes + expenses,
+            'disabled': True if (data['incomes'] and data['expenses']) is None else False
+        }
+
     def get(self, request, user):
         year = Transaction.objects.filter(user=user).order_by('transaction_date').first().transaction_date.year
         start_date = pendulum.datetime(year, 1, 1)
         end_date = pendulum.now().end_of('year')
         dates = []
-        data_array = []
         while start_date.year <= end_date.year:
             dates.append(start_date)
             start_date = start_date.add(months=1)
+        years_dict = {}
         for date in dates:
             data = Transaction.objects.filter(
                 transaction_date__range=[date.start_of('month'), date.end_of('month')],
@@ -140,16 +153,13 @@ class MonthlyBalanceView(APIView):
                     output_field=FloatField(),
                 )),
             )
-            incomes = 0.0 if data['incomes'] is None else data['incomes']
-            expenses = 0.0 if data['expenses'] is None else data['expenses']
-            data_array.append(
-                {
+            try:
+                years_dict[date.year]['months'].append(self.month_params(data, date))
+            except KeyError:
+                years_dict[date.year] = {
                     'year': date.year,
-                    'month': months_dict[date.month],
-                    'incomes': incomes,
-                    'expenses': expenses,
-                    'balance': incomes + expenses,
-                    'disabled': True if (data['incomes'] and data['expenses']) is None else False
+                    'months': [
+                        self.month_params(data, date)
+                    ]
                 }
-            )
-        return Response(data_array, status=status.HTTP_200_OK)
+        return Response([v for k, v in years_dict.items()], status=status.HTTP_200_OK)
