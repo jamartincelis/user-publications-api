@@ -1,4 +1,4 @@
-from query_raw.queries import BALANCE_MENSUAL, EGRESOS_PRESUPUESTOS
+from query_raw.queries import ANIOS_TRANSACCIONES, BALANCE_MENSUAL, EGRESOS_PRESUPUESTOS
 from helpers.helpers import validate_date
 from transaction.models import Transaction
 from transaction.serializers import MonthlyBalanceSerializer, TransactionSerializer, TransactionDetailSerializer, TransactionSummarySerializer
@@ -86,14 +86,18 @@ class MonthlyBalanceView(APIView):
         year = self.request.query_params.get('year')
         if not year:
             return Response({'400': "year it's required."}, status=status.HTTP_400_BAD_REQUEST)
+        results = {}
         with connection.cursor() as cursor:
-            cursor.execute(BALANCE_MENSUAL, [year, user, year, user, year])            
-            columns = [desc[0] for desc in cursor.description]
-            datos = [
-                dict(zip(columns, row))
-                for row in cursor.fetchall()
-            ] 
-        results = MonthlyBalanceSerializer(datos, many=True).data
+            cursor.execute(ANIOS_TRANSACCIONES, [user])
+            for row in cursor.fetchall():
+                year = str(row[0])
+                cursor.execute(BALANCE_MENSUAL, [year, user, year, user, year])            
+                columns = [desc[0] for desc in cursor.description]
+                datos = [
+                    dict(zip(columns, row))
+                    for row in cursor.fetchall()
+                ]
+                results[year] = datos
         return Response(results)
 
 class ExpenseSummaryView(APIView):

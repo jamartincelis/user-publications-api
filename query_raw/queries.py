@@ -57,3 +57,11 @@ select * from (
 ) egresos_presupuestos
 order by egresos_presupuestos.percentage desc
 """
+
+ANIOS_TRANSACCIONES = """
+select * from (
+	select distinct (EXTRACT(YEAR from transaction_date))::numeric::integer as y
+	from transactions t where user_id = '479ec168-0139-45d0-b704-2bc4e5d0c4fb'
+) years
+order by years.y desc
+"""
