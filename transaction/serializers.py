@@ -1,6 +1,7 @@
 from transaction.models import Transaction
 from rest_framework import serializers
 from catalog.serializers import CodeSerializer
+from catalog.models import Code
 
 class TransactionSerializer(serializers.ModelSerializer):
     """
@@ -23,9 +24,12 @@ class TransactionSummarySerializer(serializers.Serializer):
     """
     Permite acceder al monto total de transacciones por categoria.
     """
-    category = serializers.UUIDField(read_only=False)
+    category = serializers.SerializerMethodField()
     total_spend = serializers.IntegerField()
     num_transaction = serializers.IntegerField()
+
+    def get_category(self, obj):
+        return  Code.objects.get(id=obj['category']).description
 
 class MonthlyBalanceSerializer(serializers.Serializer):
     """

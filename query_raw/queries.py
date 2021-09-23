@@ -30,3 +30,30 @@ select month_name, coalesce(incomes,0) as incomes, coalesce(expenses,0) as expen
 	 AS ct (month_name text, incomes numeric, expenses numeric)
 ) balance
 """
+
+EGRESOS_PRESUPUESTOS = """
+select * from (
+	select balance.*,
+	       round(((abs(spend)*100)/total_expenses.amount),2) as "percentage"
+	from ( 
+		select  max(c.description) as category,
+				abs(SUM(t.amount)) AS spend, 
+				COUNT(1) AS movements
+		FROM transactions t
+		inner join codes c
+			on t.category_id = c.id
+		WHERE t.amount < 0
+		AND t.transaction_date BETWEEN %s AND %s 
+		AND t.user_id = %s
+		GROUP BY t.category_id ORDER BY t.category_id ASC
+	) balance,
+	(
+		select sum(abs(amount)) as amount
+		FROM transactions 
+		WHERE user_id = %s
+		and amount < 0 
+		AND transaction_date BETWEEN %s AND %s
+	) total_expenses
+) egresos_presupuestos
+order by egresos_presupuestos.percentage desc
+"""

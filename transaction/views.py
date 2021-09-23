@@ -1,4 +1,4 @@
-from query_raw.queries import BALANCE_MENSUAL
+from query_raw.queries import BALANCE_MENSUAL, EGRESOS_PRESUPUESTOS
 from helpers.helpers import validate_date
 from transaction.models import Transaction
 from transaction.serializers import MonthlyBalanceSerializer, TransactionSerializer, TransactionDetailSerializer, TransactionSummarySerializer
@@ -71,12 +71,9 @@ class CategorySummary(ListAPIView):
         date = validate_date(date)
         if date is False:
             return Response({'400': 'Invalid date format.'}, status=status.HTTP_400_BAD_REQUEST)
-        transactions = self.get_queryset().filter(user=user)
-        transactions = Transaction.objects.filter(
+        transactions = self.get_queryset().filter(user=user,
             transaction_date__range=[date.start_of('month'), date.end_of('month')]
         ).values('category').order_by('category').annotate(total_spend=Sum('amount'),num_transaction=Count('category'))
-
-
         data = TransactionSummarySerializer(transactions, many=True)
         return Response(data=data.data, status=status.HTTP_200_OK)
 
@@ -98,3 +95,25 @@ class MonthlyBalanceView(APIView):
             ] 
         results = MonthlyBalanceSerializer(datos, many=True).data
         return Response(results)
+
+class ExpenseSummaryView(APIView):
+    """
+    Devuelve el resumen de egresos y presupuestos por categoría.
+    """
+    def get(self, request, user):
+        date = self.request.query_params.get('date_month')
+        if not date:
+            return Response({'400': "date_month it's required."}, status=status.HTTP_400_BAD_REQUEST)
+        date = validate_date(date)
+        if date is False:
+            return Response({'400': 'Invalid date format.'}, status=status.HTTP_400_BAD_REQUEST)
+        start = date.start_of('month')
+        end = date.end_of('month')
+        with connection.cursor() as cursor:
+            cursor.execute(EGRESOS_PRESUPUESTOS, [start, end, user,user, start, end])            
+            columns = [desc[0] for desc in cursor.description]
+            datos = [
+                dict(zip(columns, row))
+                for row in cursor.fetchall()
+            ] 
+        return Response(datos, status=status.HTTP_200_OK)

@@ -404,26 +404,28 @@ respuesta
     "user": "479ec168-0139-45d0-b704-2bc4e5d0c4fb"
 }
 ```
-## Gasto total por categoría.
+## resumen de egresos y presupuestos por categoría..
 
 ```bash
 curl --request GET \
-  --url 'http://localhost:8000/user/479ec168013945d0b7042bc4e5d0c4fb/transactions/summary/?date_month=2021-09' \
+  --url 'http://localhost:8000/user/479ec168013945d0b7042bc4e5d0c4fb/transactions/expenses/summary/?date_month=2021-09'
 ```
 
   respuesta
 
 ```json
 [
-  {
-    "category": "22118f55-e6a9-46b0-ae8f-a063dda396e0",
-    "total_spend": 9500,
-    "num_transaction": 2
-  },
-  {
-    "category": "9abd4759-ab14-4e09-adc2-9c5dea1041b1",
-    "total_spend": 2000,
-    "num_transaction": 2
-  }
+    {
+        "category": "Entretenimiento",
+        "spend": 29880.0,
+        "movements": 3,
+        "percentage": 50.75
+    },
+    {
+        "category": "Shopping",
+        "spend": 29000.0,
+        "movements": 3,
+        "percentage": 49.25
+    }
 ]
 ```

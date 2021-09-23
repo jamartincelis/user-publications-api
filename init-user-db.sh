@@ -3,4 +3,5 @@ set -e
 
 psql -v ON_ERROR_STOP=1 --username "$POSTGRES_USER" --dbname "$POSTGRES_DB" <<-EOSQL
     GRANT ALL PRIVILEGES ON DATABASE pfm_db TO django;
+    CREATE EXTENSION IF NOT EXISTS tablefunc;
 EOSQL
