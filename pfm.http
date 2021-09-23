@@ -61,3 +61,6 @@ http://localhost:8000/user/479ec168013945d0b7042bc4e5d0c4fb/
 
 # Lista categoria
 http://localhost:8000/catalog/transaction_category/
+
+# Lista de preguntas frecuentes
+http://localhost:8000/faqs/
