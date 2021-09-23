@@ -1,13 +1,22 @@
-from query_raw.queries import ANIOS_TRANSACCIONES, BALANCE_MENSUAL, EGRESOS_PRESUPUESTOS
-from helpers.helpers import validate_date
-from transaction.models import Transaction
-from transaction.serializers import MonthlyBalanceSerializer, TransactionSerializer, TransactionDetailSerializer, TransactionSummarySerializer
+import pendulum
+
+from django.db.models import Sum, Count, Q, Case, When, F, FloatField, IntegerField
+from django.db import connection
+
 from rest_framework.generics import RetrieveUpdateAPIView, ListAPIView
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from django.db.models import Sum, Count
-from django.db import connection
+
+from query_raw.queries import ANIOS_TRANSACCIONES, BALANCE_MENSUAL, EGRESOS_PRESUPUESTOS
+
+from helpers.helpers import validate_date, months_dict
+
+from transaction.models import Transaction
+from transaction.serializers import MonthlyBalanceSerializer, TransactionSerializer, TransactionDetailSerializer,\
+    TransactionSummarySerializer
+
+
 
 class TransactionList(ListAPIView):
     """
@@ -29,12 +38,14 @@ class TransactionList(ListAPIView):
         data = TransactionSerializer(transactions, many=True)
         return Response(data=data.data, status=status.HTTP_200_OK)
 
+
 class TransactionDetail(RetrieveUpdateAPIView):
     """
     Permite retornar, actualizar o borrar una Transaccion.
     """
     queryset = Transaction.objects.all()
     serializer_class = TransactionDetailSerializer
+
 
 class Category(ListAPIView):
     """
@@ -52,9 +63,10 @@ class Category(ListAPIView):
         date = validate_date(date)
         if date is False:
             return Response({'400': 'Invalid date format.'}, status=status.HTTP_400_BAD_REQUEST)
-        transactions = transactions.filter(transaction_date__range=[date.start_of('month'), date.end_of('month')])         
+        transactions = transactions.filter(transaction_date__range=[date.start_of('month'), date.end_of('month')])
         data = TransactionSerializer(transactions, many=True)
         return Response(data=data.data, status=status.HTTP_200_OK)
+
 
 class CategorySummary(ListAPIView):
     """
@@ -78,28 +90,6 @@ class CategorySummary(ListAPIView):
         return Response(data=data.data, status=status.HTTP_200_OK)
 
 
-class MonthlyBalanceView(APIView):
-    """
-    Permite retornar el balance mensual del usuario.
-    """
-    def get(self, request, user):
-        year = self.request.query_params.get('year')
-        if not year:
-            return Response({'400': "year it's required."}, status=status.HTTP_400_BAD_REQUEST)
-        results = {}
-        with connection.cursor() as cursor:
-            cursor.execute(ANIOS_TRANSACCIONES, [user])
-            for row in cursor.fetchall():
-                year = str(row[0])
-                cursor.execute(BALANCE_MENSUAL, [year, user, year, user, year])            
-                columns = [desc[0] for desc in cursor.description]
-                datos = [
-                    dict(zip(columns, row))
-                    for row in cursor.fetchall()
-                ]
-                results[year] = datos
-        return Response(results)
-
 class ExpenseSummaryView(APIView):
     """
     Devuelve el resumen de egresos y presupuestos por categoría.
@@ -114,10 +104,52 @@ class ExpenseSummaryView(APIView):
         start = date.start_of('month')
         end = date.end_of('month')
         with connection.cursor() as cursor:
-            cursor.execute(EGRESOS_PRESUPUESTOS, [start, end, user,user, start, end])            
+            cursor.execute(EGRESOS_PRESUPUESTOS, [start, end, user,user, start, end])
             columns = [desc[0] for desc in cursor.description]
             datos = [
                 dict(zip(columns, row))
                 for row in cursor.fetchall()
             ] 
         return Response(datos, status=status.HTTP_200_OK)
+
+
+class MonthlyBalanceView(APIView):
+    """
+    Permite retornar el balance mensual del usuario.
+    """
+    def get(self, request, user):
+        year = Transaction.objects.filter(user=user).order_by('transaction_date').first().transaction_date.year
+        start_date = pendulum.datetime(year, 1, 1)
+        end_date = pendulum.now().end_of('year')
+        dates = []
+        data_array = []
+        while start_date.year <= end_date.year:
+            dates.append(start_date)
+            start_date = start_date.add(months=1)
+        for date in dates:
+            data = Transaction.objects.filter(
+                transaction_date__range=[date.start_of('month'), date.end_of('month')],
+                user_id=user,
+                ).aggregate(
+                incomes=Sum(Case(
+                    When(amount__gt=0, then=F('amount')),
+                    output_field=FloatField(),
+                )),
+                expenses=Sum(Case(
+                    When(amount__lt=0, then=F('amount')),
+                    output_field=FloatField(),
+                )),
+            )
+            incomes = 0.0 if data['incomes'] is None else data['incomes']
+            expenses = 0.0 if data['expenses'] is None else data['expenses']
+            data_array.append(
+                {
+                    'year': date.year,
+                    'month': months_dict[date.month],
+                    'incomes': incomes,
+                    'expenses': expenses,
+                    'balance': incomes + expenses,
+                    'disabled': True if (data['incomes'] and data['expenses']) is None else False
+                }
+            )
+        return Response(data_array, status=status.HTTP_200_OK)
