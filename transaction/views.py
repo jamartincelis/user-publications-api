@@ -179,7 +179,7 @@ class MonthlyCategoryBalanceView(APIView):
             'expenses_sum': expenses_sum,
             'expenses_count': expenses_count,
             'average': 0 if expenses_count == 0 else expenses_sum / expenses_count,
-            'budget': date.month * 1000,
+            'budget': float(date.month * 1000),
             'budget_spent': '{}%'.format(date.month),
             'has_budget': True,
             'disabled': True if data['expenses_count'] == 0 else False
