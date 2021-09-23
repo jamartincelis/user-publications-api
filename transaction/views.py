@@ -178,7 +178,7 @@ class MonthlyCategoryBalanceView(APIView):
             'month': months_dict[date.month],
             'expenses_sum': expenses_sum,
             'expenses_count': expenses_count,
-            'average': 0 if expenses_count == 0 else expenses_sum / expenses_count,
+            'average': 0.0 if expenses_count == 0 else float(expenses_sum/expenses_count),
             'budget': float(date.month * 1000),
             'budget_spent': '{}%'.format(date.month),
             'has_budget': True,
