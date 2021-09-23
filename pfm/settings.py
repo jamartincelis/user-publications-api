@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'transaction',
     'user',
     'django_extensions',
+    'faq',
 ]
 
 MIDDLEWARE = [

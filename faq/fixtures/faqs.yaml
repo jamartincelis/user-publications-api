@@ -1,0 +1,29 @@
+- model: 'faq.Faq'
+  fields:
+    question: 'Pregunta 1'
+    answer: 'Respuesta 1'
+
+- model: 'faq.Faq'
+  fields:
+    question: 'Pregunta 2'
+    answer: 'Respuesta 2'
+
+- model: 'faq.Faq'
+  fields:
+    question: 'Pregunta 3'
+    answer: 'Respuesta 3'
+
+- model: 'faq.Faq'
+  fields:
+    question: 'Pregunta 4'
+    answer: 'Respuesta 4'
+
+- model: 'faq.Faq'
+  fields:
+    question: 'Pregunta 5'
+    answer: 'Respuesta 5'
+
+- model: 'faq.Faq'
+  fields:
+    question: 'Pregunta 6'
+    answer: 'Respuesta 6'
