@@ -183,88 +183,105 @@ respuesta
 ```json
 [
     {
-        "month_name": "January",
-        "incomes": 2000,
-        "expenses": -2300,
-        "balance": -300,
-        "year": "2021"
-    },
-    {
-        "month_name": "February",
-        "incomes": 2400,
-        "expenses": 0,
-        "balance": 2400,
-        "year": "2021"
-    },
-    {
-        "month_name": "March",
-        "incomes": 2100,
-        "expenses": 0,
-        "balance": 2100,
-        "year": "2021"
-    },
-    {
-        "month_name": "April",
-        "incomes": 25000,
-        "expenses": -700,
-        "balance": 24300,
-        "year": "2021"
-    },
-    {
-        "month_name": "May",
-        "incomes": 210000,
-        "expenses": -17000,
-        "balance": 193000,
-        "year": "2021"
-    },
-    {
-        "month_name": "June",
-        "incomes": 1100,
-        "expenses": -170000,
-        "balance": -168900,
-        "year": "2021"
-    },
-    {
-        "month_name": "July",
-        "incomes": 21007,
-        "expenses": -17002,
-        "balance": 4005,
-        "year": "2021"
-    },
-    {
-        "month_name": "August",
-        "incomes": 1005,
-        "expenses": -700,
-        "balance": 305,
-        "year": "2021"
-    },
-    {
-        "month_name": "September",
-        "incomes": 2500,
-        "expenses": -2580,
-        "balance": -80,
-        "year": "2021"
-    },
-    {
-        "month_name": "October",
-        "incomes": 7100,
-        "expenses": -200,
-        "balance": 6900,
-        "year": "2021"
-    },
-    {
-        "month_name": "November",
-        "incomes": 2105,
-        "expenses": -800,
-        "balance": 1305,
-        "year": "2021"
-    },
-    {
-        "month_name": "December",
-        "incomes": 2100,
-        "expenses": -1800,
-        "balance": 300,
-        "year": "2021"
+        "year": 2021,
+        "months": [
+            {
+                "year": 2021,
+                "month": "Enero",
+                "incomes": 2000.0,
+                "expenses": -2300.0,
+                "balance": -300.0,
+                "disabled": false
+            },
+            {
+                "year": 2021,
+                "month": "Febrero",
+                "incomes": 2400.0,
+                "expenses": 0.0,
+                "balance": 2400.0,
+                "disabled": true
+            },
+            {
+                "year": 2021,
+                "month": "Marzo",
+                "incomes": 2100.0,
+                "expenses": 0.0,
+                "balance": 2100.0,
+                "disabled": true
+            },
+            {
+                "year": 2021,
+                "month": "Abril",
+                "incomes": 25000.0,
+                "expenses": -700.0,
+                "balance": 24300.0,
+                "disabled": false
+            },
+            {
+                "year": 2021,
+                "month": "Mayo",
+                "incomes": 210000.0,
+                "expenses": -17000.0,
+                "balance": 193000.0,
+                "disabled": false
+            },
+            {
+                "year": 2021,
+                "month": "Junio",
+                "incomes": 1100.0,
+                "expenses": -170000.0,
+                "balance": -168900.0,
+                "disabled": false
+            },
+            {
+                "year": 2021,
+                "month": "Julio",
+                "incomes": 21007.0,
+                "expenses": -17002.0,
+                "balance": 4005.0,
+                "disabled": false
+            },
+            {
+                "year": 2021,
+                "month": "Agosto",
+                "incomes": 1005.0,
+                "expenses": -700.0,
+                "balance": 305.0,
+                "disabled": false
+            },
+            {
+                "year": 2021,
+                "month": "Septiembre",
+                "incomes": 2500.0,
+                "expenses": -58880.0,
+                "balance": -56380.0,
+                "disabled": false
+            },
+            {
+                "year": 2021,
+                "month": "Octubre",
+                "incomes": 7100.0,
+                "expenses": -200.0,
+                "balance": 6900.0,
+                "disabled": false
+            },
+            {
+                "year": 2021,
+                "month": "Noviembre",
+                "incomes": 2105.0,
+                "expenses": -800.0,
+                "balance": 1305.0,
+                "disabled": false
+            },
+            {
+                "year": 2021,
+                "month": "Diciembre",
+                "incomes": 2100.0,
+                "expenses": -1800.0,
+                "balance": 300.0,
+                "disabled": false
+            }
+        ]
     }
 ]
 ```
@@ -404,7 +421,7 @@ respuesta
     "user": "479ec168-0139-45d0-b704-2bc4e5d0c4fb"
 }
 ```
-## resumen de egresos y presupuestos por categoría..
+## Resumen de egresos y presupuestos por categoría..
 
 ```bash
 curl --request GET \
