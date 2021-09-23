@@ -12,6 +12,7 @@ services:
             && python manage.py loaddata catalog/fixtures/transactions_categories.yaml
             && python manage.py loaddata transaction/fixtures/transactions.yaml
             && python manage.py loaddata budget/fixtures/budgets.yaml
+            && python manage.py loaddata faq/fixtures/faqs.yaml
             && python manage.py runserver 0.0.0.0:8000"
         volumes:
             - .:/code
