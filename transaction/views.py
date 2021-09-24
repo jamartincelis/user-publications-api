@@ -163,3 +163,60 @@ class MonthlyBalanceView(APIView):
                     ]
                 }
         return Response([v for k, v in years_dict.items()], status=status.HTTP_200_OK)
+
+
+class MonthlyCategoryBalanceView(APIView):
+    """
+    Permite retornar el balance mensual por categoría del usuario.
+    """
+
+    def month_params(self, data, date):
+        expenses_sum = 0.0 if data['expenses_sum'] is None else data['expenses_sum']
+        expenses_count = 0 if data['expenses_count'] is None else data['expenses_count']
+        return {
+            'year': date.year,
+            'month': months_dict[date.month],
+            'expenses_sum': expenses_sum,
+            'expenses_count': expenses_count,
+            'average': 0.0 if expenses_count == 0 else float(expenses_sum/expenses_count),
+            'budget': float(date.month * 1000),
+            'budget_spent': '{}%'.format(date.month),
+            'has_budget': True,
+            'disabled': True if data['expenses_count'] == 0 else False
+        }
+
+    def get(self, request, user, category):
+        year = Transaction.objects.filter(
+            user=user, category=category).order_by('transaction_date').first().transaction_date.year
+        start_date = pendulum.datetime(year, 1, 1)
+        end_date = pendulum.now().end_of('year')
+        dates = []
+        while start_date.year <= end_date.year:
+            dates.append(start_date)
+            start_date = start_date.add(months=1)
+        years_dict = {}
+        for date in dates:
+            data = Transaction.objects.filter(
+                transaction_date__range=[date.start_of('month'), date.end_of('month')],
+                user=user,
+                category=category
+                ).aggregate(
+                expenses_sum=Sum(Case(
+                    When(amount__lt=0, then=F('amount')),
+                    output_field=FloatField(),
+                )),
+                expenses_count=Count(Case(
+                    When(amount__lt=0, then=1),
+                    output_field=IntegerField(),
+                ))
+            )
+            try:
+                years_dict[date.year]['months'].append(self.month_params(data, date))
+            except KeyError:
+                years_dict[date.year] = {
+                    'year': date.year,
+                    'months': [
+                        self.month_params(data, date)
+                    ]
+                }
+        return Response([v for k, v in years_dict.items()], status=status.HTTP_200_OK)

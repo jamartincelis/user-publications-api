@@ -30,8 +30,8 @@ services:
             POSTGRES_PASSWORD: pass
             POSTGRES_USER: django
             POSTGRES_DB: pfm_db
-        ports:
-            - '5432:5432'
+        expose:
+            - 5432
     pfm_redis:
         image: "redis:alpine"
         command: redis-server
