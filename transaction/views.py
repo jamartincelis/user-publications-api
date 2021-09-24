@@ -27,11 +27,8 @@ class TransactionList(ListAPIView):
     filterset_fields = ['date_month']
 
     def get(self, request, user):
-        transactions = self.get_queryset().filter(user=user)            
-        date = self.request.query_params.get('date_month')
-        if not date:
-            return Response({'400': "date_month it's required."}, status=status.HTTP_400_BAD_REQUEST)
-        date = validate_date(date)
+        transactions = self.get_queryset().prefetch_related('category').filter(account__user=user)
+        date = validate_date(self.request.query_params.get('date_month'))
         if date is False:
             return Response({'400': 'Invalid date format.'}, status=status.HTTP_400_BAD_REQUEST)  
         transactions = transactions.filter(transaction_date__range=[date.start_of('month'), date.end_of('month')])
@@ -44,7 +41,7 @@ class TransactionDetail(RetrieveUpdateAPIView):
     Permite retornar, actualizar o borrar una Transaccion.
     """
     queryset = Transaction.objects.all()
-    serializer_class = TransactionDetailSerializer
+    serializer_class = TransactionSerializer
 
 
 class Category(ListAPIView):
@@ -56,11 +53,8 @@ class Category(ListAPIView):
     filterset_fields = ['date_month']
 
     def get(self, request, user, category):
-        transactions = self.get_queryset().filter(user=user,category=category)
-        date = self.request.query_params.get('date_month')
-        if not date:
-            return Response({'400': "date_month it's required."}, status=status.HTTP_400_BAD_REQUEST)
-        date = validate_date(date)
+        transactions = self.get_queryset().filter(account__user=user, category=category)
+        date = validate_date(self.request.query_params.get('date_month'))
         if date is False:
             return Response({'400': 'Invalid date format.'}, status=status.HTTP_400_BAD_REQUEST)
         transactions = transactions.filter(transaction_date__range=[date.start_of('month'), date.end_of('month')])
