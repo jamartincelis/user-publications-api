@@ -13,9 +13,12 @@ class BudgetTestCase(TestCase):
         'transaction/fixtures/transactions.yaml'
     ]
     DATE_MONTH = "?date_month={}"
+    YEAR = "?year={}"
     URL_BASE = '/user/{}/transactions/'
     URL_DETAIL = URL_BASE + '{}/'
     URL_CATEGORY = URL_BASE + 'categories/{}/' + DATE_MONTH
+    URL_EXPENSES = URL_BASE + 'expenses/summary/' + DATE_MONTH
+    URL_BALANCE = URL_BASE + 'balance/' + YEAR
     URL_DATE_MONTH = URL_BASE + DATE_MONTH
 
     def test_budgets_without_date_month_param(self):
@@ -105,3 +108,15 @@ class BudgetTestCase(TestCase):
         )
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.json()['category'], category_id)
+
+    def test_spenses(self):
+        user_id = '0390a508-dba5-4344-b77f-93e1227d42f4'
+        date_month = "2021-09"
+        response = self.client.get(self.URL_EXPENSES.format(user_id,date_month))
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_balance(self):
+        user_id = '0390a508-dba5-4344-b77f-93e1227d42f4'
+        year = "2021"
+        response = self.client.get(self.URL_BALANCE.format(user_id,year))
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
