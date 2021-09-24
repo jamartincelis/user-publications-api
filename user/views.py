@@ -1,11 +1,20 @@
+from rest_framework.generics import RetrieveUpdateAPIView, CreateAPIView
+
 from user.models import User
 from user.serializers import UserSerializer
-from rest_framework import generics
-from rest_framework.response import Response
 
-class UserDetail(generics.RetrieveUpdateDestroyAPIView):
+
+class CreateUserView(CreateAPIView):
     """
-    Permite retornar, actualizar o borrar un Usuario.
+    Crea un usuario.
+    """
+    serializer_class = UserSerializer
+    queryset = User.objects.all()
+
+
+class UserDetail(RetrieveUpdateAPIView):
+    """
+    Obtiene o actualiza un usuario.
     """
     queryset = User.objects.all()
     serializer_class = UserSerializer

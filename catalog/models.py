@@ -19,7 +19,7 @@ class Code(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4)
     name = models.CharField(max_length=60)
     description = models.CharField(max_length=100, null=True, default=None)
-    code_type = models.ForeignKey(CodeType, on_delete=models.CASCADE, related_name='codes')
+    code_type = models.ForeignKey(CodeType, on_delete=models.CASCADE)
     metadata = models.JSONField(default=None, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
