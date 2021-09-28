@@ -30,15 +30,15 @@ http://localhost:8000/user/479ec168013945d0b7042bc4e5d0c4fb/transactions/68e1878
 http://localhost:8000/user/479ec168013945d0b7042bc4e5d0c4fb/transactions/
 
 #agregar nota
-PATCH http://localhost:8000/user/479ec168013945d0b7042bc4e5d0c4fb/transactions/0b32a3b9-3396-4c19-b418-6236ab034a02/ HTTP/1.1
+PATCH http://localhost:8000/user/479ec168013945d0b7042bc4e5d0c4fb/transactions/68e18783-8b51-4618-af83-50c77f25871d/ HTTP/1.1
 content-type: application/json
 
 {
-    "user_note" : "Transaccion de prueba 3"
+    "user_note" : "Transaccion de prueba 4"
 }
 
 # asignar categoria
-PATCH http://localhost:8000/user/479ec168013945d0b7042bc4e5d0c4fb/transactions/0b32a3b9-3396-4c19-b418-6236ab034a02/ HTTP/1.1
+PATCH http://localhost:8000/user/479ec168013945d0b7042bc4e5d0c4fb/transactions/68e18783-8b51-4618-af83-50c77f25871d/ HTTP/1.1
 content-type: application/json
 
 {

@@ -16,6 +16,7 @@ class TransactionDetailSerializer(serializers.ModelSerializer):
     """
     Permite acceder a lo datos basicos de una transaccion.
     """
+    category = CodeSerializer(read_only=True)
     class Meta:
         model = Transaction
         fields = '__all__'
