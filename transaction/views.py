@@ -62,6 +62,9 @@ class Category(ListAPIView):
         return Response(data=data.data, status=status.HTTP_200_OK)
 
 
+# HACIA ABAJO
+
+
 class CategorySummary(ListAPIView):
     """
     Devuelve el resumen de transacciones por categorías del mes solicitado

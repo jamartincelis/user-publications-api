@@ -17,7 +17,7 @@ class Budget(models.Model):
     expenses_count = models.SmallIntegerField(default=0)
     average = models.DecimalField(decimal_places=2, max_digits=12, default=0)
     spent = models.DecimalField(decimal_places=1, max_digits=3, default=0)
-    budget_date = models.DateField()
+    budget_date = models.DateField(auto_now_add=True)
 
     class Meta:
         managed = True
