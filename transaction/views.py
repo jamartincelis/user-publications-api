@@ -109,7 +109,7 @@ class ExpenseSummaryView(APIView):
             'expenses': [
                 {
                     'category': CodeSerializer(category).data,
-                    'spend': 0.0,
+                    'spent': 0.0,
                     'percentage': 49.25,
                     'budget': 1000.0,
                     'expenses_count': 0,
