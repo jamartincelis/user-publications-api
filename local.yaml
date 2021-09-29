@@ -4,16 +4,6 @@ services:
     pfm_api:
         container_name: pfm_api
         build: .
-        command: >
-            bash -c "python manage.py migrate
-            && python manage.py loaddata user/fixtures/users.yaml 
-            && python manage.py loaddata catalog/fixtures/codetype.yaml
-            && python manage.py loaddata catalog/fixtures/accounts_types.yaml
-            && python manage.py loaddata catalog/fixtures/transactions_categories.yaml
-            && python manage.py loaddata transaction/fixtures/transactions.yaml
-            && python manage.py loaddata budget/fixtures/budgets.yaml
-            && python manage.py loaddata faq/fixtures/faqs.yaml
-            && python manage.py runserver 0.0.0.0:8000"        
         volumes:
             - .:/code
         ports:
@@ -31,7 +21,7 @@ services:
             POSTGRES_USER: django
             POSTGRES_DB: pfm_db
         ports:
-            - '5433:5432'           
+            - '5433:5432'
     pfm_redis:
         image: "redis:alpine"
         command: redis-server

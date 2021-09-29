@@ -4,16 +4,8 @@ services:
     pfm_api:
         container_name: pfm_api
         build: .
-        command: >
-            bash -c "python manage.py migrate
-            && python manage.py loaddata user/fixtures/users.yaml 
-            && python manage.py loaddata catalog/fixtures/codetype.yaml
-            && python manage.py loaddata catalog/fixtures/accounts_types.yaml
-            && python manage.py loaddata catalog/fixtures/transactions_categories.yaml
-            && python manage.py loaddata transaction/fixtures/transactions.yaml
-            && python manage.py loaddata budget/fixtures/budgets.yaml
-            && python manage.py loaddata faq/fixtures/faqs.yaml
-            && python manage.py runserver 0.0.0.0:8000"
+        command: bash -c "python manage.py runserver 0.0.0.0:8000"
+
         volumes:
             - .:/code
         expose:
