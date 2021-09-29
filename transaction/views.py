@@ -16,6 +16,8 @@ from transaction.models import Transaction
 from transaction.serializers import MonthlyBalanceSerializer, TransactionSerializer, TransactionDetailSerializer,\
     TransactionSummarySerializer
 
+from catalog.models import Code
+from catalog.serializers import CodeSerializer
 
 
 class TransactionList(ListAPIView):
@@ -101,16 +103,23 @@ class ExpenseSummaryView(APIView):
         date = validate_date(date)
         if date is False:
             return Response({'400': 'Invalid date format.'}, status=status.HTTP_400_BAD_REQUEST)
-        start = date.start_of('month')
-        end = date.end_of('month')
-        with connection.cursor() as cursor:
-            cursor.execute(EGRESOS_PRESUPUESTOS, [start, end, user,user, start, end])
-            columns = [desc[0] for desc in cursor.description]
-            datos = [
-                dict(zip(columns, row))
-                for row in cursor.fetchall()
-            ] 
-        return Response(datos, status=status.HTTP_200_OK)
+        categories = Code.objects.filter(code_type__name='transaction_category')
+        data = {
+            'global_expenses': 100000.00,
+            'expenses': [
+                {
+                    'category': CodeSerializer(category).data,
+                    'spend': 0.0,
+                    'percentage': 49.25,
+                    'budget': 1000.0,
+                    'expenses_count': 0,
+                    'budget_spent': '1%',
+                    'has_budget': False,
+                    'disabled': False
+                }
+            for category in categories]
+        }
+        return Response(data, status=status.HTTP_200_OK)
 
 
 class MonthlyBalanceView(APIView):
