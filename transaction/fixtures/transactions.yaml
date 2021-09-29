@@ -1,4 +1,4 @@
-  - model: 'transaction.Transaction'
+- model: 'transaction.Transaction'
   fields:
     id: '6a6463fb-fad2-49d0-bb3b-b45a6f61f4cc'
     amount: 1800
