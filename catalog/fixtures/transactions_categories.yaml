@@ -42,7 +42,7 @@
 
 - model: 'catalog.Code'
   fields:
-    id: '53e46983-d149-4b34-b9e6-0a4c0650d48f'
+    id: '9abd4759-ab14-4e09-adc2-9c5dea1041b1'
     code_type: '1ec6a6b5-65d5-4a8c-85d0-4364c141aefd'
     name: 'Entretenimiento'
     description: 'Netflix, spotify, cine, apps store, videojuegos'
@@ -154,7 +154,7 @@
 
 - model: 'catalog.Code'
   fields:
-    id: 'bd943d1e-3615-49d8-99a0-deb4933dc0d5'
+    id: '22118f55-e6a9-46b0-ae8f-a063dda396e0'
     code_type: '1ec6a6b5-65d5-4a8c-85d0-4364c141aefd'
     name: 'Shopping'
     description: 'Deportes, electrónica, vestuario y calzado'
