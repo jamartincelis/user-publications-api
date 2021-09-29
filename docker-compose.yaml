@@ -32,6 +32,8 @@ services:
             POSTGRES_DB: pfm_db
         expose:
             - 5432
+        ports:
+            - '5432:5432'
     pfm_redis:
         image: "redis:alpine"
         command: redis-server
