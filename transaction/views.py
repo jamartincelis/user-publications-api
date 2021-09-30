@@ -27,13 +27,13 @@ class TransactionList(ListAPIView):
     filterset_fields = ['date_month']
 
     def get(self, request, user):
-        transactions = self.get_queryset().filter(user=user)            
+        transactions = self.get_queryset().filter(user=user)
         date = self.request.query_params.get('date_month')
         if not date:
             return Response({'400': "date_month it's required."}, status=status.HTTP_400_BAD_REQUEST)
         date = validate_date(date)
         if date is False:
-            return Response({'400': 'Invalid date format.'}, status=status.HTTP_400_BAD_REQUEST)  
+            return Response({'400': 'Invalid date format.'}, status=status.HTTP_400_BAD_REQUEST)
         transactions = transactions.filter(transaction_date__range=[date.start_of('month'), date.end_of('month')])
         data = TransactionSerializer(transactions, many=True)
         return Response(data=data.data, status=status.HTTP_200_OK)
@@ -75,7 +75,7 @@ class CategorySummary(ListAPIView):
     queryset = Transaction.objects.all()
     filterset_fields = ['date_month']
     serializer_class = TransactionSummarySerializer
-    
+
     def get(self, request, user):
         date = self.request.query_params.get('date_month')
         if not date:
@@ -103,13 +103,15 @@ class ExpenseSummaryView(APIView):
             return Response({'400': 'Invalid date format.'}, status=status.HTTP_400_BAD_REQUEST)
         start = date.start_of('month')
         end = date.end_of('month')
+        # por que se ejecuta esto sin una clase, sí necesito en otro sitio lo tengo que copiar?, como saber cual es el test?
         with connection.cursor() as cursor:
             cursor.execute(EGRESOS_PRESUPUESTOS, [start, end, user,user, start, end])
             columns = [desc[0] for desc in cursor.description]
+            # como se que espero de este query donde estan los datamodels
             datos = [
                 dict(zip(columns, row))
                 for row in cursor.fetchall()
-            ] 
+            ]
         return Response(datos, status=status.HTTP_200_OK)
 
 

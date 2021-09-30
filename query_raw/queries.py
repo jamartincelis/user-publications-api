@@ -1,3 +1,4 @@
+
 """
 Archivos auxiliar para agregar sentencias sql planas.
 """
@@ -10,7 +11,7 @@ select month_name, coalesce(incomes,0) as incomes, coalesce(expenses,0) as expen
 				SELECT   trim(max(TO_CHAR(transaction_date, ''Month''))) AS month_name,
 						 EXTRACT(MONTH from transaction_date) as month_number,
 	                     sum(amount) as total
-				FROM transactions  
+				FROM transactions
 				WHERE amount > 0
 				AND user_id = '%s'
                 and EXTRACT(YEAR from transaction_date) = '%s'
@@ -18,15 +19,15 @@ select month_name, coalesce(incomes,0) as incomes, coalesce(expenses,0) as expen
 				union all
 				SELECT   trim(max(TO_CHAR(transaction_date, ''Month''))) AS month_name,
 						 EXTRACT(MONTH from transaction_date) as month_number,
-	                     sum(amount) as total			
-	            FROM transactions  
+	                     sum(amount) as total
+	            FROM transactions
 				WHERE amount < 0
 				AND user_id = '%s'
                 and EXTRACT(YEAR from transaction_date) = '%s'
 				group by EXTRACT(MONTH from transaction_date)
-			) balance_total 
+			) balance_total
 			order by balance_total.month_number, balance_total.total desc'
-	 ) 
+	 )
 	 AS ct (month_name text, incomes numeric, expenses numeric)
 ) balance
 """
@@ -35,23 +36,23 @@ EGRESOS_PRESUPUESTOS = """
 select * from (
 	select balance.*,
 	       round(((abs(spend)*100)/total_expenses.amount),2) as "percentage"
-	from ( 
+	from (
 		select  max(c.description) as category,
-				abs(SUM(t.amount)) AS spend, 
+				abs(SUM(t.amount)) AS spend,
 				COUNT(1) AS movements
 		FROM transactions t
 		inner join codes c
 			on t.category_id = c.id
 		WHERE t.amount < 0
-		AND t.transaction_date BETWEEN %s AND %s 
+		AND t.transaction_date BETWEEN %s AND %s
 		AND t.user_id = %s
 		GROUP BY t.category_id ORDER BY t.category_id ASC
 	) balance,
 	(
 		select sum(abs(amount)) as amount
-		FROM transactions 
+		FROM transactions
 		WHERE user_id = %s
-		and amount < 0 
+		and amount < 0
 		AND transaction_date BETWEEN %s AND %s
 	) total_expenses
 ) egresos_presupuestos

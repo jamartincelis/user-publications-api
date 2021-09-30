@@ -1,7 +1,12 @@
+from rest_framework.test import APITestCase
 from django.test import TestCase, Client
 from transaction.models import Transaction
 from json import dumps
 from rest_framework import status
+from django.urls import reverse
+from .transactions_operations import TransactionsOperations
+import pysnooper
+
 
 class BudgetTestCase(TestCase):
 
@@ -28,7 +33,7 @@ class BudgetTestCase(TestCase):
         self.assertJSONEqual(
             str(response.content, encoding='utf8'),
             {'400': "date_month it's required."}
-        )        
+        )
 
     def invalid_date_month_param_base(self,date_month):
         user_id = '0390a508-dba5-4344-b77f-93e1227d42f4'
@@ -38,7 +43,7 @@ class BudgetTestCase(TestCase):
             str(response.content, encoding='utf8'),
             {'400': 'Invalid date format.'}
         )
-          
+
     def test_invalid_date_month_param_1(self):
         date_month = "2021-13"
         self.invalid_date_month_param_base(date_month)
@@ -90,7 +95,7 @@ class BudgetTestCase(TestCase):
         response = self.client.patch(
             self.URL_DETAIL.format(user_id, transactions_id),
             data=dumps(payload),
-            content_type='application/json'            
+            content_type='application/json'
         )
         response.json()
         self.assertEqual(response.status_code, status.HTTP_200_OK)
@@ -104,7 +109,7 @@ class BudgetTestCase(TestCase):
         response = self.client.patch(
             self.URL_DETAIL.format(user_id, transactions_id),
             data=dumps(payload),
-            content_type='application/json'            
+            content_type='application/json'
         )
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.json()['category'], category_id)
@@ -120,3 +125,45 @@ class BudgetTestCase(TestCase):
         year = "2021"
         response = self.client.get(self.URL_BALANCE.format(user_id,year))
         self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+
+
+
+
+class TransactionsOpertations(TestCase):
+
+    transactions = TransactionsOperations()
+    fixtures = [
+        'user/fixtures/users.yaml',
+        'catalog/fixtures/codetype.yaml',
+        'catalog/fixtures/transactions_categories.yaml',
+        'transaction/fixtures/transactions.yaml'
+    ]
+
+    @pysnooper.snoop(depth=2, max_variable_length=1000)
+    def test_get_summary_expenses(self):
+        self.transactions.get_expense_summary(
+            '0390a508dba54344b77f93e1227d42f4', '2021-05-01', '2021-05-28')
+        self.assertEqual(0, 0)
+
+
+
+class ApiTransactionsTest(APITestCase):
+    # fixtures = ['default_inital_data']
+
+    def setUp(self):
+
+        pass
+
+    # @pysnooper.snoop(depth=3, max_variable_length=400)
+    # def test_add_money_api(self):
+    #     url = reverse('manual_transaction')
+    #     body = {
+    #     }
+
+    #     responseClient = self.client.post(
+    #         url,
+    #         body,
+    #         format='json'
+    #     )
+    #     self.assertEqual(responseClient.status_code, 200)
