@@ -103,15 +103,7 @@ class ExpenseSummaryView(APIView):
             return Response({'400': 'Invalid date format.'}, status=status.HTTP_400_BAD_REQUEST)
         start = date.start_of('month')
         end = date.end_of('month')
-        # por que se ejecuta esto sin una clase, sí necesito en otro sitio lo tengo que copiar?, como saber cual es el test?
-        with connection.cursor() as cursor:
-            cursor.execute(EGRESOS_PRESUPUESTOS, [start, end, user,user, start, end])
-            columns = [desc[0] for desc in cursor.description]
-            # como se que espero de este query donde estan los datamodels
-            datos = [
-                dict(zip(columns, row))
-                for row in cursor.fetchall()
-            ]
+
         return Response(datos, status=status.HTTP_200_OK)
 
 

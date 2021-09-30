@@ -137,7 +137,8 @@ class TransactionsOpertations(TestCase):
         'user/fixtures/users.yaml',
         'catalog/fixtures/codetype.yaml',
         'catalog/fixtures/transactions_categories.yaml',
-        'transaction/fixtures/transactions.yaml'
+        'transaction/fixtures/transactions.yaml',
+        'budget/fixtures/budgets.yaml'
     ]
 
     @pysnooper.snoop(depth=2, max_variable_length=1000)

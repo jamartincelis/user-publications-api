@@ -1,4 +1,6 @@
 from os import lseek
+
+from numpy.core.defchararray import count
 import transaction
 from transaction.models import Transaction
 from catalog.models import CodeType, Code
@@ -10,45 +12,106 @@ class TransactionsOperations():
     def __init__(self, *args, **kwargs):
         pass
 
+    def _get_budget_percent(self, budget, amount):
+
+        if budget == 0:
+            return 0
+        return np.round(float( (budget + amount)*100 / budget))
+
+
     def get_expense_summary(self, user, start_date, end_date):
+        '''[summary]
+
+        Parameters
+        ----------
+        user : [type]
+            [description]
+        start_date : [type]
+            [description]
+        end_date : [type]
+            [description]
+
+        Returns
+        -------
+        [type]
+            [description]
+        '''
+
+        # Get data to process
         transactions_query_dict = Transaction.objects.filter(
             user=user,
             transaction_date__range=(start_date, end_date)).values()
-        categoires_dict = Code.objects.filter(
+        categories_dict = Code.objects.filter(
             code_type="1ec6a6b5-65d5-4a8c-85d0-4364c141aefd").values()
 
-        user_budgets_dict = Budget.objects.filter(user=user).values()
+        user_budgets_dict = Budget.objects.filter(
+            user=user).values()
         user_budgets = pd.DataFrame.from_dict(
             user_budgets_dict)
         transactions = pd.DataFrame.from_dict(
             transactions_query_dict)
+        del user_budgets["id"]
+        del user_budgets["user_id"]
+        user_budgets['budget'] = user_budgets['amount']
+        del user_budgets['amount']
 
+        # Process stats for transactions
         transactions_negative = transactions[
             transactions['amount'] < 0].copy()
         global_expenses = transactions_negative['amount'].sum()
         transactions_negative_stats = transactions_negative.groupby([
             'category_id']).agg(
-                {   'id': 'count',
-                    'user_id': 'first',
+                {'category_id':'first',
+                    'id': 'count',
                     'amount': 'sum'
                     })
 
-        transactions_negative_stats['%'] = transactions_negative_stats['amount'].apply(
-            lambda x: (100 * x / global_expenses))
-        print()
-        transactions_negative_stats['%'] = transactions_negative_stats['%'].set_option(
-            'precision', 2)
-        '''{
-			        "category": ok,
-			        "spend": 0.0,
-				    "percentage": 49.25
-			        "budget": 1000.0,
-				      "expenses_count": 0,
-			        "budget_spent": "1%",
-			        "has_budget": true,
-					"disabled": true
+        transactions_negative_stats['percentage'] = transactions_negative_stats['amount'].apply(
+            lambda x: (np.round(float(100 * x / global_expenses),2)))
+
+        # Merege and process budgets with transactions
+        transactions_negative_stats.index = ['category_id_index', 'two']
+
+        transactions_negative_stats = transactions_negative_stats.merge(
+            user_budgets, on='category_id', how='left')
+
+        transactions_negative_stats['budget'] = transactions_negative_stats['budget'].fillna(0)
+        transactions_negative_stats['budget_spent'] = transactions_negative_stats.apply(
+            lambda x: self._get_budget_percent(x['budget'], x['amount']), axis=1)
 
 
-			    }
-        '''
-        print(transactions_negative_stats)
+        # Adapt the object to return
+        transactions_negative_stats_dict = transactions_negative_stats.to_dict('records')
+
+        categories_expends_stats = []
+
+        for categorie_dict in categories_dict:
+            for transactions_negative_stat in transactions_negative_stats_dict:
+                if transactions_negative_stat['category_id'] == categorie_dict['id']:
+                    adapted_category = {
+                        "category": categorie_dict,
+                        "expenses_count": transactions_negative_stats['id'],
+                        "spend": transactions_negative_stats['amount'],
+                        "percentage": transactions_negative_stats['percentage'],
+                        "budget": transactions_negative_stats['budget'],
+                        "budget_spent": transactions_negative_stats['budget_spent'],
+                        "has_budget": True,
+                        "disabled": True
+                    }
+                else:
+                    adapted_category = {
+                        "category": categorie_dict,
+                        "expenses_count": 0,
+                        "spend":0,
+                        "percentage": 0,
+                        "budget": 0,
+                        "budget_spent": 0,
+                        "has_budget": False,
+                        "disabled": False
+                    }
+
+                categories_expends_stats.append(adapted_category)
+
+        return {
+            "global_expenses": global_expenses,
+            "expenses": categories_expends_stats}
