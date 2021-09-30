@@ -150,21 +150,21 @@ class TransactionsOpertations(TestCase):
 
 
 class ApiTransactionsTest(APITestCase):
-    # fixtures = ['default_inital_data']
+    fixtures = [
+        'user/fixtures/users.yaml',
+        'catalog/fixtures/codetype.yaml',
+        'catalog/fixtures/transactions_categories.yaml',
+        'transaction/fixtures/transactions.yaml',
+        'budget/fixtures/budgets.yaml'
+    ]
 
-    def setUp(self):
+    def test_add_(self):
+        # url = reverse('expensessummary')
+        url = '/user/{}/transactions/expenses/summary/'.format(
+            '0390a508dba54344b77f93e1227d42f4')
+        body = {
+        }
 
-        pass
-
-    # @pysnooper.snoop(depth=3, max_variable_length=400)
-    # def test_add_money_api(self):
-    #     url = reverse('manual_transaction')
-    #     body = {
-    #     }
-
-    #     responseClient = self.client.post(
-    #         url,
-    #         body,
-    #         format='json'
-    #     )
-    #     self.assertEqual(responseClient.status_code, 200)
+        response_client = self.client.get(
+            url, {'date_month': '2021-05-01'})
+        self.assertEqual(response_client.status_code, 200)

@@ -1,12 +1,10 @@
-from os import lseek
-
-from numpy.core.defchararray import count
-import transaction
 from transaction.models import Transaction
-from catalog.models import CodeType, Code
+from catalog.models import Code
 import pandas as pd
 from budget.models import Budget
 import numpy as np
+from operator import itemgetter
+
 
 class TransactionsOperations():
     def __init__(self, *args, **kwargs):
@@ -90,11 +88,11 @@ class TransactionsOperations():
                 if transactions_negative_stat['category_id'] == categorie_dict['id']:
                     adapted_category = {
                         "category": categorie_dict,
-                        "expenses_count": transactions_negative_stats['id'],
-                        "spend": transactions_negative_stats['amount'],
-                        "percentage": transactions_negative_stats['percentage'],
-                        "budget": transactions_negative_stats['budget'],
-                        "budget_spent": transactions_negative_stats['budget_spent'],
+                        "expenses_count": transactions_negative_stat['id'],
+                        "spend": transactions_negative_stat['amount'],
+                        "percentage": transactions_negative_stat['percentage'],
+                        "budget": transactions_negative_stat['budget'],
+                        "budget_spent": transactions_negative_stat['budget_spent'],
                         "has_budget": True,
                         "disabled": True
                     }
@@ -112,6 +110,10 @@ class TransactionsOperations():
 
                 categories_expends_stats.append(adapted_category)
 
+        sorted_categories_expends_stats = sorted(
+            categories_expends_stats, reverse=True, key=itemgetter('expenses_count'))
+
         return {
             "global_expenses": global_expenses,
-            "expenses": categories_expends_stats}
+            "expenses": sorted_categories_expends_stats
+        }

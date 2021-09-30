@@ -16,7 +16,7 @@ from transaction.models import Transaction
 from transaction.serializers import MonthlyBalanceSerializer, TransactionSerializer, TransactionDetailSerializer,\
     TransactionSummarySerializer
 
-
+from .transactions_operations import TransactionsOperations
 
 class TransactionList(ListAPIView):
     """
@@ -103,8 +103,8 @@ class ExpenseSummaryView(APIView):
             return Response({'400': 'Invalid date format.'}, status=status.HTTP_400_BAD_REQUEST)
         start = date.start_of('month')
         end = date.end_of('month')
-
-        return Response(datos, status=status.HTTP_200_OK)
+        expenses_sumary = TransactionsOperations().get_expense_summary(user, start, end)
+        return Response(expenses_sumary, status=status.HTTP_200_OK)
 
 
 class MonthlyBalanceView(APIView):
