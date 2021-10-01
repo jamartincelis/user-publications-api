@@ -172,6 +172,55 @@ respuesta
 }
 ```
 
+## Editar el presupuesto del usuario.
+
+Forma 1
+
+```bash
+curl --request PATCH \
+  --url http://localhost:8000/user/479ec168013945d0b7042bc4e5d0c4fb/budgets/45a80dbb-ea71-4ce3-90b3-6761bcbf365c/ \
+  --header 'content-type: application/json'
+  --data '{"amount" : 5100}'
+```
+respuesta 
+
+```json
+{
+  "id": "45a80dbb-ea71-4ce3-90b3-6761bcbf365c",
+  "amount": "5100.00",
+  "expenses_sum": "1000.00",
+  "expenses_count": 2,
+  "average": "500.00",
+  "spent": "20.0",
+  "budget_date": "2021-09-09",
+  "user": "479ec168-0139-45d0-b704-2bc4e5d0c4fb",
+  "category": "22118f55-e6a9-46b0-ae8f-a063dda396e0"
+}
+```
+Forma 2
+
+```bash
+curl --request PUT \
+  --url http://localhost:8000/user/479ec168013945d0b7042bc4e5d0c4fb/budgets/45a80dbb-ea71-4ce3-90b3-6761bcbf365c/ \
+  --header 'content-type: application/json' 
+  --data '{"user": "479ec168-0139-45d0-b704-2bc4e5d0c4fb","category": "22118f55-e6a9-46b0-ae8f-a063dda396e0","amount" : 5100,"average": 450,"expenses_count": 3,"expenses_sum": 1100}'
+```
+respuesta 
+
+```json
+{
+  "id": "45a80dbb-ea71-4ce3-90b3-6761bcbf365c",
+  "amount": "5100.00",
+  "expenses_sum": "1100.00",
+  "expenses_count": 3,
+  "average": "450.00",
+  "spent": "20.0",
+  "budget_date": "2021-09-09",
+  "user": "479ec168-0139-45d0-b704-2bc4e5d0c4fb",
+  "category": "22118f55-e6a9-46b0-ae8f-a063dda396e0"
+}
+```
+
 ## Balance Mensual del usuario. 
 
 ```bash

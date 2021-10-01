@@ -77,15 +77,15 @@ class TransactionsTestCase(TestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.json()['user_note'], user_note)
 
-#     def test_add_category_to_transaction(self):
-#         user_id = '0390a508-dba5-4344-b77f-93e1227d42f4'
-#         transactions_id = '68e18783-8b51-4618-af83-50c77f25871d'
-#         category_id = '22118f55-e6a9-46b0-ae8f-a063dda396e0'
-#         payload = {'category' : category_id}
-#         response = self.client.patch(
-#             self.URL_DETAIL.format(user_id, transactions_id),
-#             data=dumps(payload),
-#             content_type='application/json'            
-#         )
-#         self.assertEqual(response.status_code, status.HTTP_200_OK)
-#         self.assertEqual(response.json()['category'], category_id)
+    def test_add_category_to_transaction(self):
+         user_id = '0390a508-dba5-4344-b77f-93e1227d42f4'
+         transactions_id = '68e18783-8b51-4618-af83-50c77f25871d'
+         category_id = '22118f55-e6a9-46b0-ae8f-a063dda396e0'
+         payload = {'category' : category_id}
+         response = self.client.patch(
+             self.URL_DETAIL.format(user_id, transactions_id),
+             data=dumps(payload),
+             content_type='application/json'            
+         )
+         self.assertEqual(response.status_code, status.HTTP_200_OK)
+         self.assertEqual(response.json()['category'], category_id)
