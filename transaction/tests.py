@@ -83,9 +83,9 @@ class TransactionsTestCase(TestCase):
          category_id = '22118f55-e6a9-46b0-ae8f-a063dda396e0'
          payload = {'category' : category_id}
          response = self.client.patch(
-             self.URL_DETAIL.format(user_id, transactions_id),
+             self.DETAIL_URL.format(user_id, transactions_id),
              data=dumps(payload),
              content_type='application/json'            
          )
          self.assertEqual(response.status_code, status.HTTP_200_OK)
-         self.assertEqual(response.json()['category'], category_id)
+         self.assertEqual(response.json()['category']['id'], category_id)
