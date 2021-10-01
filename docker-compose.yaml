@@ -10,6 +10,7 @@ services:
             && python manage.py loaddata user/fixtures/users.yaml 
             && python manage.py loaddata catalog/fixtures/codetype.yaml
             && python manage.py loaddata catalog/fixtures/accounts_types.yaml
+            && python manage.py loaddata account/fixtures/accounts.yaml
             && python manage.py loaddata catalog/fixtures/transactions_categories.yaml
             && python manage.py loaddata transaction/fixtures/transactions.yaml
             && python manage.py loaddata budget/fixtures/budgets.yaml
