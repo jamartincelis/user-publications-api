@@ -1,7 +1,10 @@
-from transaction.models import Transaction
 from rest_framework import serializers
+
 from catalog.serializers import CodeSerializer
 from catalog.models import Code
+
+from transaction.models import Transaction
+
 
 class TransactionSerializer(serializers.ModelSerializer):
     """
@@ -12,6 +15,7 @@ class TransactionSerializer(serializers.ModelSerializer):
         model = Transaction
         fields = '__all__'
 
+
 class TransactionDetailSerializer(serializers.ModelSerializer):
     """
     Permite acceder a lo datos basicos de una transaccion.
@@ -20,6 +24,7 @@ class TransactionDetailSerializer(serializers.ModelSerializer):
     class Meta:
         model = Transaction
         fields = '__all__'
+
 
 class TransactionSummarySerializer(serializers.Serializer):
     """
@@ -31,6 +36,7 @@ class TransactionSummarySerializer(serializers.Serializer):
 
     def get_category(self, obj):
         return  Code.objects.get(id=obj['category']).description
+
 
 class MonthlyBalanceSerializer(serializers.Serializer):
     """

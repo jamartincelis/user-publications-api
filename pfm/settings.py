@@ -13,7 +13,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 from pathlib import Path
 
 from os import environ
-import sys
+
 import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -28,7 +28,7 @@ SECRET_KEY = 'django-insecure-l4f-&lnry^*)^9*buu*225a76-n_e_$o)yo$030@+qa+s24)*9
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True if environ.get('DEBUG') == 'True' else False
-TESTING = sys.argv[1:2] == ['test']
+
 ALLOWED_HOSTS = [environ.get('ALLOWED_HOSTS'), ]
 
 # Application definition
@@ -40,8 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'rest_framework',
     'corsheaders',
+    'rest_framework',
     'budget',
     'catalog',
     'transaction',
@@ -53,7 +53,6 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
-    'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
@@ -86,17 +85,6 @@ WSGI_APPLICATION = 'pfm.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-if TESTING:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'NAME': environ.get('DATABASE_NAME'),
-            'USER': environ.get('DATABASE_USER'),
-            'PASSWORD': environ.get('DATABASE_PASSWORD'),
-            'HOST': environ.get('DATABASE_HOST'),
-            'PORT': environ.get('DATABASE_PORT'),
-        }
-    }
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
@@ -140,8 +128,6 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-if TESTING is True:
-    USE_TZ = False
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/

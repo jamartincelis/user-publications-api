@@ -6,7 +6,7 @@
     description: 'Ahorro, inversión, ffmm, deposito a plazo, compra acciones'
     metadata:
       short_name: 'AHORRO_INVERSION'
-      category_name_url: 'assets/img/category/saving.svg'
+      icon: 'assets/img/category/saving.svg'
       active: true
       color: '#FF8300'
     updated_at: '2021-05-01T13:20:30-06:00'
@@ -20,7 +20,7 @@
     description: 'Gasolina, estacionamiento, seguro auto, app taxi'
     metadata:
       short_name: 'AUTOMOVIL_TRANSPORTE'
-      category_name_url: 'assets/img/category/transport.svg'
+      icon: 'assets/img/category/transport.svg'
       active: true
       color: '8C6700'
     updated_at: '2021-05-01T13:20:30-06:00'
@@ -34,7 +34,7 @@
     description: 'Consumo de luz, agua, gas, internet, telefonía...'
     metadata:
       short_name: 'CUENTA_SERVICIO'
-      category_name_url: 'assets/img/category/service.svg'
+      icon: 'assets/img/category/service.svg'
       active: true
       color: '#BF6100'
     updated_at: '2021-05-01T13:20:30-06:00'
@@ -48,7 +48,7 @@
     description: 'Netflix, spotify, cine, apps store, videojuegos'
     metadata:
       short_name: 'ENTRETENIMIENTO'
-      category_name_url: 'assets/img/category/entertainment.svg'
+      icon: 'assets/img/category/entertainment.svg'
       active: true
       color: '#ED888A'
     updated_at: '2021-05-01T13:20:30-06:00'
@@ -62,7 +62,7 @@
     description: 'Seguros, comisiones, impuestos'
     metadata:
       short_name: 'GASTO_FINANCIERO_SEGURO'
-      category_name_url: 'assets/img/category/insurance.svg'
+      icon: 'assets/img/category/insurance.svg'
       active: true
       color: '#420456'
     updated_at: '2021-05-01T13:20:30-06:00'
@@ -76,7 +76,7 @@
     description: 'Renta, hipotecario, educación, mascota, veterinario, colegio'
     metadata:
       short_name: 'HOGAR_FAMILIA'
-      category_name_url: 'assets/img/category/home.svg'
+      icon: 'assets/img/category/home.svg'
       active: true
       color: '#00A1DF'
     updated_at: '2021-05-01T13:20:30-06:00'
@@ -90,7 +90,7 @@
     description: 'Transacciones que no quieres que se agreguen a una categoría'
     metadata:
       short_name: 'IGNORE'
-      category_name_url: 'assets/img/category/ignore.svg'
+      icon: 'assets/img/category/ignore.svg'
       active: true
       color: '#CFA7DC'
     updated_at: '2021-05-01T13:20:30-06:00'
@@ -104,7 +104,7 @@
     description: 'todos los movimientos con valor positivo, sueldos, abonos'
     metadata:
       short_name: 'INGRESO'
-      category_name_url: 'assets/img/category/income.svg'
+      icon: 'assets/img/category/income.svg'
       active: true
       color: 'INGRESO'
     updated_at: '2021-05-01T13:20:30-06:00'
@@ -118,7 +118,7 @@
     description: 'Otros'
     metadata:
       short_name: 'OTROS'
-      category_name_url: 'assets/img/category/others.svg'
+      icon: 'assets/img/category/others.svg'
       active: true
       color: '#9C9A9F'
     updated_at: '2021-05-01T13:20:30-06:00'
@@ -132,7 +132,7 @@
     description: 'Compra de divisas, pago tarjeta de crédito'
     metadata:
       short_name: 'PAGO_TARJETA_CREDITO'
-      category_name_url: 'assets/img/category/credit_card_payment.svg'
+      icon: 'assets/img/category/credit_card_payment.svg'
       active: true
       color: '#005D8F'
     updated_at: '2021-05-01T13:20:30-06:00'
@@ -146,7 +146,7 @@
     description: 'Apps de pedidos, restaurantes, bares y nightclubs'
     metadata:
       short_name: 'RESTAURANT'
-      category_name_url: 'assets/img/category/restaurant.svg'
+      icon: 'assets/img/category/restaurant.svg'
       active: true
       color: '#B00009'
     updated_at: '2021-05-01T13:20:30-06:00'
@@ -160,7 +160,7 @@
     description: 'Deportes, electrónica, vestuario y calzado'
     metadata:
       short_name: 'SHOPPING'
-      category_name_url: 'assets/img/category/shopping.svg'
+      icon: 'assets/img/category/shopping.svg'
       active: true
       color: '#7C2582'
     updated_at: '2021-05-01T13:20:30-06:00'
@@ -174,7 +174,7 @@
     description: 'Tienda de comestibles, panaderia, pasteleria...'
     metadata:
       short_name: 'SUPERMERCADO'
-      category_name_url: 'assets/img/category/supermarket.svg'
+      icon: 'assets/img/category/supermarket.svg'
       active: true
       color: '#E81E2B'
     updated_at: '2021-05-01T13:20:30-06:00'
@@ -188,7 +188,7 @@
     description: 'Transferencias entre mis cuentas personales'
     metadata:
       short_name: 'TRANSFERENCIA_ENTRE_CUENTA'
-      category_name_url: 'assets/img/category/transferencia-cuentas.svg'
+      icon: 'assets/img/category/transferencia-cuentas.svg'
       active: true
       color: '#2E47B6'
     updated_at: '2021-05-01T13:20:30-06:00'
@@ -202,7 +202,7 @@
     description: 'Transferencias a terceros, retiros en cajeros, retiros en caja'
     metadata:
       short_name: 'TRANSFERENCIA_RETIRO'
-      category_name_url: 'assets/img/category/own-transfer.svg'
+      icon: 'assets/img/category/own-transfer.svg'
       active: true
       color: '#C9A71C'
     updated_at: '2021-05-01T13:20:30-06:00'
@@ -216,7 +216,7 @@
     description: 'Farmacia, doctores, dentista, gimnasio, salon de belleza, peluqueria'
     metadata:
       short_name: 'SALUD_BIENESTAR'
-      category_name_url: 'assets/img/category/health.svg'
+      icon: 'assets/img/category/health.svg'
       active: true
       color: '#870F38'
     updated_at: '2021-05-01T13:20:30-06:00'
@@ -230,7 +230,7 @@
     description: 'Plataformas de viajes, hoteles, cabañas, arriendo de auto'
     metadata:
       short_name: 'VACACION_VIAJE'
-      category_name_url: 'assets/img/category/vacation.svg'
+      icon: 'assets/img/category/vacation.svg'
       active: true
       color: '#FFC700'
     updated_at: '2021-05-01T13:20:30-06:00'
@@ -244,7 +244,7 @@
     description: 'Transacción sin categoría'
     metadata:
       short_name: 'SIN_CATEGORIA'
-      category_name_url: ''
+      icon: ''
       active: false
       color: '#9C9A9F'
     updated_at: '2021-05-01T13:20:30-06:00'
