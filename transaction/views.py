@@ -19,6 +19,7 @@ from transaction.serializers import MonthlyBalanceSerializer, TransactionSeriali
 from catalog.models import Code
 from catalog.serializers import CodeSerializer
 
+from .transactions_operations import TransactionsOperations
 
 class TransactionList(ListAPIView):
     """
@@ -29,13 +30,13 @@ class TransactionList(ListAPIView):
     filterset_fields = ['date_month']
 
     def get(self, request, user):
-        transactions = self.get_queryset().filter(user=user)            
+        transactions = self.get_queryset().filter(user=user)
         date = self.request.query_params.get('date_month')
         if not date:
             return Response({'400': "date_month it's required."}, status=status.HTTP_400_BAD_REQUEST)
         date = validate_date(date)
         if date is False:
-            return Response({'400': 'Invalid date format.'}, status=status.HTTP_400_BAD_REQUEST)  
+            return Response({'400': 'Invalid date format.'}, status=status.HTTP_400_BAD_REQUEST)
         transactions = transactions.filter(transaction_date__range=[date.start_of('month'), date.end_of('month')])
         data = TransactionSerializer(transactions, many=True)
         return Response(data=data.data, status=status.HTTP_200_OK)
@@ -77,7 +78,7 @@ class CategorySummary(ListAPIView):
     queryset = Transaction.objects.all()
     filterset_fields = ['date_month']
     serializer_class = TransactionSummarySerializer
-    
+
     def get(self, request, user):
         date = self.request.query_params.get('date_month')
         if not date:
@@ -98,28 +99,18 @@ class ExpenseSummaryView(APIView):
     """
     def get(self, request, user):
         date = self.request.query_params.get('date_month')
+        show_rows = 6
+        if self.request.query_params.get('show_rows'):
+            show_rows = int(self.request.query_params.get('show_rows'))
         if not date:
             return Response({'400': "date_month it's required."}, status=status.HTTP_400_BAD_REQUEST)
         date = validate_date(date)
         if date is False:
             return Response({'400': 'Invalid date format.'}, status=status.HTTP_400_BAD_REQUEST)
-        categories = Code.objects.filter(code_type__name='transaction_category')
-        data = {
-            'global_expenses': 100000.00,
-            'expenses': [
-                {
-                    'category': CodeSerializer(category).data,
-                    'spent': 0.0,
-                    'percentage': 49.25,
-                    'budget': 1000.0,
-                    'expenses_count': 0,
-                    'budget_spent': '1%',
-                    'has_budget': False,
-                    'disabled': False
-                }
-            for category in categories]
-        }
-        return Response(data, status=status.HTTP_200_OK)
+        start = date.start_of('month')
+        end = date.end_of('month')
+        expenses_sumary = TransactionsOperations().get_expense_summary(user, start, end, show_rows)
+        return Response(expenses_sumary, status=status.HTTP_200_OK)
 
 
 class MonthlyBalanceView(APIView):
