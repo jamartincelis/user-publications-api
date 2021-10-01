@@ -5,7 +5,8 @@ services:
         container_name: pfm_api
         build: .
         command: >
-            bash -c "python manage.py migrate
+            bash -c "python manage.py makemigrations 
+            && python manage.py migrate
             && python manage.py loaddata user/fixtures/users.yaml 
             && python manage.py loaddata catalog/fixtures/codetype.yaml
             && python manage.py loaddata catalog/fixtures/accounts_types.yaml
