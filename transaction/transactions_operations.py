@@ -126,18 +126,6 @@ class TransactionsOperations():
                         "has_budget": True if transactions_negative_stat['budget'] > 0 else False,
                         "disabled": False if transactions_negative_stat['budget'] > 0 else False
                     }
-                # else:
-                #     adapted_category = {
-                #         "category": categorie_dict,
-                #         "expenses_count": 0,
-                #         "spend":0,
-                #         "percentage": 0,
-                #         "budget": 0,
-                #         "budget_spent": 0,
-                #         "has_budget": False,
-                #         "disabled": False
-                #     }
-
                     categories_expends_stats.append(adapted_category)
 
 
