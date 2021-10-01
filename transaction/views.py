@@ -96,6 +96,11 @@ class ExpenseSummaryView(APIView):
     """
     def get(self, request, user):
         date = self.request.query_params.get('date_month')
+        show_rows = 6
+        if self.request.query_params.get('show_rows'):
+            show_rows = int(self.request.query_params.get('show_rows'))
+            print(show_rows)
+
         if not date:
             return Response({'400': "date_month it's required."}, status=status.HTTP_400_BAD_REQUEST)
         date = validate_date(date)
@@ -103,7 +108,7 @@ class ExpenseSummaryView(APIView):
             return Response({'400': 'Invalid date format.'}, status=status.HTTP_400_BAD_REQUEST)
         start = date.start_of('month')
         end = date.end_of('month')
-        expenses_sumary = TransactionsOperations().get_expense_summary(user, start, end)
+        expenses_sumary = TransactionsOperations().get_expense_summary(user, start, end, show_rows)
         return Response(expenses_sumary, status=status.HTTP_200_OK)
 
 

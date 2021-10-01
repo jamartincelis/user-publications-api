@@ -142,7 +142,7 @@
     transaction_date: '2021-04-09T13:20:30-06:00'
     user: '479ec168013945d0b7042bc4e5d0c4fb'
     category: '22118f55e6a946b0ae8fa063dda396e0' # Shopping
-#
+
 - model: 'transaction.Transaction'
   fields:
     id: '56256f04-3009-4e25-9c86-1ab4cb40e8d2'
@@ -151,6 +151,74 @@
     transaction_date: '2021-05-09T13:20:30-06:00'
     user: '0390a508dba54344b77f93e1227d42f4'
     category: '9abd4759ab144e09adc29c5dea1041b1' # Entretenimiento
+
+
+- model: 'transaction.Transaction'
+  fields:
+    id: 'aa4a5ca3-e95b-431b-a50f-a261c3859201'
+    amount: -53000
+    description : Transaccion de prueba 1
+    transaction_date: '2021-05-09T13:20:30-06:00'
+    user: '0390a508dba54344b77f93e1227d42f4'
+    category: 'cde589f3628146719bb2333168d5971d' # Entretenimiento
+
+
+- model: 'transaction.Transaction'
+  fields:
+    id: '4fd8ec16-0caf-401d-a938-d3c5ba737901'
+    amount: -32000
+    description : Transaccion de prueba Restaurantes
+    transaction_date: '2021-05-09T13:20:30-06:00'
+    user: '0390a508dba54344b77f93e1227d42f4'
+    category: 'a249c468bb4d436583f4108d456bb494' # Entretenimiento
+
+
+- model: 'transaction.Transaction'
+  fields:
+    id: 'f4fde5b3-723e-4fb4-a7e9-00592045db09'
+    amount: -31000
+    description : Transaccion de prueba Restaurantes
+    transaction_date: '2021-05-09T13:20:30-06:00'
+    user: '0390a508dba54344b77f93e1227d42f4'
+    category: '22118f55e6a946b0ae8fa063dda396e0' # Entretenimiento
+
+- model: 'transaction.Transaction'
+  fields:
+    id: 'ac68e04e-23a0-4595-a291-aa78bbb350d6'
+    amount: -30000
+    description : Transaccion de prueba Restaurantes
+    transaction_date: '2021-05-09T13:20:30-06:00'
+    user: '0390a508dba54344b77f93e1227d42f4'
+    category: 'ab0e1c524ab146b393847db452b282b2' # Entretenimiento
+
+
+- model: 'transaction.Transaction'
+  fields:
+    id: '31bc7431-6150-4345-b2b7-db4c17405868'
+    amount: -33000
+    description : Transaccion de prueba Restaurantes
+    transaction_date: '2021-05-09T13:20:30-06:00'
+    user: '0390a508dba54344b77f93e1227d42f4'
+    category: 'f0eae54864e645b49bfd4059d2b9d4df' # Entretenimiento
+
+- model: 'transaction.Transaction'
+  fields:
+    id: '6da1c4f6-94df-4be8-85c1-3bc101d2f80c'
+    amount: -20000
+    description : Transaccion de prueba Restaurantes
+    transaction_date: '2021-05-09T13:20:30-06:00'
+    user: '0390a508dba54344b77f93e1227d42f4'
+    category: '84e6fa2f87904d948f656944c7bcba10' # Entretenimiento
+
+- model: 'transaction.Transaction'
+  fields:
+    id: '1524b77b-1733-4ded-ab78-be1caf0f400e'
+    amount: -100000
+    description : Transaccion de prueba Restaurantes
+    transaction_date: '2021-05-09T13:20:30-06:00'
+    user: '0390a508dba54344b77f93e1227d42f4'
+    category: '53566d374b4d45988b6c09f5970c33cd' # Entretenimiento
+
 
 - model: 'transaction.Transaction'
   fields:
@@ -161,6 +229,14 @@
     user: '0390a508dba54344b77f93e1227d42f4'
     category: '22118f55e6a946b0ae8fa063dda396e0' # Entretenimiento
 
+- model: 'transaction.Transaction'
+  fields:
+    id: 'cca12a4c-a210-4be5-8fe3-f0b8cad3befb'
+    amount: -9000
+    description : Transaccion de prueba 5
+    transaction_date: '2021-05-09T13:20:30-06:00'
+    user: '0390a508dba54344b77f93e1227d42f4'
+    category: '22118f55e6a946b0ae8fa063dda396e0' # Entretenimiento
 
 - model: 'transaction.Transaction'
   fields:

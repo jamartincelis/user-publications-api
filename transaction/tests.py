@@ -141,7 +141,7 @@ class TransactionsOpertations(TestCase):
         'budget/fixtures/budgets.yaml'
     ]
 
-    @pysnooper.snoop(depth=2, max_variable_length=1000)
+    # @pysnooper.snoop(depth=2, max_variable_length=1000)
     def test_get_summary_expenses(self):
         self.transactions.get_expense_summary(
             '0390a508dba54344b77f93e1227d42f4', '2021-05-01', '2021-05-28')
