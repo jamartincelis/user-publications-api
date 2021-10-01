@@ -4,8 +4,6 @@ services:
     pfm_api:
         container_name: pfm_api
         build: .
-        command: bash -c "python manage.py runserver 0.0.0.0:8000"
-
         volumes:
             - .:/code
         expose:
