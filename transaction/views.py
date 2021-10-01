@@ -99,8 +99,6 @@ class ExpenseSummaryView(APIView):
         show_rows = 6
         if self.request.query_params.get('show_rows'):
             show_rows = int(self.request.query_params.get('show_rows'))
-            print(show_rows)
-
         if not date:
             return Response({'400': "date_month it's required."}, status=status.HTTP_400_BAD_REQUEST)
         date = validate_date(date)
