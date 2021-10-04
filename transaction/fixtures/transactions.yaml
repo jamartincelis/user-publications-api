@@ -16,6 +16,7 @@
     account: 'e25736e4-b2db-4fa0-8917-86f5ec92463f'
     category: '22118f55-e6a9-46b0-ae8f-a063dda396e0' # Shopping
 
+
 - model: 'transaction.Transaction'
   fields:
     id: 'acacd300-a585-4a11-8e03-1e3195ce0827'
@@ -51,6 +52,7 @@
     transaction_date: '2021-02-09T13:20:30-06:00'
     account: 'e25736e4-b2db-4fa0-8917-86f5ec92463f'
     category: '22118f55-e6a9-46b0-ae8f-a063dda396e0' # Shopping
+
 
 - model: 'transaction.Transaction'
   fields:
@@ -141,11 +143,11 @@
     transaction_date: '2021-04-09T13:20:30-06:00'
     account: 'e25736e4-b2db-4fa0-8917-86f5ec92463f'
     category: '22118f55-e6a9-46b0-ae8f-a063dda396e0' # Shopping
-#
+
 - model: 'transaction.Transaction'
   fields:
-    id: '56256f04-3009-4e25-9c86-1ab4cb40e8d2' 
-    amount: 300000
+    id: '56256f04-3009-4e25-9c86-1ab4cb40e8d2'
+    amount: -300000
     description : Transaccion de prueba 1
     transaction_date: '2021-05-09T13:20:30-06:00'
     account: '910e8abd-1265-41ba-8125-f6c720bacde9'
@@ -154,7 +156,7 @@
 - model: 'transaction.Transaction'
   fields:
     id: '12a02e3d-c0c7-4f88-80b8-8730f28e47c0'
-    amount: 210000
+    amount: -210000
     description: Transaccion de prueba 1
     transaction_date: '2021-05-09T13:20:30-06:00'
     account: 'e25736e4-b2db-4fa0-8917-86f5ec92463f'
@@ -162,12 +164,13 @@
 
 - model: 'transaction.Transaction'
   fields:
-    id: 'c7e77eb2-6bef-4dde-b51c-822fe0257003'
+    id: '6ab88081-f945-440f-8060-ee8132654a0b'
     amount: -15000
     description : Transaccion de prueba 1
     transaction_date: '2021-05-09T13:20:30-06:00'
     account: '910e8abd-1265-41ba-8125-f6c720bacde9'
     category: '9abd4759-ab14-4e09-adc2-9c5dea1041b1' # Entretenimiento
+
 
 - model: 'transaction.Transaction'
   fields:
@@ -213,7 +216,7 @@
     transaction_date: '2021-06-09T13:20:30-06:00'
     account: 'e25736e4-b2db-4fa0-8917-86f5ec92463f'
     category: '22118f55-e6a9-46b0-ae8f-a063dda396e0' # Shopping
-#
+
 - model: 'transaction.Transaction'
   fields:
     id: '8017369b-ea2d-4bc4-b2bd-06d6c57821eb'
@@ -249,7 +252,7 @@
     transaction_date: '2021-07-09T13:20:30-06:00'
     account: 'e25736e4-b2db-4fa0-8917-86f5ec92463f'
     category: '22118f55-e6a9-46b0-ae8f-a063dda396e0' # Shopping
-#
+
 - model: 'transaction.Transaction'
   fields:
     id: '7016358b-ea2d-4bc4-b2bd-06d6c57821eb'

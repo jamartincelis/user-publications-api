@@ -1,21 +1,10 @@
-version: "3"
+version: '3'
 
 services:
     pfm_api:
         container_name: pfm_api
         build: .
-        command: >
-            bash -c "python manage.py makemigrations 
-            && python manage.py migrate
-            && python manage.py loaddata user/fixtures/users.yaml 
-            && python manage.py loaddata catalog/fixtures/codetype.yaml
-            && python manage.py loaddata catalog/fixtures/accounts_types.yaml
-            && python manage.py loaddata account/fixtures/accounts.yaml
-            && python manage.py loaddata catalog/fixtures/transactions_categories.yaml
-            && python manage.py loaddata transaction/fixtures/transactions.yaml
-            && python manage.py loaddata budget/fixtures/budgets.yaml
-            && python manage.py loaddata faq/fixtures/faqs.yaml
-            && python manage.py runserver 0.0.0.0:8000"
+        command: python manage.py runserver 0.0.0.0:8000
         volumes:
             - .:/code
         expose:
@@ -32,15 +21,17 @@ services:
             POSTGRES_PASSWORD: pass
             POSTGRES_USER: django
             POSTGRES_DB: pfm_db
+        volumes:
+            - ./postgres-data:/var/lib/postgresql/data
         expose:
             - 5432
     pfm_redis:
-        image: "redis:alpine"
-        command: redis-server
+        image: 'redis:alpine'
+        command: 'redis-server'
         expose:
             - 6379
     pfm_nginx:
-        container_name: pfm_nginx
+        container_name: 'pfm_nginx'
         build: ./nginx
         ports:
             - '80:80'

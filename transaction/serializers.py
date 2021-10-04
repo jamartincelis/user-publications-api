@@ -20,6 +20,7 @@ class TransactionDetailSerializer(serializers.ModelSerializer):
     """
     Permite acceder a lo datos basicos de una transaccion.
     """
+    category = CodeSerializer(read_only=True)
     class Meta:
         model = Transaction
         fields = '__all__'
@@ -35,6 +36,7 @@ class TransactionSummarySerializer(serializers.Serializer):
 
     # def get_category(self, obj):
     #     return  Code.objects.get(id=obj['category']).description
+
 
 
 class MonthlyBalanceSerializer(serializers.Serializer):

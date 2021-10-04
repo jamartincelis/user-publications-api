@@ -16,7 +16,10 @@ from transaction.models import Transaction
 from transaction.serializers import MonthlyBalanceSerializer, TransactionSerializer, TransactionDetailSerializer,\
     TransactionSummarySerializer
 
+from catalog.models import Code
+from catalog.serializers import CodeSerializer
 
+from .transactions_operations import TransactionsOperations
 
 class TransactionList(ListAPIView):
     """
@@ -28,9 +31,12 @@ class TransactionList(ListAPIView):
 
     def get(self, request, user):
         transactions = self.get_queryset().prefetch_related('category').filter(account__user=user)
-        date = validate_date(self.request.query_params.get('date_month'))
+        date = self.request.query_params.get('date_month')
+        if not date:
+            return Response({'400': "date_month it's required."}, status=status.HTTP_400_BAD_REQUEST)
+        date = validate_date(date)
         if date is False:
-            return Response({'400': 'Invalid date format.'}, status=status.HTTP_400_BAD_REQUEST)  
+            return Response({'400': 'Invalid date format.'}, status=status.HTTP_400_BAD_REQUEST)
         transactions = transactions.filter(transaction_date__range=[date.start_of('month'), date.end_of('month')])
         data = TransactionSerializer(transactions, many=True)
         return Response(data=data.data, status=status.HTTP_200_OK)
@@ -72,7 +78,7 @@ class CategorySummary(ListAPIView):
     queryset = Transaction.objects.all()
     filterset_fields = ['date_month']
     serializer_class = TransactionSummarySerializer
-    
+
     def get(self, request, user):
         date = self.request.query_params.get('date_month')
         if not date:
@@ -93,6 +99,9 @@ class ExpenseSummaryView(APIView):
     """
     def get(self, request, user):
         date = self.request.query_params.get('date_month')
+        show_rows = 6
+        if self.request.query_params.get('show_rows'):
+            show_rows = int(self.request.query_params.get('show_rows'))
         if not date:
             return Response({'400': "date_month it's required."}, status=status.HTTP_400_BAD_REQUEST)
         date = validate_date(date)
@@ -100,14 +109,8 @@ class ExpenseSummaryView(APIView):
             return Response({'400': 'Invalid date format.'}, status=status.HTTP_400_BAD_REQUEST)
         start = date.start_of('month')
         end = date.end_of('month')
-        with connection.cursor() as cursor:
-            cursor.execute(EGRESOS_PRESUPUESTOS, [start, end, user,user, start, end])
-            columns = [desc[0] for desc in cursor.description]
-            datos = [
-                dict(zip(columns, row))
-                for row in cursor.fetchall()
-            ] 
-        return Response(datos, status=status.HTTP_200_OK)
+        expenses_sumary = TransactionsOperations().get_expense_summary(user, start, end, show_rows)
+        return Response(expenses_sumary, status=status.HTTP_200_OK)
 
 
 class MonthlyBalanceView(APIView):
@@ -128,7 +131,7 @@ class MonthlyBalanceView(APIView):
         }
 
     def get(self, request, user):
-        year = Transaction.objects.filter(user=user).order_by('transaction_date').first().transaction_date.year
+        year = Transaction.objects.filter(account__user=user).order_by('transaction_date').first().transaction_date.year
         start_date = pendulum.datetime(year, 1, 1)
         end_date = pendulum.now().end_of('year')
         dates = []
@@ -139,7 +142,7 @@ class MonthlyBalanceView(APIView):
         for date in dates:
             data = Transaction.objects.filter(
                 transaction_date__range=[date.start_of('month'), date.end_of('month')],
-                user_id=user,
+                account__user=user,
                 ).aggregate(
                 incomes=Sum(Case(
                     When(amount__gt=0, then=F('amount')),
