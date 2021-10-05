@@ -4,17 +4,18 @@
     amount: 1800
     description : Transaccion de prueba 1
     transaction_date: '2021-01-09T13:20:30-06:00'
-    user: '0390a508dba54344b77f93e1227d42f4'
-    category: '9abd4759ab144e09adc29c5dea1041b1' # Entretenimiento
+    account: '910e8abd-1265-41ba-8125-f6c720bacde9'
+    category: '9abd4759-ab14-4e09-adc2-9c5dea1041b1' # Entretenimiento
 
 - model: 'transaction.Transaction'
   fields:
     id: '203a1ace-8a57-4d49-ae8d-699221e9f3cb'
     amount: 2000
     description: Transaccion de prueba 1
-    transaction_date: '2021-05-09T13:20:30-06:00'
-    user: '479ec168013945d0b7042bc4e5d0c4fb'
-    category: 'f0eae54864e645b49bfd4059d2b9d4df' # Shopping
+    transaction_date: '2021-01-09T13:20:30-06:00'
+    account: 'e25736e4-b2db-4fa0-8917-86f5ec92463f'
+    category: '22118f55-e6a9-46b0-ae8f-a063dda396e0' # Shopping
+
 
 - model: 'transaction.Transaction'
   fields:
@@ -22,8 +23,8 @@
     amount: -1200
     description : Transaccion de prueba 1
     transaction_date: '2021-01-09T13:20:30-06:00'
-    user: '0390a508dba54344b77f93e1227d42f4'
-    category: '9abd4759ab144e09adc29c5dea1041b1' # Entretenimiento
+    account: '910e8abd-1265-41ba-8125-f6c720bacde9'
+    category: '9abd4759-ab14-4e09-adc2-9c5dea1041b1' # Entretenimiento
 
 - model: 'transaction.Transaction'
   fields:
@@ -31,8 +32,8 @@
     amount: -2300
     description: Transaccion de prueba 1
     transaction_date: '2021-01-09T13:20:30-06:00'
-    user: '479ec168013945d0b7042bc4e5d0c4fb'
-    category: '22118f55e6a946b0ae8fa063dda396e0' # Shopping
+    account: 'e25736e4-b2db-4fa0-8917-86f5ec92463f'
+    category: '22118f55-e6a9-46b0-ae8f-a063dda396e0' # Shopping
 
 - model: 'transaction.Transaction'
   fields:
@@ -40,8 +41,8 @@
     amount: 1300
     description : Transaccion de prueba 1
     transaction_date: '2021-02-09T13:20:30-06:00'
-    user: '0390a508dba54344b77f93e1227d42f4'
-    category: '9abd4759ab144e09adc29c5dea1041b1' # Entretenimiento
+    account: '910e8abd-1265-41ba-8125-f6c720bacde9'
+    category: '9abd4759-ab14-4e09-adc2-9c5dea1041b1' # Entretenimiento
 
 - model: 'transaction.Transaction'
   fields:
@@ -49,8 +50,8 @@
     amount: 2400
     description: Transaccion de prueba 1
     transaction_date: '2021-02-09T13:20:30-06:00'
-    user: '479ec168013945d0b7042bc4e5d0c4fb'
-    category: '22118f55e6a946b0ae8fa063dda396e0' # Shopping
+    account: 'e25736e4-b2db-4fa0-8917-86f5ec92463f'
+    category: '22118f55-e6a9-46b0-ae8f-a063dda396e0' # Shopping
 
 
 - model: 'transaction.Transaction'
@@ -59,8 +60,8 @@
     amount: -12000
     description : Transaccion de prueba 1
     transaction_date: '2021-02-09T13:20:30-06:00'
-    user: '0390a508dba54344b77f93e1227d42f4'
-    category: '9abd4759ab144e09adc29c5dea1041b1' # Entretenimiento
+    account: '910e8abd-1265-41ba-8125-f6c720bacde9'
+    category: '9abd4759-ab14-4e09-adc2-9c5dea1041b1' # Entretenimiento
 
 - model: 'transaction.Transaction'
   fields:
@@ -68,8 +69,8 @@
     amount: -23000
     description: Transaccion de prueba 1
     transaction_date: '2021-02-09T13:20:30-06:00'
-    user: '479ec168013945d0b7042bc4e5d0c4fb'
-    category: '22118f55e6a946b0ae8fa063dda396e0' # Shopping
+    account: 'e25736e4-b2db-4fa0-8917-86f5ec92463f'
+    category: '22118f55-e6a9-46b0-ae8f-a063dda396e0' # Shopping
 
 - model: 'transaction.Transaction'
   fields:
@@ -77,8 +78,8 @@
     amount: 3000
     description : Transaccion de prueba 1
     transaction_date: '2021-03-09T13:20:30-06:00'
-    user: '0390a508dba54344b77f93e1227d42f4'
-    category: '9abd4759ab144e09adc29c5dea1041b1' # Entretenimiento
+    account: '910e8abd-1265-41ba-8125-f6c720bacde9'
+    category: '9abd4759-ab14-4e09-adc2-9c5dea1041b1' # Entretenimiento
 
 - model: 'transaction.Transaction'
   fields:
@@ -86,8 +87,8 @@
     amount: 2100
     description: Transaccion de prueba 1
     transaction_date: '2021-03-09T13:20:30-06:00'
-    user: '479ec168013945d0b7042bc4e5d0c4fb'
-    category: '22118f55e6a946b0ae8fa063dda396e0' # Shopping
+    account: 'e25736e4-b2db-4fa0-8917-86f5ec92463f'
+    category: '22118f55-e6a9-46b0-ae8f-a063dda396e0' # Shopping
 
 - model: 'transaction.Transaction'
   fields:
@@ -95,8 +96,8 @@
     amount: -1100
     description : Transaccion de prueba 1
     transaction_date: '2021-03-09T13:20:30-06:00'
-    user: '0390a508dba54344b77f93e1227d42f4'
-    category: '9abd4759ab144e09adc29c5dea1041b1' # Entretenimiento
+    account: '910e8abd-1265-41ba-8125-f6c720bacde9'
+    category: '9abd4759-ab14-4e09-adc2-9c5dea1041b1' # Entretenimiento
 
 - model: 'transaction.Transaction'
   fields:
@@ -104,8 +105,8 @@
     amount: -1700
     description: Transaccion de prueba 1
     transaction_date: '2021-03-09T13:20:30-06:00'
-    user: '479ec168013945d0b7042bc4e5d0c4fb'
-    category: '22118f55e6a946b0ae8fa063dda396e0' # Shopping
+    account: 'e25736e4-b2db-4fa0-8917-86f5ec92463f'
+    category: '22118f55-e6a9-46b0-ae8f-a063dda396e0' # Shopping
 
 - model: 'transaction.Transaction'
   fields:
@@ -113,8 +114,8 @@
     amount: 30000
     description : Transaccion de prueba 1
     transaction_date: '2021-04-09T13:20:30-06:00'
-    user: '0390a508dba54344b77f93e1227d42f4'
-    category: '9abd4759ab144e09adc29c5dea1041b1' # Entretenimiento
+    account: '910e8abd-1265-41ba-8125-f6c720bacde9'
+    category: '9abd4759-ab14-4e09-adc2-9c5dea1041b1' # Entretenimiento
 
 - model: 'transaction.Transaction'
   fields:
@@ -122,8 +123,8 @@
     amount: 25000
     description: Transaccion de prueba 1
     transaction_date: '2021-04-09T13:20:30-06:00'
-    user: '479ec168013945d0b7042bc4e5d0c4fb'
-    category: '22118f55e6a946b0ae8fa063dda396e0' # Shopping
+    account: 'e25736e4-b2db-4fa0-8917-86f5ec92463f'
+    category: '22118f55-e6a9-46b0-ae8f-a063dda396e0' # Shopping
 
 - model: 'transaction.Transaction'
   fields:
@@ -131,8 +132,8 @@
     amount: -100
     description : Transaccion de prueba 1
     transaction_date: '2021-04-09T13:20:30-06:00'
-    user: '0390a508dba54344b77f93e1227d42f4'
-    category: '9abd4759ab144e09adc29c5dea1041b1' # Entretenimiento
+    account: '910e8abd-1265-41ba-8125-f6c720bacde9'
+    category: '9abd4759-ab14-4e09-adc2-9c5dea1041b1' # Entretenimiento
 
 - model: 'transaction.Transaction'
   fields:
@@ -140,8 +141,8 @@
     amount: -700
     description: Transaccion de prueba 1
     transaction_date: '2021-04-09T13:20:30-06:00'
-    user: '479ec168013945d0b7042bc4e5d0c4fb'
-    category: '22118f55e6a946b0ae8fa063dda396e0' # Shopping
+    account: 'e25736e4-b2db-4fa0-8917-86f5ec92463f'
+    category: '22118f55-e6a9-46b0-ae8f-a063dda396e0' # Shopping
 
 - model: 'transaction.Transaction'
   fields:
@@ -149,151 +150,27 @@
     amount: -300000
     description : Transaccion de prueba 1
     transaction_date: '2021-05-09T13:20:30-06:00'
-    user: '0390a508dba54344b77f93e1227d42f4'
-    category: '9abd4759ab144e09adc29c5dea1041b1' # Entretenimiento
-
-
-- model: 'transaction.Transaction'
-  fields:
-    id: 'aa4a5ca3-e95b-431b-a50f-a261c3859201'
-    amount: -53000
-    description : Transaccion de prueba 1
-    transaction_date: '2021-05-09T13:20:30-06:00'
-    user: '0390a508dba54344b77f93e1227d42f4'
-    category: 'cde589f3628146719bb2333168d5971d' # Entretenimiento
-
-
-- model: 'transaction.Transaction'
-  fields:
-    id: '4fd8ec16-0caf-401d-a938-d3c5ba737901'
-    amount: -32000
-    description : Transaccion de prueba Restaurantes
-    transaction_date: '2021-05-09T13:20:30-06:00'
-    user: '0390a508dba54344b77f93e1227d42f4'
-    category: 'a249c468bb4d436583f4108d456bb494' # Entretenimiento
-
-
-- model: 'transaction.Transaction'
-  fields:
-    id: 'f4fde5b3-723e-4fb4-a7e9-00592045db09'
-    amount: -31000
-    description : Transaccion de prueba Restaurantes
-    transaction_date: '2021-05-09T13:20:30-06:00'
-    user: '0390a508dba54344b77f93e1227d42f4'
-    category: '22118f55e6a946b0ae8fa063dda396e0' # Entretenimiento
-
-- model: 'transaction.Transaction'
-  fields:
-    id: 'ac68e04e-23a0-4595-a291-aa78bbb350d6'
-    amount: -30000
-    description : Transaccion de prueba Restaurantes
-    transaction_date: '2021-05-09T13:20:30-06:00'
-    user: '0390a508dba54344b77f93e1227d42f4'
-    category: 'ab0e1c524ab146b393847db452b282b2' # Entretenimiento
-
-
-- model: 'transaction.Transaction'
-  fields:
-    id: '31bc7431-6150-4345-b2b7-db4c17405868'
-    amount: -33000
-    description : Transaccion de prueba Restaurantes
-    transaction_date: '2021-05-09T13:20:30-06:00'
-    user: '0390a508dba54344b77f93e1227d42f4'
-    category: 'f0eae54864e645b49bfd4059d2b9d4df' # Entretenimiento
-
-- model: 'transaction.Transaction'
-  fields:
-    id: '6da1c4f6-94df-4be8-85c1-3bc101d2f80c'
-    amount: -20000
-    description : Transaccion de prueba Restaurantes
-    transaction_date: '2021-05-09T13:20:30-06:00'
-    user: '0390a508dba54344b77f93e1227d42f4'
-    category: '84e6fa2f87904d948f656944c7bcba10' # Entretenimiento
-
-- model: 'transaction.Transaction'
-  fields:
-    id: '1524b77b-1733-4ded-ab78-be1caf0f400e'
-    amount: -100000
-    description : Transaccion de prueba Restaurantes
-    transaction_date: '2021-05-09T13:20:30-06:00'
-    user: '0390a508dba54344b77f93e1227d42f4'
-    category: '53566d374b4d45988b6c09f5970c33cd' # Entretenimiento
-
-
-- model: 'transaction.Transaction'
-  fields:
-    id: '2f0304cc-1314-4737-adfc-0cf5de554826'
-    amount: 900000
-    description : Transaccion de prueba 5
-    transaction_date: '2021-05-09T13:20:30-06:00'
-    user: '0390a508dba54344b77f93e1227d42f4'
-    category: '22118f55e6a946b0ae8fa063dda396e0' # Entretenimiento
-
-- model: 'transaction.Transaction'
-  fields:
-    id: 'cca12a4c-a210-4be5-8fe3-f0b8cad3befb'
-    amount: -9000
-    description : Transaccion de prueba 5
-    transaction_date: '2021-05-09T13:20:30-06:00'
-    user: '0390a508dba54344b77f93e1227d42f4'
-    category: '22118f55e6a946b0ae8fa063dda396e0' # Entretenimiento
-
-- model: 'transaction.Transaction'
-  fields:
-    id: 'ba180b2c-866b-4ffc-9397-06b3d12949e7'
-    amount: -1500000
-    description : Transaccion de prueba 5
-    transaction_date: '2021-05-09T13:20:30-06:00'
-    user: '0390a508dba54344b77f93e1227d42f4'
-    category: '22118f55e6a946b0ae8fa063dda396e0' # Entretenimiento
-
-- model: 'transaction.Transaction'
-  fields:
-    id: 'c5657c05-27e4-4155-815c-194613ba4b85'
-    amount: 1500000
-    description : Transaccion de prueba 5
-    transaction_date: '2021-05-09T13:20:30-06:00'
-    user: '0390a508dba54344b77f93e1227d42f4'
-    category: '22118f55e6a946b0ae8fa063dda396e0' # Entretenimiento
-
+    account: '910e8abd-1265-41ba-8125-f6c720bacde9'
+    category: '9abd4759-ab14-4e09-adc2-9c5dea1041b1' # Entretenimiento
 
 - model: 'transaction.Transaction'
   fields:
     id: '12a02e3d-c0c7-4f88-80b8-8730f28e47c0'
     amount: -210000
     description: Transaccion de prueba 1
-    transaction_date: '2021-05-19T13:20:30-06:00'
-    user: '479ec168013945d0b7042bc4e5d0c4fb'
-    category: '22118f55e6a946b0ae8fa063dda396e0' # Shopping
-
-- model: 'transaction.Transaction'
-  fields:
-    id: 'e2c165ce-b54a-44e4-8d59-4b7261262100'
-    amount: 230000
-    description: Transaccion de prueba 10
-    transaction_date: '2021-05-29T13:20:30-06:00'
-    user: '479ec168013945d0b7042bc4e5d0c4fb'
-    category: '22118f55e6a946b0ae8fa063dda396e0' # Shopping
-
-
-- model: 'transaction.Transaction'
-  fields:
-    id: 'e2c165ce-b54a-44e4-8d59-4b7261262100'
-    amount: 230000
-    description: Transaccion de prueba 10
-    transaction_date: '2021-05-29T13:20:30-06:00'
-    user: '479ec168013945d0b7042bc4e5d0c4fb'
-    category: '22118f55e6a946b0ae8fa063dda396e0' # Shopping
-
+    transaction_date: '2021-05-09T13:20:30-06:00'
+    account: 'e25736e4-b2db-4fa0-8917-86f5ec92463f'
+    category: '22118f55-e6a9-46b0-ae8f-a063dda396e0' # Shopping
 
 - model: 'transaction.Transaction'
   fields:
     id: '6ab88081-f945-440f-8060-ee8132654a0b'
     amount: -15000
-    description : Transaccion de prueba 15
-    transaction_date: '2021-05-19T13:20:30-06:00'
-    user: '0390a508dba54344b77f93e1227d42f4'
-    category: '9abd4759ab144e09adc29c5dea1041b1' # Entretenimiento
+    description : Transaccion de prueba 1
+    transaction_date: '2021-05-09T13:20:30-06:00'
+    account: '910e8abd-1265-41ba-8125-f6c720bacde9'
+    category: '9abd4759-ab14-4e09-adc2-9c5dea1041b1' # Entretenimiento
+
 
 - model: 'transaction.Transaction'
   fields:
@@ -301,8 +178,8 @@
     amount: -17000
     description: Transaccion de prueba 1
     transaction_date: '2021-05-09T13:20:30-06:00'
-    user: '479ec168013945d0b7042bc4e5d0c4fb'
-    category: '22118f55e6a946b0ae8fa063dda396e0' # Shopping
+    account: 'e25736e4-b2db-4fa0-8917-86f5ec92463f'
+    category: '22118f55-e6a9-46b0-ae8f-a063dda396e0' # Shopping
 
 - model: 'transaction.Transaction'
   fields:
@@ -310,8 +187,8 @@
     amount: 400
     description : Transaccion de prueba 1
     transaction_date: '2021-06-09T13:20:30-06:00'
-    user: '0390a508dba54344b77f93e1227d42f4'
-    category: '9abd4759ab144e09adc29c5dea1041b1' # Entretenimiento
+    account: '910e8abd-1265-41ba-8125-f6c720bacde9'
+    category: '9abd4759-ab14-4e09-adc2-9c5dea1041b1' # Entretenimiento
 
 - model: 'transaction.Transaction'
   fields:
@@ -319,8 +196,8 @@
     amount: 1100
     description: Transaccion de prueba 1
     transaction_date: '2021-06-09T13:20:30-06:00'
-    user: '479ec168013945d0b7042bc4e5d0c4fb'
-    category: '22118f55e6a946b0ae8fa063dda396e0' # Shopping
+    account: 'e25736e4-b2db-4fa0-8917-86f5ec92463f'
+    category: '22118f55-e6a9-46b0-ae8f-a063dda396e0' # Shopping
 
 - model: 'transaction.Transaction'
   fields:
@@ -328,8 +205,8 @@
     amount: -1700
     description : Transaccion de prueba 1
     transaction_date: '2021-06-09T13:20:30-06:00'
-    user: '0390a508dba54344b77f93e1227d42f4'
-    category: '9abd4759ab144e09adc29c5dea1041b1' # Entretenimiento
+    account: '910e8abd-1265-41ba-8125-f6c720bacde9'
+    category: '9abd4759-ab14-4e09-adc2-9c5dea1041b1' # Entretenimiento
 
 - model: 'transaction.Transaction'
   fields:
@@ -337,16 +214,17 @@
     amount: -170000
     description: Transaccion de prueba 1
     transaction_date: '2021-06-09T13:20:30-06:00'
-    user: '479ec168013945d0b7042bc4e5d0c4fb'
-    category: '22118f55e6a946b0ae8fa063dda396e0' # Shopping
+    account: 'e25736e4-b2db-4fa0-8917-86f5ec92463f'
+    category: '22118f55-e6a9-46b0-ae8f-a063dda396e0' # Shopping
+
 - model: 'transaction.Transaction'
   fields:
     id: '8017369b-ea2d-4bc4-b2bd-06d6c57821eb'
     amount: 300000
     description : Transaccion de prueba 1
     transaction_date: '2021-07-09T13:20:30-06:00'
-    user: '0390a508dba54344b77f93e1227d42f4'
-    category: '9abd4759ab144e09adc29c5dea1041b1' # Entretenimiento
+    account: '910e8abd-1265-41ba-8125-f6c720bacde9'
+    category: '9abd4759-ab14-4e09-adc2-9c5dea1041b1' # Entretenimiento
 
 - model: 'transaction.Transaction'
   fields:
@@ -354,8 +232,8 @@
     amount: 21007
     description: Transaccion de prueba 1
     transaction_date: '2021-07-09T13:20:30-06:00'
-    user: '479ec168013945d0b7042bc4e5d0c4fb'
-    category: '22118f55e6a946b0ae8fa063dda396e0' # Shopping
+    account: 'e25736e4-b2db-4fa0-8917-86f5ec92463f'
+    category: '22118f55-e6a9-46b0-ae8f-a063dda396e0' # Shopping
 
 - model: 'transaction.Transaction'
   fields:
@@ -363,8 +241,8 @@
     amount: -11004
     description : Transaccion de prueba 1
     transaction_date: '2021-07-09T13:20:30-06:00'
-    user: '0390a508dba54344b77f93e1227d42f4'
-    category: '9abd4759ab144e09adc29c5dea1041b1' # Entretenimiento
+    account: '910e8abd-1265-41ba-8125-f6c720bacde9'
+    category: '9abd4759-ab14-4e09-adc2-9c5dea1041b1' # Entretenimiento
 
 - model: 'transaction.Transaction'
   fields:
@@ -372,8 +250,8 @@
     amount: -17002
     description: Transaccion de prueba 1
     transaction_date: '2021-07-09T13:20:30-06:00'
-    user: '479ec168013945d0b7042bc4e5d0c4fb'
-    category: '22118f55e6a946b0ae8fa063dda396e0' # Shopping
+    account: 'e25736e4-b2db-4fa0-8917-86f5ec92463f'
+    category: '22118f55-e6a9-46b0-ae8f-a063dda396e0' # Shopping
 
 - model: 'transaction.Transaction'
   fields:
@@ -381,8 +259,8 @@
     amount: 30001
     description : Transaccion de prueba 1
     transaction_date: '2021-08-09T13:20:30-06:00'
-    user: '0390a508dba54344b77f93e1227d42f4'
-    category: '9abd4759ab144e09adc29c5dea1041b1' # Entretenimiento
+    account: '910e8abd-1265-41ba-8125-f6c720bacde9'
+    category: '9abd4759-ab14-4e09-adc2-9c5dea1041b1' # Entretenimiento
 
 - model: 'transaction.Transaction'
   fields:
@@ -390,8 +268,8 @@
     amount: 1005
     description: Transaccion de prueba 1
     transaction_date: '2021-08-09T13:20:30-06:00'
-    user: '479ec168013945d0b7042bc4e5d0c4fb'
-    category: '22118f55e6a946b0ae8fa063dda396e0' # Shopping
+    account: 'e25736e4-b2db-4fa0-8917-86f5ec92463f'
+    category: '22118f55-e6a9-46b0-ae8f-a063dda396e0' # Shopping
 
 - model: 'transaction.Transaction'
   fields:
@@ -399,8 +277,8 @@
     amount: -18900
     description : Transaccion de prueba 1
     transaction_date: '2021-08-09T13:20:30-06:00'
-    user: '0390a508dba54344b77f93e1227d42f4'
-    category: '9abd4759ab144e09adc29c5dea1041b1' # Entretenimiento
+    account: '910e8abd-1265-41ba-8125-f6c720bacde9'
+    category: '9abd4759-ab14-4e09-adc2-9c5dea1041b1' # Entretenimiento
 
 - model: 'transaction.Transaction'
   fields:
@@ -408,8 +286,8 @@
     amount: -700
     description: Transaccion de prueba 1
     transaction_date: '2021-08-09T13:20:30-06:00'
-    user: '479ec168013945d0b7042bc4e5d0c4fb'
-    category: '22118f55e6a946b0ae8fa063dda396e0' # Shopping
+    account: 'e25736e4-b2db-4fa0-8917-86f5ec92463f'
+    category: '22118f55-e6a9-46b0-ae8f-a063dda396e0' # Shopping
 #
 - model: 'transaction.Transaction'
   fields:
@@ -417,8 +295,8 @@
     amount: 1000
     description : Transaccion de prueba 1
     transaction_date: '2021-09-09T13:20:30-06:00'
-    user: '0390a508dba54344b77f93e1227d42f4'
-    category: '9abd4759ab144e09adc29c5dea1041b1' # Entretenimiento
+    account: '910e8abd-1265-41ba-8125-f6c720bacde9'
+    category: '9abd4759-ab14-4e09-adc2-9c5dea1041b1' # Entretenimiento
 
 - model: 'transaction.Transaction'
   fields:
@@ -426,8 +304,8 @@
     amount: 1500
     description: Transaccion de prueba 1
     transaction_date: '2021-09-09T13:20:30-06:00'
-    user: '479ec168013945d0b7042bc4e5d0c4fb'
-    category: '22118f55e6a946b0ae8fa063dda396e0' # Shopping
+    account: 'e25736e4-b2db-4fa0-8917-86f5ec92463f'
+    category: '22118f55-e6a9-46b0-ae8f-a063dda396e0' # Shopping
 
 - model: 'transaction.Transaction'
   fields:
@@ -435,8 +313,8 @@
     amount: -1080
     description : Transaccion de prueba 1
     transaction_date: '2021-09-09T13:20:30-06:00'
-    user: '479ec168013945d0b7042bc4e5d0c4fb'
-    category: '9abd4759ab144e09adc29c5dea1041b1' # Entretenimiento
+    account: 'e25736e4-b2db-4fa0-8917-86f5ec92463f'
+    category: '9abd4759-ab14-4e09-adc2-9c5dea1041b1' # Entretenimiento
 
 - model: 'transaction.Transaction'
   fields:
@@ -444,8 +322,8 @@
     amount: -10800
     description : Transaccion de prueba 1
     transaction_date: '2021-09-09T13:20:30-06:00'
-    user: '479ec168013945d0b7042bc4e5d0c4fb'
-    category: '9abd4759ab144e09adc29c5dea1041b1' # Entretenimiento
+    account: 'e25736e4-b2db-4fa0-8917-86f5ec92463f'
+    category: '9abd4759-ab14-4e09-adc2-9c5dea1041b1' # Entretenimiento
 
 - model: 'transaction.Transaction'
   fields:
@@ -453,8 +331,8 @@
     amount: -18000
     description : Transaccion de prueba 1
     transaction_date: '2021-09-09T13:20:30-06:00'
-    user: '479ec168013945d0b7042bc4e5d0c4fb'
-    category: '9abd4759ab144e09adc29c5dea1041b1' # Entretenimiento
+    account: 'e25736e4-b2db-4fa0-8917-86f5ec92463f'
+    category: '9abd4759-ab14-4e09-adc2-9c5dea1041b1' # Entretenimiento
 
 - model: 'transaction.Transaction'
   fields:
@@ -462,8 +340,8 @@
     amount: -18000
     description : Transaccion de prueba 1
     transaction_date: '2020-09-09T13:20:30-06:00'
-    user: '479ec168013945d0b7042bc4e5d0c4fb'
-    category: '9abd4759ab144e09adc29c5dea1041b1' # Entretenimiento
+    account: 'e25736e4-b2db-4fa0-8917-86f5ec92463f'
+    category: '9abd4759-ab14-4e09-adc2-9c5dea1041b1' # Entretenimiento
 
 - model: 'transaction.Transaction'
   fields:
@@ -471,8 +349,8 @@
     amount: -1
     description : Transaccion de prueba 1
     transaction_date: '2018-02-09T13:20:30-06:00'
-    user: '479ec168013945d0b7042bc4e5d0c4fb'
-    category: '9abd4759ab144e09adc29c5dea1041b1' # Entretenimiento
+    account: 'e25736e4-b2db-4fa0-8917-86f5ec92463f'
+    category: '9abd4759-ab14-4e09-adc2-9c5dea1041b1' # Entretenimiento
 
 - model: 'transaction.Transaction'
   fields:
@@ -480,8 +358,8 @@
     amount: -1500
     description: Transaccion de prueba 1
     transaction_date: '2021-09-09T13:20:30-06:00'
-    user: '479ec168013945d0b7042bc4e5d0c4fb'
-    category: '22118f55e6a946b0ae8fa063dda396e0' # Shopping
+    account: 'e25736e4-b2db-4fa0-8917-86f5ec92463f'
+    category: '22118f55-e6a9-46b0-ae8f-a063dda396e0' # Shopping
 
 - model: 'transaction.Transaction'
   fields:
@@ -489,8 +367,8 @@
     amount: -2500
     description: Transaccion de prueba 1
     transaction_date: '2021-09-09T13:20:30-06:00'
-    user: '479ec168013945d0b7042bc4e5d0c4fb'
-    category: '22118f55e6a946b0ae8fa063dda396e0' # Shopping
+    account: 'e25736e4-b2db-4fa0-8917-86f5ec92463f'
+    category: '22118f55-e6a9-46b0-ae8f-a063dda396e0' # Shopping
 
 - model: 'transaction.Transaction'
   fields:
@@ -498,8 +376,8 @@
     amount: -25000
     description: Transaccion de prueba 1
     transaction_date: '2021-09-09T13:20:30-06:00'
-    user: '479ec168013945d0b7042bc4e5d0c4fb'
-    category: '22118f55e6a946b0ae8fa063dda396e0' # Shopping
+    account: 'e25736e4-b2db-4fa0-8917-86f5ec92463f'
+    category: '22118f55-e6a9-46b0-ae8f-a063dda396e0' # Shopping
 
 - model: 'transaction.Transaction'
   fields:
@@ -507,8 +385,8 @@
     amount: 1000
     description : Transaccion de prueba 1
     transaction_date: '2021-09-09T13:20:30-06:00'
-    user: '479ec168013945d0b7042bc4e5d0c4fb'
-    category: '9abd4759ab144e09adc29c5dea1041b1' # Entretenimiento
+    account: 'e25736e4-b2db-4fa0-8917-86f5ec92463f'
+    category: '9abd4759-ab14-4e09-adc2-9c5dea1041b1' # Entretenimiento
 
 - model: 'transaction.Transaction'
   fields:
@@ -516,8 +394,8 @@
     amount: 3000
     description : Transaccion de prueba 1
     transaction_date: '2021-10-09T13:20:30-06:00'
-    user: '0390a508dba54344b77f93e1227d42f4'
-    category: '9abd4759ab144e09adc29c5dea1041b1' # Entretenimiento
+    account: '910e8abd-1265-41ba-8125-f6c720bacde9'
+    category: '9abd4759-ab14-4e09-adc2-9c5dea1041b1' # Entretenimiento
 
 - model: 'transaction.Transaction'
   fields:
@@ -525,5 +403,95 @@
     amount: 7100
     description: Transaccion de prueba 1
     transaction_date: '2021-10-09T13:20:30-06:00'
-    user: '479ec168013945d0b7042bc4e5d0c4fb'
-    category: '22118f55e6a946b0ae8fa063dda396e0' # Shopping
+    account: 'e25736e4-b2db-4fa0-8917-86f5ec92463f'
+    category: '22118f55-e6a9-46b0-ae8f-a063dda396e0' # Shopping
+
+- model: 'transaction.Transaction'
+  fields:
+    id: 'c7e77eb2-4bef-5dde-b51c-721fe0257003'
+    amount: -6100
+    description : Transaccion de prueba 1
+    transaction_date: '2021-10-09T13:20:30-06:00'
+    account: '910e8abd-1265-41ba-8125-f6c720bacde9'
+    category: '9abd4759-ab14-4e09-adc2-9c5dea1041b1' # Entretenimiento
+
+- model: 'transaction.Transaction'
+  fields:
+    id: '72ad49c2-e3cd-4a11-86e3-767f34728a04'
+    amount: -200
+    description: Transaccion de prueba 1
+    transaction_date: '2021-10-09T13:20:30-06:00'
+    account: 'e25736e4-b2db-4fa0-8917-86f5ec92463f'
+    category: '22118f55-e6a9-46b0-ae8f-a063dda396e0' # Shopping
+
+- model: 'transaction.Transaction'
+  fields:
+    id: '7016369b-ea2d-4bc4-b2bd-16d8c57821eb'
+    amount: 300
+    description : Transaccion de prueba 1
+    transaction_date: '2021-11-09T13:20:30-06:00'
+    account: '910e8abd-1265-41ba-8125-f6c720bacde9'
+    category: '9abd4759-ab14-4e09-adc2-9c5dea1041b1' # Entretenimiento
+
+- model: 'transaction.Transaction'
+  fields:
+    id: '12a02e3d-c0c9-4f25-80b8-8730f28e47c0'
+    amount: 2105
+    description: Transaccion de prueba 1
+    transaction_date: '2021-11-09T13:20:30-06:00'
+    account: 'e25736e4-b2db-4fa0-8917-86f5ec92463f'
+    category: '22118f55-e6a9-46b0-ae8f-a063dda396e0' # Shopping
+
+- model: 'transaction.Transaction'
+  fields:
+    id: 'c7e77eb2-6bef-4dde-b57c-822fe0257003'
+    amount: -1100
+    description : Transaccion de prueba 1
+    transaction_date: '2021-11-09T13:20:30-06:00'
+    account: '910e8abd-1265-41ba-8125-f6c720bacde9'
+    category: '9abd4759-ab14-4e09-adc2-9c5dea1041b1' # Entretenimiento
+
+- model: 'transaction.Transaction'
+  fields:
+    id: '73ad59c2-e3cd-4a11-86e3-767f34728a04'
+    amount: -800
+    description: Transaccion de prueba 1
+    transaction_date: '2021-11-09T13:20:30-06:00'
+    account: 'e25736e4-b2db-4fa0-8917-86f5ec92463f'
+    category: '22118f55-e6a9-46b0-ae8f-a063dda396e0' # Shopping
+
+- model: 'transaction.Transaction'
+  fields:
+    id: '7016369b-ea2d-6bc4-b3bd-06d6c57821eb'
+    amount: 30000
+    description : Transaccion de prueba 1
+    transaction_date: '2021-12-09T13:20:30-06:00'
+    account: '910e8abd-1265-41ba-8125-f6c720bacde9'
+    category: '9abd4759-ab14-4e09-adc2-9c5dea1041b1' # Entretenimiento
+
+- model: 'transaction.Transaction'
+  fields:
+    id: '12a02e3d-c0c9-4f88-80b8-9770f28e47c0'
+    amount: 2100
+    description: Transaccion de prueba 1
+    transaction_date: '2021-12-09T13:20:30-06:00'
+    account: 'e25736e4-b2db-4fa0-8917-86f5ec92463f'
+    category: '22118f55-e6a9-46b0-ae8f-a063dda396e0' # Shopping
+
+- model: 'transaction.Transaction'
+  fields:
+    id: 'c7e78eb2-4bef-4dde-b61c-822fe0257003'
+    amount: -11000
+    description : Transaccion de prueba 1
+    transaction_date: '2021-12-09T13:20:30-06:00'
+    account: '910e8abd-1265-41ba-8125-f6c720bacde9'
+    category: '9abd4759-ab14-4e09-adc2-9c5dea1041b1' # Entretenimiento
+
+- model: 'transaction.Transaction'
+  fields:
+    id: '72ad58c2-e3cd-4a11-86e3-767f34728a04'
+    amount: -1800
+    description: Transaccion de prueba 1
+    transaction_date: '2021-12-09T13:20:30-06:00'
+    account: 'e25736e4-b2db-4fa0-8917-86f5ec92463f'
+    category: '22118f55-e6a9-46b0-ae8f-a063dda396e0' # Shopping

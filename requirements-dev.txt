@@ -1,0 +1,2 @@
+-r common.txt
+django-extensions # para ver los patrones url django

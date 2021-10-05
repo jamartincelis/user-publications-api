@@ -1,32 +1,23 @@
 - model: 'budget.Budget'
   fields:
-    id: '61b7e6ef13a04df589c3d6fd82d363b9'
-    budget_date: '2021-09-09T13:20:30-06:00'
-    amount: 200000
-    user: '0390a508dba54344b77f93e1227d42f4'
-    category: '9abd4759ab144e09adc29c5dea1041b1' # Entretenimiento
-
-- model: 'budget.Budget'
-  fields:
-    id: 'd463f0da05184238a2a879480efe3c0d'
-    budget_date: '2021-09-09T13:20:30-06:00'
-    amount: 300000
-    user: '0390a508dba54344b77f93e1227d42f4'
-    category: 'f0eae54864e645b49bfd4059d2b9d4df'
+    id: '45a80dbbea714ce390b36761bcbf365c'
+    user: '479ec168013945d0b7042bc4e5d0c4fb'
+    category: '22118f55e6a946b0ae8fa063dda396e0' # Shopping
+    amount: 5000
+    expenses_sum: 1000.00
+    expenses_count: 2
+    average: 500
+    spent: 20.0
+    budget_date: '2021-09-09'
 
 - model: 'budget.Budget'
   fields:
     id: '64aad0df2597443a90527be5a283ab7d'
-    budget_date: '2021-09-09T13:20:30-06:00'
-    amount: 500000
     user: '0390a508dba54344b77f93e1227d42f4'
-    category: 'ab0e1c524ab146b393847db452b282b2'
-
-
-- model: 'budget.Budget'
-  fields:
-    id: '45a80dbbea714ce390b36761bcbf365c'
-    budget_date: '2021-09-09T13:20:30-06:00'
-    amount: 240000
-    user: '479ec168013945d0b7042bc4e5d0c4fb'
-    category: '22118f55e6a946b0ae8fa063dda396e0' # Shopping
+    category: '9abd4759ab144e09adc29c5dea1041b1' # Entretenimiento
+    amount: 2400
+    expenses_sum: 1444.22
+    expenses_count: 7
+    average: 206.31
+    spent: 60.1
+    budget_date: '2021-09-09'

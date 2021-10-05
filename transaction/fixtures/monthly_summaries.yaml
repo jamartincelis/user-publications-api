@@ -1,0 +1,10 @@
+- model: 'transaction.MonthlySummary'
+  fields:
+    id: '6a6463fb-fad2-49d0-bb3b-b45a6f61f4cc'
+    user: '0390a508-dba5-4344-b77f-93e1227d42f4'
+    incomes_sum: 10845
+    incomes_count: 6
+    expenses_sum: -7512
+    expenses_count: 2
+    balance: 3333
+    summary_date: '2021-01-01'

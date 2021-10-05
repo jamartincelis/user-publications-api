@@ -2,20 +2,27 @@ from rest_framework.test import APITestCase
 from django.test import TestCase, Client
 from transaction.models import Transaction
 from json import dumps
+from django.test import TestCase, Client
 from rest_framework import status
 from django.urls import reverse
 from .transactions_operations import TransactionsOperations
 import pysnooper
 
 
-class BudgetTestCase(TestCase):
+from transaction.models import Transaction
+
+
+class TransactionsTestCase(TestCase):
 
     client = Client()
     fixtures = [
-        'user/fixtures/users.yaml',
         'catalog/fixtures/codetype.yaml',
+        'catalog/fixtures/accounts_types.yaml',
         'catalog/fixtures/transactions_categories.yaml',
-        'transaction/fixtures/transactions.yaml'
+        'user/fixtures/users.yaml',
+        'account/fixtures/accounts.yaml',
+        'transaction/fixtures/transactions.yaml',
+        'transaction/fixtures/monthly_summaries.yaml'
     ]
     DATE_MONTH = "?date_month={}"
     YEAR = "?year={}"
@@ -25,6 +32,8 @@ class BudgetTestCase(TestCase):
     URL_EXPENSES = URL_BASE + 'expenses/summary/' + DATE_MONTH
     URL_BALANCE = URL_BASE + 'balance/' + YEAR
     URL_DATE_MONTH = URL_BASE + DATE_MONTH
+    USER = '0390a508-dba5-4344-b77f-93e1227d42f4'
+    CATEGORY = '22118f55-e6a9-46b0-ae8f-a063dda396e0'
 
     def test_budgets_without_date_month_param(self):
         user_id = '0390a508-dba5-4344-b77f-93e1227d42f4'
@@ -36,10 +45,12 @@ class BudgetTestCase(TestCase):
         )
 
     def invalid_date_month_param_base(self,date_month):
-        user_id = '0390a508-dba5-4344-b77f-93e1227d42f4'
-        response = self.client.get((self.URL_DATE_MONTH).format(user_id,date_month))
+        """
+        Funcion base para las pruebas 
+        """
+        response = self.client.get((self.URL_DATE_MONTH).format(self.USER,date_month))
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
-        self.assertJSONEqual(
+        return self.assertJSONEqual(
             str(response.content, encoding='utf8'),
             {'400': 'Invalid date format.'}
         )
@@ -52,71 +63,61 @@ class BudgetTestCase(TestCase):
         date_month = "12-2021"
         self.invalid_date_month_param_base(date_month)
 
-    def test_transactions_list_by_date(self):
-        user_id = '0390a508-dba5-4344-b77f-93e1227d42f4'
-        transactions = Transaction.objects.filter(user=user_id,
+    def test_get_transaction_detail(self):
+        response = self.client.get(self.URL_DETAIL.format(self.USER, '203a1ace-8a57-4d49-ae8d-699221e9f3cb'))
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_get_transactions_list_by_date(self):
+        transactions = Transaction.objects.filter(account__user=self.USER,
             transaction_date__range=['2021-09-01', '2021-09-30']
         )
-        date_month = "2021-09"
-        response = self.client.get(self.URL_DATE_MONTH.format(user_id,date_month))
+        response = self.client.get(self.URL_DATE_MONTH.format(self.USER, '2021-09'))
         data = response.json()
         self.assertEqual(transactions.count(), len(data))
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-
-    def test_transaction_detail(self):
-        user_id = '479ec168013945d0b7042bc4e5d0c4fb'
-        transaction_id = '68e18783-8b51-4618-af83-50c77f25871d'
-        transaction = Transaction.objects.get(user=user_id,id=transaction_id)
-        response = self.client.get(self.URL_DETAIL.format(user_id,transaction_id))
-        data = response.json()
-        self.assertEqual(data['id'], str(transaction.id))
-        self.assertEqual(data['user'], str(transaction.user.id))
-        self.assertEqual(data['category'], str(transaction.category.id))
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
-
-    def test_transactions_list_by_date_and_category(self):
-        user_id = '0390a508-dba5-4344-b77f-93e1227d42f4'
-        category_id = '22118f55-e6a9-46b0-ae8f-a063dda396e0' #Shopping
-        date_month = "2021-09"
-        transactions = Transaction.objects.filter(user=user_id,
+ 
+    def test_get_transactions_list_by_date_and_category(self):
+        transactions = Transaction.objects.filter(account__user=self.USER,
             transaction_date__range=['2021-09-01', '2021-09-30'],
-            category = category_id
+            category = self.CATEGORY
         )
-        response = self.client.get(self.URL_CATEGORY.format(user_id, category_id, date_month))
+        response = self.client.get(self.URL_CATEGORY.format(self.USER, self.CATEGORY, '2021-09'))
         data = response.json()
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(transactions.count(), len(data))
 
     def test_add_note_to_transaction(self):
-        user_id = '0390a508-dba5-4344-b77f-93e1227d42f4'
-        transactions_id = '68e18783-8b51-4618-af83-50c77f25871d'
-        user_note = "Transaccion de prueba 3"
-        payload = {"user_note" : user_note}
+        transaction = '68e18783-8b51-4618-af83-50c77f25871d'
+        user_note = 'Esta es una nota'
+        payload = {
+            'user_note' : user_note
+        }
         response = self.client.patch(
-            self.URL_DETAIL.format(user_id, transactions_id),
+            self.URL_DETAIL.format(self.USER, transaction),
             data=dumps(payload),
             content_type='application/json'
         )
-        response.json()
+        # print(dumps(response.json(), indent=4, ensure_ascii=False))
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.json()['user_note'], user_note)
 
     def test_add_category_to_transaction(self):
         user_id = '0390a508-dba5-4344-b77f-93e1227d42f4'
         transactions_id = '68e18783-8b51-4618-af83-50c77f25871d'
-        category_id = "22118f55-e6a9-46b0-ae8f-a063dda396e0"
-        payload = {"category" : category_id}
+        category_id = '22118f55-e6a9-46b0-ae8f-a063dda396e0'
+        payload = {'category' : category_id}
         response = self.client.patch(
             self.URL_DETAIL.format(user_id, transactions_id),
             data=dumps(payload),
-            content_type='application/json'
+            content_type='application/json'            
         )
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(response.json()['category'], category_id)
+        self.assertEqual(response.json()['category']['id'], category_id)
 
     def test_spenses(self):
-        user_id = '0390a508-dba5-4344-b77f-93e1227d42f4'
-        date_month = "2021-09"
+        user_id = '479ec168013945d0b7042bc4e5d0c4fb'
+        date_month = "2021-01"
+        print(self.URL_EXPENSES.format(user_id,date_month))
         response = self.client.get(self.URL_EXPENSES.format(user_id,date_month))
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
@@ -127,9 +128,6 @@ class BudgetTestCase(TestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
 
-
-
-
 class TransactionsOpertations(TestCase):
 
     transactions = TransactionsOperations()
@@ -137,6 +135,7 @@ class TransactionsOpertations(TestCase):
         'user/fixtures/users.yaml',
         'catalog/fixtures/codetype.yaml',
         'catalog/fixtures/transactions_categories.yaml',
+        'account/fixtures/accounts.yaml',
         'transaction/fixtures/transactions.yaml',
         'budget/fixtures/budgets.yaml'
     ]
@@ -154,6 +153,7 @@ class ApiTransactionsTest(APITestCase):
         'user/fixtures/users.yaml',
         'catalog/fixtures/codetype.yaml',
         'catalog/fixtures/transactions_categories.yaml',
+        'account/fixtures/accounts.yaml',
         'transaction/fixtures/transactions.yaml',
         'budget/fixtures/budgets.yaml'
     ]
@@ -161,10 +161,7 @@ class ApiTransactionsTest(APITestCase):
     def test_add_(self):
         # url = reverse('expensessummary')
         url = '/user/{}/transactions/expenses/summary/'.format(
-            '0390a508dba54344b77f93e1227d42f4')
-        body = {
-        }
-
+            '479ec168013945d0b7042bc4e5d0c4fb')
         response_client = self.client.get(
-            url, {'date_month': '2021-05-01'})
+            url, {'date_month': '2021-01'})
         self.assertEqual(response_client.status_code, 200)

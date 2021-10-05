@@ -30,7 +30,7 @@ class TransactionList(ListAPIView):
     filterset_fields = ['date_month']
 
     def get(self, request, user):
-        transactions = self.get_queryset().filter(user=user)
+        transactions = self.get_queryset().prefetch_related('category').filter(account__user=user)
         date = self.request.query_params.get('date_month')
         if not date:
             return Response({'400': "date_month it's required."}, status=status.HTTP_400_BAD_REQUEST)
@@ -47,7 +47,7 @@ class TransactionDetail(RetrieveUpdateAPIView):
     Permite retornar, actualizar o borrar una Transaccion.
     """
     queryset = Transaction.objects.all()
-    serializer_class = TransactionDetailSerializer
+    serializer_class = TransactionSerializer
 
 
 class Category(ListAPIView):
@@ -59,16 +59,16 @@ class Category(ListAPIView):
     filterset_fields = ['date_month']
 
     def get(self, request, user, category):
-        transactions = self.get_queryset().filter(user=user,category=category)
-        date = self.request.query_params.get('date_month')
-        if not date:
-            return Response({'400': "date_month it's required."}, status=status.HTTP_400_BAD_REQUEST)
-        date = validate_date(date)
+        transactions = self.get_queryset().filter(account__user=user, category=category)
+        date = validate_date(self.request.query_params.get('date_month'))
         if date is False:
             return Response({'400': 'Invalid date format.'}, status=status.HTTP_400_BAD_REQUEST)
         transactions = transactions.filter(transaction_date__range=[date.start_of('month'), date.end_of('month')])
         data = TransactionSerializer(transactions, many=True)
         return Response(data=data.data, status=status.HTTP_200_OK)
+
+
+# HACIA ABAJO
 
 
 class CategorySummary(ListAPIView):
@@ -131,7 +131,7 @@ class MonthlyBalanceView(APIView):
         }
 
     def get(self, request, user):
-        year = Transaction.objects.filter(user=user).order_by('transaction_date').first().transaction_date.year
+        year = Transaction.objects.filter(account__user=user).order_by('transaction_date').first().transaction_date.year
         start_date = pendulum.datetime(year, 1, 1)
         end_date = pendulum.now().end_of('year')
         dates = []
@@ -142,7 +142,7 @@ class MonthlyBalanceView(APIView):
         for date in dates:
             data = Transaction.objects.filter(
                 transaction_date__range=[date.start_of('month'), date.end_of('month')],
-                user_id=user,
+                account__user=user,
                 ).aggregate(
                 incomes=Sum(Case(
                     When(amount__gt=0, then=F('amount')),

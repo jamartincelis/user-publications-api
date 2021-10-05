@@ -1,7 +1,6 @@
 from os import environ
 
 import pendulum
-import pendulum.parsing.exceptions
 
 
 months_dict = {
@@ -22,6 +21,6 @@ months_dict = {
 
 def validate_date(value):
     try:
-        return pendulum.parse(value+'-01', tz=environ.get('TIME_ZONE'))
-    except pendulum.parsing.exceptions.ParserError:
+        return pendulum.from_format(value+'-01', 'YYYY-MM-DD')
+    except ValueError:
         return False

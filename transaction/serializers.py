@@ -30,12 +30,13 @@ class TransactionSummarySerializer(serializers.Serializer):
     """
     Permite acceder al monto total de transacciones por categoria.
     """
-    category = serializers.SerializerMethodField()
+    category = CodeSerializer()
     total_spend = serializers.IntegerField()
     num_transaction = serializers.IntegerField()
 
-    def get_category(self, obj):
-        return  Code.objects.get(id=obj['category']).description
+    # def get_category(self, obj):
+    #     return  Code.objects.get(id=obj['category']).description
+
 
 
 class MonthlyBalanceSerializer(serializers.Serializer):

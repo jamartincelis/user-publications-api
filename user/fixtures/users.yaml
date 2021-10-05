@@ -1,11 +1,11 @@
 - model: 'user.User'
   fields:
-    id: '0390a508dba54344b77f93e1227d42f4'
-    optional_id: '0390a508dba54344b77f93e1227d42f4'
+    id: '0390a508-dba5-4344-b77f-93e1227d42f4'
+    optional_id: '0390a508-dba5-4344-b77f-93e1227d42f4'
     email: 'user@user.com'
 
 - model: 'user.User'
   fields:
-    id: '479ec168013945d0b7042bc4e5d0c4fb'
-    optional_id: '479ec168013945d0b7042bc4e5d0c4fb'
+    id: '479ec168-0139-45d0-b704-2bc4e5d0c4fb'
+    optional_id: '479ec168-0139-45d0-b704-2bc4e5d0c4fb'
     email: 'correo@correo.com'

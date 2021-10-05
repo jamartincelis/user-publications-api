@@ -37,7 +37,7 @@ class TransactionsOperations():
         '''
         # Get data to process
         transactions_query_dict = Transaction.objects.filter(
-            user=user,
+            account__user=user,
             transaction_date__range=(start_date, end_date)).values()
         categories_dict = Code.objects.filter(
             code_type="1ec6a6b5-65d5-4a8c-85d0-4364c141aefd").values()
