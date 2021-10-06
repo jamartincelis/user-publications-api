@@ -7,7 +7,7 @@ class CodeSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Code
-        fields = ['id', 'name', 'metadata']
+        fields = ['id', 'name', 'metadata', 'description']
 
 
 class CodeTypeSerializer(serializers.ModelSerializer):
@@ -23,4 +23,4 @@ class CatalogSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = CodeType
-        fields = fields = ['id', 'name', 'codes', 'description']
+        fields = fields = ['id', 'name', 'codes']
