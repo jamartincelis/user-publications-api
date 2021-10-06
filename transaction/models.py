@@ -16,7 +16,7 @@ class Transaction(models.Model):
     amount = models.DecimalField(decimal_places=2, max_digits=12)
     description = models.CharField(max_length=100)
     transaction_date = models.DateTimeField()
-    user_note = models.CharField(max_length=100, null=True, default=None)
+    user_note = models.CharField(max_length=100, null=True, default=None, blank=True)
     
     class Meta:
         managed = True

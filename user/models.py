@@ -4,8 +4,8 @@ from django.db import models
 
 class User(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4)
-    optional_id = models.CharField(max_length=60)
-    email = models.EmailField(null=True, default=None)
+    optional_id = models.CharField(max_length=60, blank=True)
+    email = models.EmailField(null=True, default=None, blank=True)
 
     class Meta:
         managed = True
