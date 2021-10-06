@@ -72,9 +72,6 @@ class Category(ListAPIView):
         return Response(data=data.data, status=status.HTTP_200_OK)
 
 
-# HACIA ABAJO
-
-
 class CategorySummary(ListAPIView):
     """
     Devuelve el resumen de transacciones por categorías del mes solicitado
@@ -106,6 +103,8 @@ class ExpenseSummaryView(APIView):
     }
 
     def group_transactions(self, transactions):
+        # Se genera un diccionario con la suma del monto y la suma del número de transacciones y se agrupan
+        # por categoría
         for transaction in transactions:
             amount = float(transaction['amount'])
             category = transaction['category']
