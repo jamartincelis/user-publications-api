@@ -45,6 +45,9 @@ class TransactionDetail(RetrieveUpdateAPIView):
     queryset = Transaction.objects.all()
     serializer_class = TransactionSerializer
 
+    def patch(self, request, *args, **kwargs):
+        return self.partial_update(request, *args, **kwargs)
+
 
 class Category(ListAPIView):
     """
