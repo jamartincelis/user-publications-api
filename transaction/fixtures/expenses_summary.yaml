@@ -1,0 +1,50 @@
+- model: 'budget.Budget'
+  fields:
+    id: '45a80dbb-ea71-4ce3-90b3-6761bcbf365c'
+    user: '0390a508-dba5-4344-b77f-93e1227d42f4'
+    category: '22118f55-e6a9-46b0-ae8f-a063dda396e0' # Shopping
+    amount: 5000
+    budget_date: '2021-01-09'
+
+- model: 'budget.Budget'
+  fields:
+    id: '64aad0df-2597-443a-9052-7be5a283ab7d'
+    user: '0390a508-dba5-4344-b77f-93e1227d42f4'
+    category: '9abd4759-ab14-4e09-adc2-9c5dea1041b1' # Entretenimiento
+    amount: 2400
+    budget_date: '2021-01-21'
+
+- model: 'budget.Budget'
+  fields:
+    id: '64aad0df-2597-443a-9052-7be5a283ab7d'
+    user: '0390a508-dba5-4344-b77f-93e1227d42f4'
+    category: 'cde589f3-6281-4671-9bb2-333168d5971d' # Hogar y familia
+    amount: 100
+    budget_date: '2021-01-21'
+
+- model: 'transaction.Transaction'
+  fields:
+    id: '6a6463fb-fad2-49d0-bb3b-b45a6f61f4cc'
+    amount: -1800
+    description : CINEPOLIS
+    transaction_date: '2021-09-09T13:20:30-06:00'
+    account: 'e25736e4-b2db-4fa0-8917-86f5ec92463f'
+    category: '9abd4759-ab14-4e09-adc2-9c5dea1041b1' # Entretenimiento
+
+- model: 'transaction.Transaction'
+  fields:
+    id: 'f08b5827-1c2a-4545-a10f-fc02f991e608'
+    amount: -2300
+    description : NETFLIX
+    transaction_date: '2021-09-09T13:20:30-06:00'
+    account: 'e25736e4-b2db-4fa0-8917-86f5ec92463f'
+    category: '9abd4759-ab14-4e09-adc2-9c5dea1041b1' # Entretenimiento
+
+- model: 'transaction.Transaction'
+  fields:
+    id: '203a1ace-8a57-4d49-ae8d-699221e9f3cb'
+    amount: -2000
+    description: AMAZONMX
+    transaction_date: '2021-09-09T13:20:30-06:00'
+    account: 'e25736e4-b2db-4fa0-8917-86f5ec92463f'
+    category: '22118f55-e6a9-46b0-ae8f-a063dda396e0' # Shopping

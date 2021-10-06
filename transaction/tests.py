@@ -1,13 +1,8 @@
-from rest_framework.test import APITestCase
-from django.test import TestCase, Client
-from transaction.models import Transaction
 from json import dumps
-from django.test import TestCase, Client
-from rest_framework import status
-from django.urls import reverse
-from .transactions_operations import TransactionsOperations
-import pysnooper
 
+from django.test import TestCase, Client
+
+from rest_framework import status
 
 from transaction.models import Transaction
 
@@ -39,10 +34,7 @@ class TransactionsTestCase(TestCase):
         user_id = '0390a508-dba5-4344-b77f-93e1227d42f4'
         response = self.client.get(self.URL_BASE.format(user_id))
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
-        self.assertJSONEqual(
-            str(response.content, encoding='utf8'),
-            {'400': "date_month it's required."}
-        )
+        self.assertJSONEqual(str(response.content, encoding='utf8'), {'400': "Invalid date format."})
 
     def invalid_date_month_param_base(self,date_month):
         """
@@ -50,10 +42,7 @@ class TransactionsTestCase(TestCase):
         """
         response = self.client.get((self.URL_DATE_MONTH).format(self.USER,date_month))
         self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
-        return self.assertJSONEqual(
-            str(response.content, encoding='utf8'),
-            {'400': 'Invalid date format.'}
-        )
+        return self.assertJSONEqual(str(response.content, encoding='utf8'), {'400': 'Invalid date format.'})
 
     def test_invalid_date_month_param_1(self):
         date_month = "2021-13"
@@ -69,22 +58,11 @@ class TransactionsTestCase(TestCase):
 
     def test_get_transactions_list_by_date(self):
         transactions = Transaction.objects.filter(account__user=self.USER,
-            transaction_date__range=['2021-09-01', '2021-09-30']
-        )
+            transaction_date__range=['2021-09-01', '2021-09-30'])
         response = self.client.get(self.URL_DATE_MONTH.format(self.USER, '2021-09'))
         data = response.json()
         self.assertEqual(transactions.count(), len(data))
         self.assertEqual(response.status_code, status.HTTP_200_OK)
- 
-    def test_get_transactions_list_by_date_and_category(self):
-        transactions = Transaction.objects.filter(account__user=self.USER,
-            transaction_date__range=['2021-09-01', '2021-09-30'],
-            category = self.CATEGORY
-        )
-        response = self.client.get(self.URL_CATEGORY.format(self.USER, self.CATEGORY, '2021-09'))
-        data = response.json()
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(transactions.count(), len(data))
 
     def test_add_note_to_transaction(self):
         transaction = '68e18783-8b51-4618-af83-50c77f25871d'
@@ -114,54 +92,24 @@ class TransactionsTestCase(TestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.json()['category']['id'], category_id)
 
-    def test_spenses(self):
-        user_id = '479ec168013945d0b7042bc4e5d0c4fb'
-        date_month = "2021-01"
-        print(self.URL_EXPENSES.format(user_id,date_month))
-        response = self.client.get(self.URL_EXPENSES.format(user_id,date_month))
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
 
-    def test_balance(self):
-        user_id = '0390a508-dba5-4344-b77f-93e1227d42f4'
-        year = "2021"
-        response = self.client.get(self.URL_BALANCE.format(user_id,year))
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
+class ExpensesSummaryTestCase(TestCase):
 
-
-class TransactionsOpertations(TestCase):
-
-    transactions = TransactionsOperations()
+    client = Client()
     fixtures = [
-        'user/fixtures/users.yaml',
         'catalog/fixtures/codetype.yaml',
+        'catalog/fixtures/accounts_types.yaml',
         'catalog/fixtures/transactions_categories.yaml',
-        'account/fixtures/accounts.yaml',
-        'transaction/fixtures/transactions.yaml',
-        'budget/fixtures/budgets.yaml'
-    ]
-
-    # @pysnooper.snoop(depth=2, max_variable_length=1000)
-    def test_get_summary_expenses(self):
-        self.transactions.get_expense_summary(
-            '0390a508dba54344b77f93e1227d42f4', '2021-05-01', '2021-05-28')
-        self.assertEqual(0, 0)
-
-
-
-class ApiTransactionsTest(APITestCase):
-    fixtures = [
         'user/fixtures/users.yaml',
-        'catalog/fixtures/codetype.yaml',
-        'catalog/fixtures/transactions_categories.yaml',
         'account/fixtures/accounts.yaml',
-        'transaction/fixtures/transactions.yaml',
-        'budget/fixtures/budgets.yaml'
+        'transaction/fixtures/expenses_summary.yaml'
     ]
+    USER = '0390a508-dba5-4344-b77f-93e1227d42f4'
+    CATEGORY = '22118f55-e6a9-46b0-ae8f-a063dda396e0'
+    URL = '/user/{}/transactions/expenses/summary/?date_month={}'
 
-    def test_add_(self):
-        # url = reverse('expensessummary')
-        url = '/user/{}/transactions/expenses/summary/'.format(
-            '479ec168013945d0b7042bc4e5d0c4fb')
-        response_client = self.client.get(
-            url, {'date_month': '2021-01'})
-        self.assertEqual(response_client.status_code, 200)
+    def test_get_expenses_summary_by_month(self):
+        response = self.client.get(self.URL.format(self.USER, '2021-09'))
+        data = response.json()
+        # print(dumps(response.json(), indent=4, ensure_ascii=False))
+        self.assertEqual(response.status_code, status.HTTP_200_OK)

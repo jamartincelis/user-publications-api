@@ -22,5 +22,5 @@ months_dict = {
 def validate_date(value):
     try:
         return pendulum.from_format(value+'-01', 'YYYY-MM-DD')
-    except ValueError:
+    except (ValueError, TypeError):
         return False
