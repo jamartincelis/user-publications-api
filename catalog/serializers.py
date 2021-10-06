@@ -23,4 +23,4 @@ class CatalogSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = CodeType
-        fields = fields = ['id', 'name', 'metadata', 'codes']
+        fields = fields = ['id', 'name', 'codes']
