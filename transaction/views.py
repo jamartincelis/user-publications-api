@@ -1,7 +1,7 @@
 import pendulum
 
 from django.db.models import Sum, Count, Q, Case, When, F, FloatField, IntegerField
-from django.db import connection
+from django.shortcuts import get_object_or_404
 
 from rest_framework.generics import RetrieveUpdateAPIView, ListAPIView
 from rest_framework.views import APIView
@@ -46,7 +46,12 @@ class TransactionDetail(RetrieveUpdateAPIView):
     serializer_class = TransactionSerializer
 
     def patch(self, request, *args, **kwargs):
-        return self.partial_update(request, *args, **kwargs)
+        instance = Transaction.objects.get(id=kwargs['pk'])
+        if 'category' in request.data:
+            request.data['category_id'] = request.data['category']
+        instance.__dict__.update(request.data)
+        instance.save()
+        return Response(TransactionSerializer(instance).data, status=status.HTTP_200_OK)
 
 
 class Category(ListAPIView):

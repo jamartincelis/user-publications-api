@@ -36,10 +36,6 @@ class TransactionSummarySerializer(serializers.Serializer):
     total_spend = serializers.IntegerField()
     num_transaction = serializers.IntegerField()
 
-    # def get_category(self, obj):
-    #     return  Code.objects.get(id=obj['category']).description
-
-
 
 class MonthlyBalanceSerializer(serializers.Serializer):
     """
