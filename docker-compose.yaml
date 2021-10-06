@@ -6,7 +6,7 @@ services:
         build: .
         command: python manage.py runserver 0.0.0.0:8000
         volumes:
-            - .:/pfm_api
+            - .:/code
         expose:
             - 8000
         env_file:
@@ -22,7 +22,7 @@ services:
             POSTGRES_USER: django
             POSTGRES_DB: pfm_db
         volumes:
-            - ./postgres-data:/var/lib/postgresql/data
+            - ../postgres-data:/var/lib/postgresql/data
         expose:
             - 5432
     pfm_redis:
