@@ -79,7 +79,7 @@ class CategorySummary(ListAPIView):
         date = validate_date(self.request.query_params.get('date_month'))
         if not date:
             return Response({'400': "Invalid date format."}, status=status.HTTP_400_BAD_REQUEST)
-        transactions = self.get_queryset().filter(user=user,
+        transactions = self.get_queryset().filter(account__user=user,
             transaction_date__range=[date.start_of('month'), date.end_of('month')]
         ).values('category').order_by('category').annotate(total_spend=Sum('amount'),num_transaction=Count('category'))
         data = TransactionSummarySerializer(transactions, many=True)
@@ -134,7 +134,7 @@ class ExpenseSummaryView(APIView):
         }
 
     def merge_data(self):
-        categories = Code.objects.filter(code_type__name='transaction_category')
+        categories = Code.objects.filter(code_type__name='transaction_category').exclude(name='Otros')
         for category in categories:
             budget = self.get_budget(category.id)
             expenses = self.get_expenses(category.id)
@@ -150,6 +150,7 @@ class ExpenseSummaryView(APIView):
                 }
             )
         self.data['categories'] = sorted(self.data['categories'], key=lambda x:x['amount'])
+
 
     def get(self, request, user):
         date = validate_date(self.request.query_params.get('date_month'))
@@ -241,7 +242,7 @@ class MonthlyCategoryBalanceView(APIView):
 
     def get(self, request, user, category):
         year = Transaction.objects.filter(
-            user=user, category=category).order_by('transaction_date').first().transaction_date.year
+            account__user=user, category=category).order_by('transaction_date').first().transaction_date.year
         start_date = pendulum.datetime(year, 1, 1)
         end_date = pendulum.now().end_of('year')
         dates = []
@@ -252,7 +253,7 @@ class MonthlyCategoryBalanceView(APIView):
         for date in dates:
             data = Transaction.objects.filter(
                 transaction_date__range=[date.start_of('month'), date.end_of('month')],
-                user=user,
+                account__user=user,
                 category=category
                 ).aggregate(
                 expenses_sum=Sum(Case(
