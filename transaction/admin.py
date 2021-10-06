@@ -1,4 +1,18 @@
-from transaction.models import Transaction
 from django.contrib import admin
 
-admin.site.register(Transaction)
+from transaction.models import Transaction
+
+
+class TransactionAdmin(admin.ModelAdmin):
+    list_display = [
+        'id',
+        'account',
+        'category',
+        'amount',
+        'description',
+        'transaction_date',
+        'user_note'
+    ]
+
+
+admin.site.register(Transaction, TransactionAdmin)

@@ -14,6 +14,9 @@ class CodeType(models.Model):
         managed = True
         db_table = 'codetypes'
 
+    def __str__(self):
+        return self.name
+
 
 class Code(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4)
@@ -27,3 +30,6 @@ class Code(models.Model):
     class Meta:
         managed = True
         db_table = 'codes'
+
+    def __str__(self):
+        return self.name

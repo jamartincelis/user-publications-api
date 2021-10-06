@@ -12,3 +12,6 @@ class Account(models.Model):
     class Meta:
         managed = True
         db_table = 'accounts'
+
+    def __str__(self):
+        return str(self.id)

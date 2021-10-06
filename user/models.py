@@ -10,3 +10,6 @@ class User(models.Model):
     class Meta:
         managed = True
         db_table = 'users'
+
+    def __str__(self):
+        return str(self.id)
