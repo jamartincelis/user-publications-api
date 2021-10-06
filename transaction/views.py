@@ -151,6 +151,33 @@ class ExpenseSummaryView(APIView):
             )
         self.data['categories'] = sorted(self.data['categories'], key=lambda x:x['amount'])
 
+    def get_other_expenses(self):
+        others_code = Code.objects.get(code_type__name='transaction_category', name='Otros')
+        if len(self.grouped_expenses) > 5:
+            amount = 0.0
+            for x in self.data['categories'][5:]:
+                amount += x['amount']
+            self.data['categories'].append(
+                {
+                    'category': CodeSerializer(others_code).data,
+                    'budget': self.get_budget(others_code.id),
+                    'expenses': self.get_expenses(others_code.id),
+                    'percentage': '0%',
+                    'disabled': False,
+                    'amount': amount
+                }
+            )
+        else:
+            self.data['categories'].append(
+                {
+                    'category': CodeSerializer(others_code).data,
+                    'budget': self.get_budget(others_code.id),
+                    'expenses': self.get_expenses(others_code.id),
+                    'percentage': '0%',
+                    'disabled': True,
+                    'amount': 0.0
+                }
+            )
 
     def get(self, request, user):
         date = validate_date(self.request.query_params.get('date_month'))
@@ -165,6 +192,7 @@ class ExpenseSummaryView(APIView):
             user=user, budget_date__range=[date.start_of('month'), date.end_of('month')])
         self.group_transactions(transactions)
         self.merge_data()
+        self.get_other_expenses()
         return Response(self.data, status=status.HTTP_200_OK)
 
 

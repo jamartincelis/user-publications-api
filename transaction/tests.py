@@ -111,5 +111,5 @@ class ExpensesSummaryTestCase(TestCase):
     def test_get_expenses_summary_by_month(self):
         response = self.client.get(self.URL.format(self.USER, '2021-09'))
         data = response.json()
-        # print(dumps(response.json(), indent=4, ensure_ascii=False))
+        print(dumps(response.json(), indent=4, ensure_ascii=False))
         self.assertEqual(response.status_code, status.HTTP_200_OK)
