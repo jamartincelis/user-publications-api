@@ -183,6 +183,12 @@ class ExpenseSummaryView(APIView):
         date = validate_date(self.request.query_params.get('date_month'))
         if not date:
             return Response({'400': "Invalid date format."}, status=status.HTTP_400_BAD_REQUEST)
+        self.grouped_expenses = {}
+        self.budgets = []
+        self.data = {
+            'global_expenses': 0.0,
+            'categories': []
+        }
         transactions = Transaction.objects.filter(
             account__user=user,
             transaction_date__range=[date.start_of('month'), date.end_of('month')],
