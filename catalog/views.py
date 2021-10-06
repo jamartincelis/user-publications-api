@@ -26,4 +26,4 @@ class Catalog(RetrieveAPIView):
 
     serializer_class = CatalogSerializer
     lookup_field = 'name'
-    queryset = Code.objects.all()
+    queryset = CodeType.objects.prefetch_related('codes').all()
