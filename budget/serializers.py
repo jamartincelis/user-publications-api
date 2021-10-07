@@ -20,6 +20,8 @@ class BudgetDetailSerializer(serializers.ModelSerializer):
     """
     Permite editar los datos basicos de un presupuesto.
     """
+    category = CodeSerializer(read_only=True)
+
     class Meta:
         model = Budget
         fields = '__all__' 
