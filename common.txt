@@ -13,5 +13,4 @@ pytzdata==2020.1
 PyYAML==5.4.1
 six==1.16.0
 sqlparse==0.4.2
-virtualenv==20.7.2
-virtualenv-clone==0.5.
+gunicorn
