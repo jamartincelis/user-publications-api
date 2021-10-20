@@ -142,7 +142,7 @@ class ExpenseSummaryView(APIView):
         }
 
     def merge_data(self):
-        categories = Code.objects.filter(code_type__name='transaction_category').exclude(name='Otros')
+        categories = Code.objects.filter(code_type__name='transaction_category')
         for category in categories:
             expenses = self.get_expenses(category.id)
             budget = self.get_budget(category.id, expenses['amount'])
@@ -161,7 +161,6 @@ class ExpenseSummaryView(APIView):
         self.data['categories'] = sorted(self.data['categories'], key=lambda x:x['amount'])
 
     def get_other_expenses(self):
-        others_code = Code.objects.get(code_type__name='transaction_category', name='Otros')
         if len(self.grouped_expenses) > 5:
             amount = 0.0
             for x in self.data['categories'][5:]:
@@ -170,27 +169,11 @@ class ExpenseSummaryView(APIView):
                 percentage = round(amount / self.data['global_expenses'] * 100, 2)
             else:
                 percentage = 0.0
-            self.data['categories'].append(
-                {
-                    'category': CodeSerializer(others_code).data,
-                    'budget': self.get_budget(others_code.id, amount),
-                    'expenses': self.get_expenses(others_code.id),
-                    'percentage': percentage,
-                    'disabled': False,
-                    'amount': amount
-                }
-            )
-        else:
-            self.data['categories'].append(
-                {
-                    'category': CodeSerializer(others_code).data,
-                    'budget': self.get_budget(others_code.id, 0.0),
-                    'expenses': self.get_expenses(others_code.id),
-                    'percentage': 0.0,
-                    'disabled': True,
-                    'amount': 0.0
-                }
-            )
+            self.data['others'] = {
+                'amount': amount,
+                'percentage': percentage,
+                'disabled': True if amount == 0 else False
+            }
 
     def get(self, request, user):
         date = validate_date(self.request.query_params.get('date_month'))
