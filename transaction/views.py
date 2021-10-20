@@ -127,7 +127,7 @@ class ExpenseSummaryView(APIView):
                 'count': 0
             }
 
-    def get_budget(self, category):
+    def get_budget(self, category, amount):
         try:
             budget = self.budgets.get(category=category)
         except Budget.DoesNotExist:
@@ -138,20 +138,22 @@ class ExpenseSummaryView(APIView):
             'budget_date': str(budget.budget_date) if budget else None,
             'category': str(category) if budget else None,
             'has_budget': True if budget else False,
+            'budget_spent': round(abs(amount/float(budget.amount))*100, 2) if budget and amount != 0 else 0.0
         }
 
     def merge_data(self):
         categories = Code.objects.filter(code_type__name='transaction_category').exclude(name='Otros')
         for category in categories:
-            budget = self.get_budget(category.id)
             expenses = self.get_expenses(category.id)
-            percentage = expenses['amount'] / float(budget['amount']) if budget['has_budget'] is True else 0
+            budget = self.get_budget(category.id, expenses['amount'])
+            percentage = expenses['amount'] / self.data['global_expenses'] if self.data['global_expenses'] != 0 else 0.0
+            # print(expenses['amount'], self.data['global_expenses'], percentage)
             self.data['categories'].append(
                 {
                     'category': CodeSerializer(category).data,
                     'budget': budget,
                     'expenses': expenses,
-                    'percentage': '{}%'.format(int(abs(percentage)*100)),
+                    'percentage': round(abs(percentage)*100, 2),
                     'disabled': True if abs(expenses['amount']) < 1 else False,
                     'amount': expenses['amount']
                 }
@@ -164,12 +166,16 @@ class ExpenseSummaryView(APIView):
             amount = 0.0
             for x in self.data['categories'][5:]:
                 amount += x['amount']
+            if self.data['global_expenses'] != 0:
+                percentage = round(amount / self.data['global_expenses'] * 100, 2)
+            else:
+                percentage = 0.0
             self.data['categories'].append(
                 {
                     'category': CodeSerializer(others_code).data,
-                    'budget': self.get_budget(others_code.id),
+                    'budget': self.get_budget(others_code.id, amount),
                     'expenses': self.get_expenses(others_code.id),
-                    'percentage': '0%',
+                    'percentage': percentage,
                     'disabled': False,
                     'amount': amount
                 }
@@ -178,9 +184,9 @@ class ExpenseSummaryView(APIView):
             self.data['categories'].append(
                 {
                     'category': CodeSerializer(others_code).data,
-                    'budget': self.get_budget(others_code.id),
+                    'budget': self.get_budget(others_code.id, 0.0),
                     'expenses': self.get_expenses(others_code.id),
-                    'percentage': '0%',
+                    'percentage': 0.0,
                     'disabled': True,
                     'amount': 0.0
                 }

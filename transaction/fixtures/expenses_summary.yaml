@@ -84,3 +84,12 @@
     transaction_date: '2021-09-09T13:20:30-06:00'
     account: 'e25736e4-b2db-4fa0-8917-86f5ec92463f'
     category: 'a249c468-bb4d-4365-83f4-108d456bb494' # Apps de pedidos, restaurantes, bares y nightclubs
+
+- model: 'transaction.Transaction'
+  fields:
+    id: '5f31135c-b3ca-499e-8add-c26273f59c40'
+    amount: -500
+    description: RENTA
+    transaction_date: '2021-09-09T13:20:30-06:00'
+    account: 'e25736e4-b2db-4fa0-8917-86f5ec92463f'
+    category: 'cde589f3-6281-4671-9bb2-333168d5971d' # Renta, hipotecario, educación, mascota, veterinario, colegio
