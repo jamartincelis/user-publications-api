@@ -161,19 +161,17 @@ class ExpenseSummaryView(APIView):
         self.data['categories'] = sorted(self.data['categories'], key=lambda x:x['amount'])
 
     def get_other_expenses(self):
+        amount = 0.0
+        percentage = 0.0
         if len(self.grouped_expenses) > 5:
-            amount = 0.0
             for x in self.data['categories'][5:]:
                 amount += x['amount']
-            if self.data['global_expenses'] != 0:
-                percentage = round(amount / self.data['global_expenses'] * 100, 2)
-            else:
-                percentage = 0.0
-            self.data['others'] = {
-                'amount': amount,
-                'percentage': percentage,
-                'disabled': True if amount == 0 else False
-            }
+            percentage = round(amount / self.data['global_expenses'] * 100, 2)
+        self.data['other_expenses'] = {
+            'amount': amount,
+            'percentage': percentage,
+            'disabled': True if amount == 0 else False
+        }
 
     def get(self, request, user):
         date = validate_date(self.request.query_params.get('date_month'))
