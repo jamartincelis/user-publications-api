@@ -1,20 +1,54 @@
-# Coopeuch Salud Financiera
+# Project name
+
+Coopeuch Salud Financiera
+
+# Version 
+
+Versión en desarrollo v.0.133
+
+## Description
 
 Desarrollo de endpoints para el proyecto coopeuch salud financiera.
 
-## Desplegar el proyecto en local
+## Requirements and Installation
+
+Se pueden ver en el archivo common.txt y requeriments-dev.txt.
+
+## Build
+
+Para el ambiente de desarrollo
 
 ```bash
-docker-compose -f local.yaml up
+docker-compose -f local.yaml build
 ```
 
-## Desplegar el proyecto en la instancia aws
+Para producción
 
 ```bash
 docker-compose up
 ```
 
-## Crear un usuario de pruebas
+## Development Run
+
+```bash
+docker-compose -f local.yaml up
+```
+
+## Production Run
+
+```bash
+docker-compose up
+```
+
+### Api Rest Docs
+
+Los enpoints se encuentran publicados en http://ec2-54-144-77-35.compute-1.amazonaws.com/. En el siguiente apartado, se puede ver la documentación de la api.
+
+[Coopeuch Salud Financiera Api](API.md)
+
+### Tech docs
+
+#### Crear un usuario de pruebas. 
 
 Una vez que al contenedor esté desplegado, ejecutar:
 
@@ -22,12 +56,6 @@ Una vez que al contenedor esté desplegado, ejecutar:
 docker exec -it pfm_api python manage.py createsuperuser
 ```
 
-## Coopeuch Salud Financiera Api
-
-Los enpoints se encuentran publicados en http://ec2-54-144-77-35.compute-1.amazonaws.com/. En el siguiente apartado, se puede ver la documentación de la api.
-
-[Coopeuch Salud Financiera Api](API.md)
-
-## AWS ec2:
+#### AWS ec2:
 ```54.144.77.35```
 ```Llave: ubankpilotos```
