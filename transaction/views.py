@@ -265,7 +265,6 @@ class MonthlyCategoryBalanceView(APIView):
             'expenses_count': expenses_count,
             'average': 0.0 if expenses_count == 0 else float(expenses_sum/expenses_count),
             'budget': budget.amount if budget else 0,
-            #'budget_spent': '{}%'.format(budget.spent) if budget else 0,
             'budget_spent': '{}%'.format(budget_spent),
             'has_budget': True if budget else False,
             'disabled': True if data['expenses_count'] == 0 else False
