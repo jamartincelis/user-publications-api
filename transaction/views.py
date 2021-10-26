@@ -253,18 +253,21 @@ class MonthlyCategoryBalanceView(APIView):
     Permite retornar el balance mensual por categoría del usuario.
     """
 
-    def month_params(self, data, date):
+    def month_params(self, data, date, budget):
         expenses_sum = 0.0 if data['expenses_sum'] is None else data['expenses_sum']
         expenses_count = 0 if data['expenses_count'] is None else data['expenses_count']
+        budget_spent = int((abs(expenses_sum)*100)/float(budget.amount)) if budget else 0
+
         return {
             'year': date.year,
             'month': months_dict[date.month],
             'expenses_sum': expenses_sum,
             'expenses_count': expenses_count,
             'average': 0.0 if expenses_count == 0 else float(expenses_sum/expenses_count),
-            'budget': float(date.month * 1000),
-            'budget_spent': '{}%'.format(date.month),
-            'has_budget': True,
+            'budget': budget.amount if budget else 0,
+            #'budget_spent': '{}%'.format(budget.spent) if budget else 0,
+            'budget_spent': '{}%'.format(budget_spent),
+            'has_budget': True if budget else False,
             'disabled': True if data['expenses_count'] == 0 else False
         }
 
@@ -278,7 +281,13 @@ class MonthlyCategoryBalanceView(APIView):
             dates.append(start_date)
             start_date = start_date.add(months=1)
         years_dict = {}
+        month = 1
         for date in dates:
+            try:
+                budget = Budget.objects.get(user=user, category=category, 
+                    budget_date__month=month)
+            except Budget.DoesNotExist:
+                budget = None
             data = Transaction.objects.filter(
                 transaction_date__range=[date.start_of('month'), date.end_of('month')],
                 account__user=user,
@@ -294,12 +303,13 @@ class MonthlyCategoryBalanceView(APIView):
                 ))
             )
             try:
-                years_dict[date.year]['months'].append(self.month_params(data, date))
+                years_dict[date.year]['months'].append(self.month_params(data, date, budget))
             except KeyError:
                 years_dict[date.year] = {
                     'year': date.year,
                     'months': [
-                        self.month_params(data, date)
+                        self.month_params(data, date, budget)
                     ]
                 }
+            month+=1
         return Response([v for k, v in years_dict.items()], status=status.HTTP_200_OK)
