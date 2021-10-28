@@ -111,12 +111,14 @@ class ExpenseSummaryView(APIView):
             try:
                 self.grouped_expenses[category]['amount'] += amount
                 self.grouped_expenses[category]['count'] += 1
+                self.grouped_expenses[category]['average'] = 1000 
             except KeyError:
                 self.grouped_expenses[category] = {
                     'amount': amount,
-                    'count': 1
+                    'count': 1,
+                    'average': 1000
                 }
-            self.data['global_expenses'] += amount
+            self.data['global_expenses'] += abs(amount)
 
     def get_expenses(self, category):
         try:
@@ -147,7 +149,6 @@ class ExpenseSummaryView(APIView):
             expenses = self.get_expenses(category.id)
             budget = self.get_budget(category.id, expenses['amount'])
             percentage = expenses['amount'] / self.data['global_expenses'] if self.data['global_expenses'] != 0 else 0.0
-            # print(expenses['amount'], self.data['global_expenses'], percentage)
             self.data['categories'].append(
                 {
                     'category': CodeSerializer(category).data,
@@ -187,7 +188,7 @@ class ExpenseSummaryView(APIView):
             account__user=user,
             transaction_date__range=[date.start_of('month'), date.end_of('month')],
             amount__lt=0
-        ).values('amount', 'category')
+        ).values('amount', 'category').order_by('category')
         self.budgets = Budget.objects.filter(
             user=user, budget_date__range=[date.start_of('month'), date.end_of('month')])
         self.group_transactions(transactions)
@@ -254,8 +255,8 @@ class MonthlyCategoryBalanceView(APIView):
     """
 
     def month_params(self, data, date, budget):
-        expenses_sum = 0.0 if data['expenses_sum'] is None else data['expenses_sum']
-        expenses_count = 0 if data['expenses_count'] is None else data['expenses_count']
+        expenses_sum = 0.0 if data['expenses_sum'] is None else abs(data['expenses_sum'])
+        expenses_count = 0 if data['expenses_count'] is None else abs(data['expenses_count'])
         budget_spent = (abs(expenses_sum)*100)/float(budget.amount) if budget else 0
         return {
             'year': date.year,
