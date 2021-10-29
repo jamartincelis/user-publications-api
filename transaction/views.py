@@ -283,14 +283,11 @@ class MonthlyCategoryBalanceView(APIView):
         years_dict = {}
         month = 1
         for date in dates:
-            print(month)
-            print(date)
             try:
                 budget = Budget.objects.get(user=user, category=category, 
                     budget_date__month=month)
             except Budget.DoesNotExist:
                 budget = None
-            print(budget)
             data = Transaction.objects.filter(
                 transaction_date__range=[date.start_of('month'), date.end_of('month')],
                 account__user=user,
