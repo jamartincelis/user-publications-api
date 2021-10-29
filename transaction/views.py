@@ -267,6 +267,7 @@ class MonthlyCategoryBalanceView(APIView):
             'budget': budget.amount if budget else 0,
             'budget_spent': round(budget_spent,2),
             'has_budget': True if budget else False,
+            'budget_id': budget.id if budget else False,
             'disabled': True if expenses_count == 0 else False
         }
 
@@ -282,11 +283,13 @@ class MonthlyCategoryBalanceView(APIView):
         years_dict = {}
         month = 1
         for date in dates:
+            print(month)
             try:
                 budget = Budget.objects.get(user=user, category=category, 
                     budget_date__month=month)
             except Budget.DoesNotExist:
                 budget = None
+            print(budget)
             data = Transaction.objects.filter(
                 transaction_date__range=[date.start_of('month'), date.end_of('month')],
                 account__user=user,
