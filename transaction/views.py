@@ -284,6 +284,7 @@ class MonthlyCategoryBalanceView(APIView):
         month = 1
         for date in dates:
             print(month)
+            print(date)
             try:
                 budget = Budget.objects.get(user=user, category=category, 
                     budget_date__month=month)
@@ -314,4 +315,6 @@ class MonthlyCategoryBalanceView(APIView):
                     ]
                 }
             month+=1
+            if month > 12:
+               month = 1 
         return Response([v for k, v in years_dict.items()], status=status.HTTP_200_OK)
