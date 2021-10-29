@@ -267,6 +267,7 @@ class MonthlyCategoryBalanceView(APIView):
             'budget': budget.amount if budget else 0,
             'budget_spent': round(budget_spent,2),
             'has_budget': True if budget else False,
+            'budget_id': budget.id if budget else False,
             'disabled': True if expenses_count == 0 else False
         }
 
@@ -311,4 +312,6 @@ class MonthlyCategoryBalanceView(APIView):
                     ]
                 }
             month+=1
+            if month > 12:
+               month = 1 
         return Response([v for k, v in years_dict.items()], status=status.HTTP_200_OK)
