@@ -1,0 +1,97 @@
+- model: 'catalog.Code'
+  fields:
+    id: '3954361d-ddf5-46dc-a8f8-af98ee9811da'
+    code_type: 'c2a07389-da13-4420-9060-c6bef2d6bd03'
+    name: 'Sueldo'
+    description: 'Sueldos, salarios, honorarios e ingresos por trabajo'
+    metadata:
+      short_name: 'SUELDO'
+      icon: 'assets/img/category/income.svg'
+      active: true
+      color: '#0E891A'
+    updated_at: '2021-11-09T13:20:30-06:00'
+    created_at: '2021-11-09T13:20:30-06:00'
+
+- model: 'catalog.Code'
+  fields:
+    id: '8ebba319-0042-41ff-bdbb-ba05cd824d52'
+    code_type: 'c2a07389-da13-4420-9060-c6bef2d6bd03'
+    name: 'Transferencias'
+    description: 'Transferencias, depósitos y reembolsos recibidos'
+    metadata:
+      short_name: 'TRANSFERENCIAS'
+      icon: 'assets/img/category/income.svg'
+      active: true
+      color: '#0E891A'
+    updated_at: '2021-11-09T13:20:30-06:00'
+    created_at: '2021-11-09T13:20:30-06:00'
+
+- model: 'catalog.Code'
+  fields:
+    id: 'e131ca4e-28d2-48fc-ab73-ea92e48b084f'
+    code_type: 'c2a07389-da13-4420-9060-c6bef2d6bd03'
+    name: 'Rendimientos'
+    description: 'Pago de dividendos e intereses ganados'
+    metadata:
+      short_name: 'RENDIMIENTOS'
+      icon: 'assets/img/category/income.svg'
+      active: true
+      color: '#0E891A'
+    updated_at: '2021-11-09T13:20:30-06:00'
+    created_at: '2021-11-09T13:20:30-06:00'
+
+- model: 'catalog.Code'
+  fields:
+    id: '9abd4759-ab14-4e09-adc2-9c5dea1041b1'
+    code_type: 'c2a07389-da13-4420-9060-c6bef2d6bd03'
+    name: 'Rentas y arriendos'
+    description: 'Ingresos por arriendos de muebles e inmuebles'
+    metadata:
+      short_name: 'RENTAS_ARRIENDOS'
+      icon: 'assets/img/category/income.svg'
+      active: true
+      color: '#0E891A'
+    updated_at: '2021-11-09T13:20:30-06:00'
+    created_at: '2021-11-09T13:20:30-06:00'
+
+- model: 'catalog.Code'
+  fields:
+    id: '593cea05-8f4d-4b40-ad1b-d73e43c8d53d'
+    code_type: 'c2a07389-da13-4420-9060-c6bef2d6bd03'
+    name: 'Devolución de impuestos'
+    description: 'Devoluciones del Servicio de Impuestos Internos'
+    metadata:
+      short_name: 'DEVOLUCION_IMPUESTOS'
+      icon: 'assets/img/category/income.svg'
+      active: true
+      color: '#0E891A'
+    updated_at: '2021-11-09T13:20:30-06:00'
+    created_at: '2021-11-09T13:20:30-06:00'
+
+- model: 'catalog.Code'
+  fields:
+    id: '5f342655-bf27-4523-aa32-40d7cb48ae38'
+    code_type: 'c2a07389-da13-4420-9060-c6bef2d6bd03'
+    name: 'Subvención'
+    description: 'Pensión, becas, subvención y ayudas familiares'
+    metadata:
+      short_name: 'SUBVENCION'
+      icon: 'assets/img/category/income.svg'
+      active: true
+      color: '#0E891A'
+    updated_at: '2021-11-09T13:20:30-06:00'
+    created_at: '2021-11-09T13:20:30-06:00'
+
+- model: 'catalog.Code'
+  fields:
+    id: '763d39ca-45e8-4171-8a97-29ba9a37665c'
+    code_type: 'c2a07389-da13-4420-9060-c6bef2d6bd03'
+    name: 'Regalos y otros ingresos'
+    description: 'Regalos hechos por transferencias y otros ingresos'
+    metadata:
+      short_name: 'REGALOS_OTROS_INGRESOS'
+      icon: 'assets/img/category/income.svg'
+      active: true
+      color: '#0E891A'
+    updated_at: '2021-11-09T13:20:30-06:00'
+    created_at: '2021-11-09T13:20:30-06:00'

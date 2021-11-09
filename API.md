@@ -29,12 +29,25 @@ curl --request GET \
 curl --request GET \
   --url http://localhost:8000/catalog/{name}/
 ```
-
 ejemplo
 
 ```bash
 curl --request GET \
   --url http://localhost:8000/catalog/account_status/
+```
+
+## Obtener las categorias de ingresos de las transacciones
+
+```bash
+curl --request GET \
+  --url http://localhost:8000/catalog/incomes_categories/
+```
+
+## Obtener las categorias de egresos de las transacciones
+
+```bash
+curl --request GET \
+  --url http://localhost:8000/catalog/expenses_categories/
 ```
 
 ## Acceder a los datos del usuario
@@ -142,7 +155,7 @@ respuesta
     "user": "479ec168-0139-45d0-b704-2bc4e5d0c4fb"
 }
 ```
-## Crear presupuesto. 
+## Crear presupuesto (revisar presupuestos). 
 
 ```bash
 curl --request POST \

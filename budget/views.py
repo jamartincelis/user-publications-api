@@ -40,7 +40,7 @@ class BudgetList(ListCreateAPIView):
 
 class Category(ListAPIView):
     """
-    Devuelve las transacciones del usuario filtradas por mes y categoría
+    Devuelve los presupuestos del usuario filtradas por mes y categoría
     """
     queryset = Budget.objects.all()
     serializer_class = BudgetSerializer
@@ -48,7 +48,7 @@ class Category(ListAPIView):
 
     def get(self, request, user, category):
         budgets = self.get_queryset().filter(user=user, category=category)
-        date = self.request.query_params.get('date_month')
+        date = validate_date(self.request.query_params.get('date_month'))
         if not date:
             return Response({'400': "Invalid date format."}, status=status.HTTP_400_BAD_REQUEST)
         budgets = budgets.filter(budget_date__range=[date.start_of('month'), date.end_of('month')])

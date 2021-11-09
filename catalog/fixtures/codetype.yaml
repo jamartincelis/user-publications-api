@@ -8,9 +8,17 @@
   
 - model: 'catalog.CodeType'
   fields:
-    id: '1ec6a6b565d54a8c85d04364c141aefd'
-    name: 'transaction_category'
-    description: 'Categorías de transacciones'
+    id: 'c2a07389-da13-4420-9060-c6bef2d6bd03'
+    name: 'incomes_categories'
+    description: 'Categorías de Ingresos de las transacciones'
+    updated_at: '2021-05-01T13:20:30-06:00'
+    created_at: '2021-05-01T13:20:30-06:00'
+
+- model: 'catalog.CodeType'
+  fields:
+    id: '1ec6a6b5-65d5-4a8c-85d0-4364c141aefd'
+    name: 'expenses_categories'
+    description: 'Categorías de egresos de las transacciones'
     updated_at: '2021-05-01T13:20:30-06:00'
     created_at: '2021-05-01T13:20:30-06:00'
 

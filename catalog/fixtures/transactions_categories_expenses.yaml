@@ -1,19 +1,5 @@
 - model: 'catalog.Code'
   fields:
-    id: '72fb8abb-d236-469d-a511-0e7d81c4af1e'
-    code_type: '1ec6a6b5-65d5-4a8c-85d0-4364c141aefd'
-    name: 'Ahorros & Inversión'
-    description: 'Ahorro, inversión, ffmm, deposito a plazo, compra acciones'
-    metadata:
-      short_name: 'AHORRO_INVERSION'
-      icon: 'assets/img/category/saving.svg'
-      active: true
-      color: '#FF8300'
-    updated_at: '2021-05-01T13:20:30-06:00'
-    created_at: '2021-05-01T13:20:30-06:00'
-
-- model: 'catalog.Code'
-  fields:
     id: '53566d37-4b4d-4598-8b6c-09f5970c33cd'
     code_type: '1ec6a6b5-65d5-4a8c-85d0-4364c141aefd'
     name: 'Automóvil & Transporte'
@@ -42,99 +28,15 @@
 
 - model: 'catalog.Code'
   fields:
-    id: '9abd4759-ab14-4e09-adc2-9c5dea1041b1'
+    id: 'd26e9eb4-5c2a-45f2-af03-571af93ae7e2'
     code_type: '1ec6a6b5-65d5-4a8c-85d0-4364c141aefd'
-    name: 'Entretenimiento'
-    description: 'Netflix, spotify, cine, apps store, videojuegos'
+    name: 'Transferencias & Retiros'
+    description: 'Transferencias a terceros, retiros en cajeros, retiros en caja'
     metadata:
-      short_name: 'ENTRETENIMIENTO'
-      icon: 'assets/img/category/entertainment.svg'
+      short_name: 'TRANSFERENCIA_RETIRO'
+      icon: 'assets/img/category/transfer.svg'
       active: true
-      color: '#ED888A'
-    updated_at: '2021-05-01T13:20:30-06:00'
-    created_at: '2021-05-01T13:20:30-06:00'
-
-- model: 'catalog.Code'
-  fields:
-    id: 'cf01dce7-6d5e-4ad6-8e5a-8ba5c6d6f94c'
-    code_type: '1ec6a6b5-65d5-4a8c-85d0-4364c141aefd'
-    name: 'Gastos Financieros & Seguros'
-    description: 'Seguros, comisiones, impuestos'
-    metadata:
-      short_name: 'GASTO_FINANCIERO_SEGURO'
-      icon: 'assets/img/category/insurance.svg'
-      active: true
-      color: '#420456'
-    updated_at: '2021-05-01T13:20:30-06:00'
-    created_at: '2021-05-01T13:20:30-06:00'
-
-- model: 'catalog.Code'
-  fields:
-    id: 'cde589f3-6281-4671-9bb2-333168d5971d'
-    code_type: '1ec6a6b5-65d5-4a8c-85d0-4364c141aefd'
-    name: 'Hogar & Familia'
-    description: 'Renta, hipotecario, educación, mascota, veterinario, colegio'
-    metadata:
-      short_name: 'HOGAR_FAMILIA'
-      icon: 'assets/img/category/home.svg'
-      active: true
-      color: '#00A1DF'
-    updated_at: '2021-05-01T13:20:30-06:00'
-    created_at: '2021-05-01T13:20:30-06:00'
-
-- model: 'catalog.Code'
-  fields:
-    id: 'bf50dc35-43d0-4f60-9860-770b8afc96f4'
-    code_type: '1ec6a6b5-65d5-4a8c-85d0-4364c141aefd'
-    name: 'Ignorar'
-    description: 'Transacciones que no quieres que se agreguen a una categoría'
-    metadata:
-      short_name: 'IGNORE'
-      icon: 'assets/img/category/ignore.svg'
-      active: true
-      color: '#CFA7DC'
-    updated_at: '2021-05-01T13:20:30-06:00'
-    created_at: '2021-05-01T13:20:30-06:00'
-
-- model: 'catalog.Code'
-  fields:
-    id: 'bd38d1e6-37c5-4ab4-986e-ddc58fed7802'
-    code_type: '1ec6a6b5-65d5-4a8c-85d0-4364c141aefd'
-    name: 'Ingresos'
-    description: 'todos los movimientos con valor positivo, sueldos, abonos'
-    metadata:
-      short_name: 'INGRESO'
-      icon: 'assets/img/category/income.svg'
-      active: true
-      color: '#0E891A'
-    updated_at: '2021-05-01T13:20:30-06:00'
-    created_at: '2021-05-01T13:20:30-06:00'
-
-- model: 'catalog.Code'
-  fields:
-    id: '38e570af-1241-426c-afa5-f874b1c49128'
-    code_type: '1ec6a6b5-65d5-4a8c-85d0-4364c141aefd'
-    name: 'Otros'
-    description: 'Otros'
-    metadata:
-      short_name: 'OTROS'
-      icon: 'assets/img/category/others.svg'
-      active: true
-      color: '#9C9A9F'
-    updated_at: '2021-05-01T13:20:30-06:00'
-    created_at: '2021-05-01T13:20:30-06:00'
-
-- model: 'catalog.Code'
-  fields:
-    id: '4419f198-e4d5-4352-aba6-c6f173b748b2'
-    code_type: '1ec6a6b5-65d5-4a8c-85d0-4364c141aefd'
-    name: 'Pago Tarjeta de Crédito'
-    description: 'Compra de divisas, pago tarjeta de crédito'
-    metadata:
-      short_name: 'PAGO_TARJETA_CREDITO'
-      icon: 'assets/img/category/credit_card_payment.svg'
-      active: true
-      color: '#005D8F'
+      color: '#C9A71C'
     updated_at: '2021-05-01T13:20:30-06:00'
     created_at: '2021-05-01T13:20:30-06:00'
 
@@ -154,15 +56,15 @@
 
 - model: 'catalog.Code'
   fields:
-    id: '22118f55-e6a9-46b0-ae8f-a063dda396e0'
+    id: '9abd4759-ab14-4e09-adc2-9c5dea1041b1'
     code_type: '1ec6a6b5-65d5-4a8c-85d0-4364c141aefd'
-    name: 'Shopping'
-    description: 'Deportes, electrónica, vestuario y calzado'
+    name: 'Entretenimiento'
+    description: 'Netflix, spotify, cine, apps store, videojuegos'
     metadata:
-      short_name: 'SHOPPING'
-      icon: 'assets/img/category/shopping.svg'
+      short_name: 'ENTRETENIMIENTO'
+      icon: 'assets/img/category/entertainment.svg'
       active: true
-      color: '#7C2582'
+      color: '#ED888A'
     updated_at: '2021-05-01T13:20:30-06:00'
     created_at: '2021-05-01T13:20:30-06:00'
 
@@ -182,43 +84,15 @@
 
 - model: 'catalog.Code'
   fields:
-    id: '4cdad960-1ec7-4a9b-aae8-71eeb6ba2ad7'
+    id: '72fb8abb-d236-469d-a511-0e7d81c4af1e'
     code_type: '1ec6a6b5-65d5-4a8c-85d0-4364c141aefd'
-    name: 'Transferencias entre Cuentas Propias'
-    description: 'Transferencias entre mis cuentas personales'
+    name: 'Ahorros & Inversión'
+    description: 'Ahorro, inversión, ffmm, deposito a plazo, compra acciones'
     metadata:
-      short_name: 'TRANSFERENCIA_ENTRE_CUENTA'
-      icon: 'assets/img/category/own-transfer.svg'
+      short_name: 'AHORRO_INVERSION'
+      icon: 'assets/img/category/saving.svg'
       active: true
-      color: '#2E47B6'
-    updated_at: '2021-05-01T13:20:30-06:00'
-    created_at: '2021-05-01T13:20:30-06:00'
-
-- model: 'catalog.Code'
-  fields:
-    id: 'd26e9eb4-5c2a-45f2-af03-571af93ae7e2'
-    code_type: '1ec6a6b5-65d5-4a8c-85d0-4364c141aefd'
-    name: 'Transferencias & Retiros'
-    description: 'Transferencias a terceros, retiros en cajeros, retiros en caja'
-    metadata:
-      short_name: 'TRANSFERENCIA_RETIRO'
-      icon: 'assets/img/category/transfer.svg'
-      active: true
-      color: '#C9A71C'
-    updated_at: '2021-05-01T13:20:30-06:00'
-    created_at: '2021-05-01T13:20:30-06:00'
-
-- model: 'catalog.Code'
-  fields:
-    id: 'f0eae548-64e6-45b4-9bfd-4059d2b9d4df'
-    code_type: '1ec6a6b5-65d5-4a8c-85d0-4364c141aefd'
-    name: 'Salud & Bienestar'
-    description: 'Farmacia, doctores, dentista, gimnasio, salon de belleza, peluqueria'
-    metadata:
-      short_name: 'SALUD_BIENESTAR'
-      icon: 'assets/img/category/health.svg'
-      active: true
-      color: '#870F38'
+      color: '#FF8300'
     updated_at: '2021-05-01T13:20:30-06:00'
     created_at: '2021-05-01T13:20:30-06:00'
 
@@ -238,28 +112,113 @@
 
 - model: 'catalog.Code'
   fields:
-    id: 'f37b6770-7fc5-43e0-a837-50926e1ee459'
+    id: '22118f55-e6a9-46b0-ae8f-a063dda396e0'
     code_type: '1ec6a6b5-65d5-4a8c-85d0-4364c141aefd'
-    name: 'Sin categoría'
-    description: 'Transacción sin categoría'
+    name: 'Shopping'
+    description: 'Deportes, electrónica, vestuario y calzado'
     metadata:
-      short_name: 'SIN_CATEGORIA'
-      icon: ''
-      active: false
-      color: '#9C9A9F'
+      short_name: 'SHOPPING'
+      icon: 'assets/img/category/shopping.svg'
+      active: true
+      color: '#7C2582'
     updated_at: '2021-05-01T13:20:30-06:00'
     created_at: '2021-05-01T13:20:30-06:00'
 
 - model: 'catalog.Code'
   fields:
-    id: 'f37b6770-7fc5-43e0-a837-50926e1ee459'
+    id: 'bf50dc35-43d0-4f60-9860-770b8afc96f4'
     code_type: '1ec6a6b5-65d5-4a8c-85d0-4364c141aefd'
-    name: 'Sin categoría'
-    description: 'Transacción sin categoría'
+    name: 'Ignorar'
+    description: 'Transacciones que no quieres que se agreguen a una categoría'
     metadata:
-      short_name: 'SIN_CATEGORIA'
-      icon: ''
-      active: false
+      short_name: 'IGNORE'
+      icon: 'assets/img/category/ignore.svg'
+      active: true
+      color: '#CFA7DC'
+    updated_at: '2021-05-01T13:20:30-06:00'
+    created_at: '2021-05-01T13:20:30-06:00'
+
+- model: 'catalog.Code'
+  fields:
+    id: '4419f198-e4d5-4352-aba6-c6f173b748b2'
+    code_type: '1ec6a6b5-65d5-4a8c-85d0-4364c141aefd'
+    name: 'Pago Tarjeta de Crédito'
+    description: 'Compra de divisas, pago tarjeta de crédito'
+    metadata:
+      short_name: 'PAGO_TARJETA_CREDITO'
+      icon: 'assets/img/category/credit_card_payment.svg'
+      active: true
+      color: '#005D8F'
+    updated_at: '2021-05-01T13:20:30-06:00'
+    created_at: '2021-05-01T13:20:30-06:00'
+
+- model: 'catalog.Code'
+  fields:
+    id: 'cde589f3-6281-4671-9bb2-333168d5971d'
+    code_type: '1ec6a6b5-65d5-4a8c-85d0-4364c141aefd'
+    name: 'Hogar & Familia'
+    description: 'Renta, hipotecario, educación, mascota, veterinario, colegio'
+    metadata:
+      short_name: 'HOGAR_FAMILIA'
+      icon: 'assets/img/category/home.svg'
+      active: true
+      color: '#00A1DF'
+    updated_at: '2021-05-01T13:20:30-06:00'
+    created_at: '2021-05-01T13:20:30-06:00'
+
+- model: 'catalog.Code'
+  fields:
+    id: '4cdad960-1ec7-4a9b-aae8-71eeb6ba2ad7'
+    code_type: '1ec6a6b5-65d5-4a8c-85d0-4364c141aefd'
+    name: 'Transferencias entre Cuentas Propias'
+    description: 'Transferencias entre mis cuentas personales'
+    metadata:
+      short_name: 'TRANSFERENCIA_ENTRE_CUENTA'
+      icon: 'assets/img/category/own-transfer.svg'
+      active: true
+      color: '#2E47B6'
+    updated_at: '2021-05-01T13:20:30-06:00'
+    created_at: '2021-05-01T13:20:30-06:00'
+
+- model: 'catalog.Code'
+  fields:
+    id: 'f0eae548-64e6-45b4-9bfd-4059d2b9d4df'
+    code_type: '1ec6a6b5-65d5-4a8c-85d0-4364c141aefd'
+    name: 'Salud & Bienestar'
+    description: 'Farmacia, doctores, dentista, gimnasio, salon de belleza, peluqueria'
+    metadata:
+      short_name: 'SALUD_BIENESTAR'
+      icon: 'assets/img/category/health.svg'
+      active: true
+      color: '#870F38'
+    updated_at: '2021-05-01T13:20:30-06:00'
+    created_at: '2021-05-01T13:20:30-06:00'
+
+- model: 'catalog.Code'
+  fields:
+    id: 'cf01dce7-6d5e-4ad6-8e5a-8ba5c6d6f94c'
+    code_type: '1ec6a6b5-65d5-4a8c-85d0-4364c141aefd'
+    name: 'Gastos Financieros & Seguros'
+    description: 'Seguros, comisiones, impuestos'
+    metadata:
+      short_name: 'GASTO_FINANCIERO_SEGURO'
+      icon: 'assets/img/category/insurance.svg'
+      active: true
+      color: '#420456'
+    updated_at: '2021-05-01T13:20:30-06:00'
+    created_at: '2021-05-01T13:20:30-06:00'
+
+## Otros estados
+- model: 'catalog.Code'
+  fields:
+    id: '38e570af-1241-426c-afa5-f874b1c49128'
+    code_type: '1ec6a6b5-65d5-4a8c-85d0-4364c141aefd'
+    name: 'Otros'
+    description: 'Otros'
+    metadata:
+      short_name: 'OTROS'
+      icon: 'assets/img/category/others.svg'
+      active: true
       color: '#9C9A9F'
     updated_at: '2021-05-01T13:20:30-06:00'
     created_at: '2021-05-01T13:20:30-06:00'
