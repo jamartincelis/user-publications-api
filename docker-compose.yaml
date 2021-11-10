@@ -23,8 +23,8 @@ services:
             POSTGRES_DB: pfm_db
         volumes:
             - ../postgres-data:/var/lib/postgresql/data
-        expose:
-            - 5432
+        ports:
+            - '5432:5432'
     pfm_redis:
         image: 'redis:alpine'
         command: 'redis-server'
