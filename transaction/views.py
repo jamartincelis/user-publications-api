@@ -144,7 +144,7 @@ class ExpenseSummaryView(APIView):
         }
 
     def merge_data(self):
-        categories = Code.objects.filter(code_type__name='transaction_category')
+        categories = Code.objects.filter(code_type__name='expenses_categories')
         for category in categories:
             expenses = self.get_expenses(category.id)
             budget = self.get_budget(category.id, expenses['amount'])

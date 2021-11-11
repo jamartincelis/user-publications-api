@@ -42,7 +42,7 @@
 
 - model: 'catalog.Code'
   fields:
-    id: '9abd4759-ab14-4e09-adc2-9c5dea1041b1'
+    id: '9abd4759-ab14-4e09-adc2-9c5dea1041b2'
     code_type: 'c2a07389-da13-4420-9060-c6bef2d6bd03'
     name: 'Rentas y arriendos'
     description: 'Ingresos por arriendos de muebles e inmuebles'
