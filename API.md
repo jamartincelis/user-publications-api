@@ -552,3 +552,41 @@ curl --request GET \
     }
 ]
 ```
+
+## Consejos.
+
+```bash
+curl --request GET \
+  --url http://localhost:8000/tips/
+```
+
+  respuesta
+
+```json
+[
+    {
+        "id": 2,
+        "name": "Consejo #1",
+        "description": "Intenta mantener todos tus movimientos categorizados para que sepas dónde se va tu dinero. ¿Hay alguna categoría que no te hace sentido? Puedes editarla para tener todo bajo control.",
+        "metadata": {
+            "icon": "advice-1.svg"
+        }
+    },
+    {
+        "id": 3,
+        "name": "Consejo #2",
+        "description": "Los presupuestos te ayudan a fijar un límite de gasto en una categoría. Crea uno y define el monto máximo que quieres gastar en un mes. Revísalo de forma períodica para que controles mejor tus gastos.",
+        "metadata": {
+            "icon": "advice-1.svg"
+        }
+    },
+    {
+        "id": 4,
+        "name": "Consejo #3",
+        "description": "Usa tus tarjetas de débito Coopeuch para hacer todas tus compras, así tendrás una mirada completa de tu salud financiera en esta plataforma.",
+        "metadata": {
+            "icon": "advice-1.svg"
+        }
+    },
+]
+```

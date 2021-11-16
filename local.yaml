@@ -15,8 +15,10 @@ services:
             && python manage.py loaddata transaction/fixtures/transactions.yaml
             && python manage.py loaddata budget/fixtures/budgets.yaml
             && python manage.py runserver 0.0.0.0:8000 
-            && python manage.py runjobs monthly"                
-        #command: python manage.py runserver 0.0.0.0:8000
+            && python manage.py runjobs monthly"
+        # faqs y tips ejecutar solo 1 vez para evitar duplicidad de los datos                   
+        #command: python manage.py loaddata faq/fixtures/faqs.yaml
+        #command: python manage.py loaddata tip/fixtures/tips.yaml
         volumes:
             - .:/code
         ports:
