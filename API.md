@@ -590,3 +590,33 @@ curl --request GET \
     },
 ]
 ```
+
+## Notifications.
+
+```bash
+curl --request GET \
+  --url http://localhost:8000/notifications/
+```
+
+  respuesta
+
+```json
+[
+    {
+        "id": 1,
+        "description": "<b>¡Inviete ya!</b> Te ayudaremos para que comiences a invertir tu dinero <a>aquí</a>",
+        "metadata": {
+            "icon": "assets/img/img_user.svg",
+            "backgorund": "#FFFFFF"
+        }
+    },
+    {
+        "id": 2,
+        "description": "<b>¡Muy bien!</b> Llevas un buen orden, te recomiendo <b>ahorrar</b> o <b>invertir</b> tu dinero. Conoce más consejos.",
+        "metadata": {
+            "icon": "assets/img/img_user.svg",
+            "backgorund": "#e0e4f4"
+        }
+    }
+]
+```

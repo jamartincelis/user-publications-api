@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'account',
     'faq',
     'tip',
+    'notification',
 ]
 
 MIDDLEWARE = [

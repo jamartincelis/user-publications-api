@@ -6,12 +6,12 @@ from tip.serializers import TipSerializer
 
 class TipList(ListAPIView):
     """
-    Devuelve la lista de preguntas frecuentes
+    Devuelve la lista de consejos.
     """
     queryset = Tip.objects.all()
     serializer_class = TipSerializer
 
     def get(self, request):
-        faqs = self.get_queryset()
-        data = TipSerializer(faqs, many=True)
+        tips = self.get_queryset()
+        data = TipSerializer(tips, many=True)
         return Response(data=data.data, status=status.HTTP_200_OK)
