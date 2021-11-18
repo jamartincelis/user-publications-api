@@ -4,6 +4,7 @@ class Notification(models.Model):
     """
     Representa una notificacion de la base de datos
     """
+    title = models.CharField(max_length=60)
     description = models.TextField(null=True)
     metadata = models.JSONField(null=True)
  

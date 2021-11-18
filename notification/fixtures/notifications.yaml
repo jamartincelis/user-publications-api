@@ -1,5 +1,6 @@
 - model: 'notification.Notification'
   fields:
+    title: ''
     description: '<b>¡Inviete ya!</b> Te ayudaremos para que comiences a invertir tu dinero <a>aquí</a>'
     metadata:
       icon: 'assets/img/img_user.svg'
@@ -7,6 +8,7 @@
 
 - model: 'notification.Notification'
   fields:
+    title: ''
     description: '<b>¡Muy bien!</b> Llevas un buen orden, te recomiendo <b>ahorrar</b> o <b>invertir</b> tu dinero. Conoce más consejos.' 
     metadata:
       icon: 'assets/img/img_user.svg'
