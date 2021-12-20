@@ -12,7 +12,7 @@ class FilteredListSerializer(serializers.ListSerializer):
 class CodeSerializer(serializers.ModelSerializer):
 
     class Meta:
-        list_serializer_class = FilteredListSerializer
+        #list_serializer_class = FilteredListSerializer
         model = Code
         fields = ['id', 'name', 'metadata', 'description']
 
