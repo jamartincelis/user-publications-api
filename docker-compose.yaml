@@ -5,6 +5,7 @@ services:
         container_name: pfm_api
         build: .
         command: gunicorn pfm.wsgi:application -b 0.0.0.0:8000 -w 2 -t 30
+        # command: python manage.py runserver 0.0.0.0:8000
         volumes:
             - .:/code
         expose:
