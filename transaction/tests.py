@@ -13,7 +13,8 @@ class TransactionsTestCase(TestCase):
     fixtures = [
         'catalog/fixtures/codetype.yaml',
         'catalog/fixtures/accounts_types.yaml',
-        'catalog/fixtures/transactions_categories.yaml',
+        'catalog/fixtures/transactions_categories_expenses.yaml',
+        'catalog/fixtures/transactions_categories_incomes.yaml',
         'user/fixtures/users.yaml',
         'account/fixtures/accounts.yaml',
         'transaction/fixtures/transactions.yaml',
@@ -99,7 +100,8 @@ class ExpensesSummaryTestCase(TestCase):
     fixtures = [
         'catalog/fixtures/codetype.yaml',
         'catalog/fixtures/accounts_types.yaml',
-        'catalog/fixtures/transactions_categories.yaml',
+        'catalog/fixtures/transactions_categories_expenses.yaml',
+        'catalog/fixtures/transactions_categories_incomes.yaml',
         'user/fixtures/users.yaml',
         'account/fixtures/accounts.yaml',
         'transaction/fixtures/expenses_summary.yaml'

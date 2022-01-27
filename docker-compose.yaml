@@ -4,8 +4,8 @@ services:
     pfm_api:
         container_name: pfm_api
         build: .
-        command: gunicorn pfm.wsgi:application -b 0.0.0.0:8000 -w 2 -t 30
-        # command: python manage.py runserver 0.0.0.0:8000
+        command: >
+            bash -c "gunicorn pfm.wsgi:application -b 0.0.0.0:8000 -w 2 -t 30"           
         volumes:
             - .:/code
         expose:
@@ -24,8 +24,8 @@ services:
             POSTGRES_DB: pfm_db
         volumes:
             - ../postgres-data:/var/lib/postgresql/data
-        expose:
-            - 5432
+        ports:
+            - '5432:5432'
     pfm_redis:
         image: 'redis:alpine'
         command: 'redis-server'
