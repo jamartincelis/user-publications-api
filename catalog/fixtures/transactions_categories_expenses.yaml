@@ -231,7 +231,7 @@
     description: 'Transacción sin categoría'
     metadata:
       short_name: 'SIN_CATEGORIA'
-      icon: ''
+      icon: 'assets/img/category/not-category.svg'
       active: false
       color: '#9C9A9F'
     updated_at: '2021-05-01T13:20:30-06:00'
