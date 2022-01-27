@@ -2,7 +2,8 @@ from rest_framework.generics import ListAPIView, RetrieveAPIView
 
 from catalog.models import CodeType, Code
 from catalog.serializers import CodeTypeSerializer, CodeSerializer, CatalogSerializer
-
+from rest_framework.response import Response
+from rest_framework import status
 
 class CodeTypeList(ListAPIView):
 
@@ -22,8 +23,15 @@ class CatalogList(ListAPIView):
     queryset = CodeType.objects.prefetch_related('codes').all().order_by('name')
 
 
-class Catalog(RetrieveAPIView):
-
+class Catalog(ListAPIView):
+    """
+    Devuelve los tipos de catalogos y sus catalogos filtrados por nombre.
+    """
+    queryset = CodeType.objects.all()
     serializer_class = CatalogSerializer
-    lookup_field = 'name'
-    queryset = CodeType.objects.prefetch_related('codes').all()
+    filterset_fields = ['name']
+
+    def get(self, request, name):
+        codes = self.get_queryset().filter(name=name)
+        data = CatalogSerializer(codes, many=True)
+        return Response(data=data.data, status=status.HTTP_200_OK)

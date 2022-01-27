@@ -4,10 +4,8 @@ services:
     pfm_api:
         container_name: pfm_api
         build: .
-        command: 
         command: >
-            bash -c "gunicorn pfm.wsgi:application -b 0.0.0.0:8000 -w 2 -t 30
-            && python manage.py runjobs monthly"           
+            bash -c "gunicorn pfm.wsgi:application -b 0.0.0.0:8000 -w 2 -t 30"           
         volumes:
             - .:/code
         expose:
