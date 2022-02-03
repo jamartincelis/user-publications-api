@@ -42,7 +42,7 @@ docker-compose up
 
 ### Api Rest Docs
 
-Los enpoints se encuentran publicados en http://ec2-54-144-77-35.compute-1.amazonaws.com/. En el siguiente apartado, se puede ver la documentación de la api.
+Los enpoints se encuentran publicados en http://ec2-54-166-147-4.compute-1.amazonaws.com/. En el siguiente apartado, se puede ver la documentación de la api.
 
 [Coopeuch Salud Financiera Api](API.md)
 
@@ -57,5 +57,5 @@ docker exec -it pfm_api python manage.py createsuperuser
 ```
 
 #### AWS ec2:
-```54.144.77.35```
+```54.166.147.4```
 ```Llave: ubankpilotos```
