@@ -23,15 +23,14 @@ class CatalogList(ListAPIView):
     queryset = CodeType.objects.prefetch_related('codes').all().order_by('name')
 
 
-class Catalog(ListAPIView):
+class Catalog(RetrieveAPIView):
     """
     Devuelve los tipos de catalogos y sus catalogos filtrados por nombre.
     """
-    queryset = CodeType.objects.all()
-    serializer_class = CatalogSerializer
-    filterset_fields = ['name']
 
     def get(self, request, name):
-        codes = self.get_queryset().filter(name=name)
-        data = CatalogSerializer(codes, many=True)
-        return Response(data=data.data, status=status.HTTP_200_OK)
+        try:
+            code = CodeType.objects.prefetch_related('codes').get(name=name)
+            return Response(data=CatalogSerializer(code).data, status=status.HTTP_200_OK)
+        except CodeType.DoesNotExist:
+            return Response('Not found.', status=status.HTTP_404_NOT_FOUND)
