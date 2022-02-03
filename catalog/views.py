@@ -27,10 +27,6 @@ class Catalog(RetrieveAPIView):
     """
     Devuelve los tipos de catalogos y sus catalogos filtrados por nombre.
     """
-
-    def get(self, request, name):
-        try:
-            code = CodeType.objects.prefetch_related('codes').get(name=name)
-            return Response(data=CatalogSerializer(code).data, status=status.HTTP_200_OK)
-        except CodeType.DoesNotExist:
-            return Response('Not found.', status=status.HTTP_404_NOT_FOUND)
+    serializer_class = CatalogSerializer
+    lookup_field = 'name'
+    queryset = CodeType.objects.prefetch_related('codes').all()
