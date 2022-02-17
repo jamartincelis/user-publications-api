@@ -3,6 +3,13 @@ on:
   push:
     branches:
       - master # or the name of your main branch
+env:
+  ECR_REPOSITORY: ${{ github.event.repository.name }}
+  IMAGE_TAG: pfm-${{ github.sha }}
+  KUBE_NAMESPACE: widgets-dev
+  K8S_DEPLOYMENT: dev_deployment
+  AWS_REGION: us-east-1
+  EKS_CLUSTER_NAME: Fargate-kuber-demo
 jobs:
   build:
     name: Build
@@ -21,3 +28,30 @@ jobs:
       #   timeout-minutes: 5
       #   env:
       #     SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID_WIDGETS }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_WIDGETS }}
+          aws-region: us-east-1
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+      - name: Build, tag, and push image to Amazon ECR
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+        run: |
+          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -t $ECR_REGISTRY/$ECR_REPOSITORY:latest .
+          docker push -a $ECR_REGISTRY/$ECR_REPOSITORY
+      - name: Deploy
+        uses: cancue/eks-action@v0.0.2
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID_WIDGETS }}
+          aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY_WIDGETS }}
+          aws_region: $AWS_REGION
+          cluster_name: $EKS_CLUSTER_NAME
+        with:
+          args: |
+            kubectl set image deployment/$ECR_REPOSITORY $ECR_REPOSITORY=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -n $KUBE_NAMESPACE
+            kubectl rollout status deployment/$ECR_REPOSITORY -n $KUBE_NAMESPACE
