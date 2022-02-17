@@ -55,7 +55,3 @@ Una vez que al contenedor esté desplegado, ejecutar:
 ```bash
 docker exec -it pfm_api python manage.py createsuperuser
 ```
-
-#### AWS ec2:
-```54.166.147.4```
-```Llave: ubankpilotos```
