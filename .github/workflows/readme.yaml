@@ -1,0 +1,17 @@
+name: readme.io
+on:
+  push:
+    branches:
+      - master
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: readmeio/github-readme-sync@v2
+        with:
+          readme-oas-key: w2yg4tCKPgXwKyuB9Db6j0eSgZVzMIWd:621918d2754e62c676496260
+           
+          # OPTIONAL CONFIG, use if necessary
+          # oas-file-path: './swagger.json'
+          # api-version: 'v1.0.0'
