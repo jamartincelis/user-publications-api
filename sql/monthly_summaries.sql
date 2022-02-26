@@ -10,5 +10,3 @@ CREATE TABLE monthly_summaries (
     CONSTRAINT monthly_summaries_pkey PRIMARY KEY (id)
 );
 CREATE INDEX monthly_summaries_user_id_9a827774 ON monthly_summaries USING btree (user_id);
-
-ALTER TABLE monthly_summaries ADD CONSTRAINT monthly_summaries_user_id_9a827774_fk_users_id FOREIGN KEY (user_id) REFERENCES users(id) DEFERRABLE INITIALLY DEFERRED;
