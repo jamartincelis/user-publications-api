@@ -5,61 +5,48 @@
 		"version": "v1.0.0"
 	},
 	"servers": [{
-		"url": "{URL}"
+		"url": "http://localhost:8000/"
 	}],
 	"paths": {
-		"/monitoring/health-check/": {
-			"get": {
-				"summary": "Health check",
-				"operationId": "health_check",
-				"description": "",
-				"parameters": [],
-				"responses": {
-					"200": {
-						"content": {
-							"application/json": {
-								"schema": {
-									"type": "array",
-									"items": {}
-								}
-							}
-						},
-						"description": "Permite verificiar si el servicio está activo"
-					}
-				},
-				"tags": [
-					"Monitoreo"
-				]
-			}
+        "/catalog/{name}/": {
+            "get": {
+                "summary": "Lista de catalogos por nombre",
+                "operationId": "listar_catalogos_por_nombre",
+                "description": "",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "name",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "required": true,
+                        "description": "Nombre(s) de catalogo(s)",
+                        "example": "codetypes_list"       
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {}
+                                }
+                            }
+                        },
+                        "description": "Lista de catálogos"
+                    }
+                },
+                "tags": [
+                    "Catalogos"
+                ]
+            }
 		},
-		"/monitoring/sentry/": {
+		"/user/{userID}/budgets/?date_month={datemonth}": {
 			"get": {
-				"summary": "Sentry",
-				"operationId": "sentry",
-				"description": "",
-				"parameters": [],
-				"responses": {
-					"200": {
-						"content": {
-							"application/json": {
-								"schema": {
-									"type": "array",
-									"items": {}
-								}
-							}
-						},
-						"description": "Permite determinar si el servicio está conectado con Sentry."
-					}
-				},
-				"tags": [
-					"Monitoreo"
-				]
-			}
-		},
-		"/users/{userID}/projects/{projectID}/activities/": {
-			"get": {
-				"summary": "Listar actividades",
-				"operationId": "get_activities",
+				"summary": "Presupuestos del usuario filtrados por mes",
+				"operationId": "get_budgets_by_month",
 				"description": "",
 				"parameters": [{
 						"in": "path",
@@ -68,18 +55,28 @@
 							"type": "string"
 						},
 						"required": true,
-						"description": "UUID del usuario",
-						"example": "b9e605ee-4cca-400e-99c5-ae24abca97d5"
+						"description": "Id del usuario",
+						"example": "479ec168013945d0b7042bc4e5d0c4fb"
 					},
 					{
 						"in": "path",
-						"name": "projectID",
+						"name": "categoryID",
 						"schema": {
 							"type": "string"
 						},
 						"required": true,
-						"description": "UUID de la meta",
-						"example": "016fe969-4d2f-43f9-81b4-1bdcebd975e4"
+						"description": "Id de la categoría",
+						"example": "22118f55-e6a9-46b0-ae8f-a063dda396e0"
+					},
+					{
+						"in": "path",
+						"name": "datemonth",
+						"schema": {
+							"type": "string"
+						},
+						"required": true,
+						"description": "Fecha",
+						"example": "2021-09"
 					}
 				],
 				"responses": {
@@ -92,119 +89,18 @@
 								}
 							}
 						},
-						"description": "Permite obtener las actividades dado un usuario y meta."
+						"description": "Permite obtener los Presupuestos del usuario filtrados por mes."
 					}
 				},
 				"tags": [
-					"Actividades"
-				]
-			},
-			"post": {
-				"summary": "Crear actividad",
-				"operationId": "post_activities",
-				"parameters": [{
-						"in": "path",
-						"name": "userID",
-						"schema": {
-							"type": "string"
-						},
-						"required": true,
-						"description": "UUID del usuario",
-						"example": "b9e605ee-4cca-400e-99c5-ae24abca97d5"
-					},
-					{
-						"in": "path",
-						"name": "projectID",
-						"schema": {
-							"type": "string"
-						},
-						"required": true,
-						"description": "UUID de la meta",
-						"example": "016fe969-4d2f-43f9-81b4-1bdcebd975e4"
-					}
-				],
-				"requestBody": {
-					"content": {
-						"application/json": {
-							"schema": {
-								"title": "Actividad",
-								"type": "object",
-								"properties": {								
-									"rule": {
-										"type": "string",
-										"description": "Id de la regla",
-										"example": "6e10b138-9899-43cf-8a62-d6119456aa82"										
-									},
-									"payment": {
-										"type": "string",
-										"description": "Id del pago",
-										"example": "edf6a8f3-3081-414e-9b2f-4b6fa32eba2e"
-									},	
-									"project_name": {
-										"type": "string",
-										"description": "Nombre de la meta",
-										"example": "Meta de prueba"
-									},
-									"amount": {
-										"type": "number",
-										"description": "Cantidad",
-										"example": 2000
-									},
-									"title": {
-										"type": "string",
-										"description": "Título",
-										"example": "Titulo"
-									},
-									"message": {
-										"type": "string",
-										"description": "Mensaje",
-										"example": "Mensaje"
-									},
-									"footer": {
-										"type": "string",
-										"description": "Footer",
-										"example": "Footer"
-									},
-									"rule_name": {
-										"type": "string",
-										"description": "Nombre de la regla",
-										"example": "Pasión Futbolera"
-									},
-									"rule_icon": {
-										"type": "string",
-										"description": "Iconp de la regla",
-										"example": "./icon"
-									},
-									"activity_type": {
-										"type": "string",
-										"description": "Tipo de actividad",
-										"enum": ["E", "S"]
-									}
-								},
-								"required": [
-									"user",
-									"project",
-									"rule",
-									"payment"
-								]
-							}
-						}
-					}
-				},
-				"responses": {
-					"201": {
-						"description": "Created"
-					}
-				},
-				"tags": [
-					"Actividades"
+					"Presupuestos"
 				]
 			}
-		},
-		"/users/{userID}/projects/{projectID}/activities/{activityID}/": {
+		},			
+		"/user/{userID}/budgets/categories/{categoryID}/?date_month={datemonth}": {
 			"get": {
-				"summary": "Ver detalle de actividad",
-				"operationId": "get_activity_detail",
+				"summary": "Presupuestos del usuario filtrados por categoría y por mes",
+				"operationId": "get_budgets_by_category_month",
 				"description": "",
 				"parameters": [{
 						"in": "path",
@@ -213,28 +109,28 @@
 							"type": "string"
 						},
 						"required": true,
-						"description": "User ID",
-						"example": "b9e605ee-4cca-400e-99c5-ae24abca97d5"
+						"description": "Id del usuario",
+						"example": "479ec168013945d0b7042bc4e5d0c4fb"
 					},
 					{
 						"in": "path",
-						"name": "projectID",
+						"name": "categoryID",
 						"schema": {
 							"type": "string"
 						},
 						"required": true,
-						"description": "Project ID",
-						"example": "016fe969-4d2f-43f9-81b4-1bdcebd975e4"
+						"description": "Id de la categoría",
+						"example": "22118f55-e6a9-46b0-ae8f-a063dda396e0"
 					},
 					{
 						"in": "path",
-						"name": "activityID",
+						"name": "datemonth",
 						"schema": {
 							"type": "string"
 						},
 						"required": true,
-						"description": "Activity ID",
-						"example": "afcc1b39-8887-4027-977d-5b1cbff2e533"
+						"description": "Fecha",
+						"example": "2021-09"
 					}
 				],
 				"responses": {
@@ -247,65 +143,101 @@
 								}
 							}
 						},
-						"description": "Get Activity detail"
+						"description": "Permite obtener los Presupuestos del usuario filtrados por categoría y por mes."
 					}
 				},
 				"tags": [
-					"Actividades"
+					"Presupuestos"
+				]
+			}
+		},
+		"/user/{userID}/budgets/{budgetID}/": {
+			"get": {
+				"summary": "Ver detalle del presupuesto",
+				"operationId": "get_budget_detail",
+				"description": "",
+				"parameters": [
+					{
+						"in": "path",
+						"name": "userID",
+						"schema": {
+							"type": "string"
+						},
+						"required": true,
+						"description": "Id del presupuesto",
+						"example": "479ec168013945d0b7042bc4e5d0c4fb"
+					},
+					{
+						"in": "path",
+						"name": "budgetID",
+						"schema": {
+							"type": "string"
+						},
+						"required": true,
+						"description": "Id del presupuesto",
+						"example": "45a80dbbea714ce390b3-6761bcbf365c"
+					}
+				],
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "array",
+									"items": {}
+								}
+							}
+						},
+						"description": "Obtener detalle del presupuesto"
+					}
+				},
+				"tags": [
+					"Presupuestos"
 				]
 			},
 			"patch": {
-				"summary": "Actualizar actividad parcialmente.",
-				"operationId": "update_rule",
+				"summary": "Actualizar presupuesto parcialmente.",
+				"operationId": "update_budget",
 				"description": "",
-				"parameters": [{
+				"parameters": [
+					{
 						"in": "path",
 						"name": "userID",
 						"schema": {
 							"type": "string"
 						},
 						"required": true,
-						"description": "User ID",
-						"example": "b9e605ee-4cca-400e-99c5-ae24abca97d5"
+						"description": "Id del usuario",
+						"example": "479ec168013945d0b7042bc4e5d0c4fb"
 					},
 					{
 						"in": "path",
-						"name": "projectID",
+						"name": "budgetID",
 						"schema": {
 							"type": "string"
 						},
 						"required": true,
-						"description": "Project ID",
-						"example": "016fe969-4d2f-43f9-81b4-1bdcebd975e4"
-					},
-					{
-						"in": "path",
-						"name": "activityID",
-						"schema": {
-							"type": "string"
-						},
-						"required": true,
-						"description": "Activity ID",
-						"example": "afcc1b39-8887-4027-977d-5b1cbff2e533"
+						"description": "Id del presupuesto",
+						"example": "45a80dbbea714ce390b3-6761bcbf365c"
 					}
 				],
 				"requestBody": {
 					"content": {
 						"application/json": {
 							"schema": {
-								"title": "Actividad",
-								"type": "object",
-								"properties": {
-									"rule_name": {
-										"type": "string",
-										"description": "Nombre de la regla",
-										"example": "Pasión Futbolera"
-									}
-								}
-							}
+								"$ref": "#/components/schemas/Presupuesto"
+							},
+                            "examples": {
+                                "Actualizar monto": {
+                                  "summary": "Ejemplo actualizar monto",
+                                  "value": {
+                                        "amount": 9000
+                                  }
+                                }                      
+                            }							
 						}
 					}
-				},				
+				},			
 				"responses": {
 					"200": {
 						"content": {
@@ -316,113 +248,54 @@
 								}
 							}
 						},
-						"description": "Update activity"
+						"description": "Actualizar presupuesto"
 					}
 				},
 				"tags": [
-					"Actividades"
+					"Presupuestos"
 				]
 			},
 			"put": {
-				"summary": "Actualizar actividad.",
-				"operationId": "update_rule_put",
+				"summary": "Actualizar presupuesto.",
+				"operationId": "update_budget_put",
 				"description": "",
-				"parameters": [{
+				"parameters": [
+					{
 						"in": "path",
 						"name": "userID",
 						"schema": {
 							"type": "string"
 						},
 						"required": true,
-						"description": "User ID",
-						"example": "b9e605ee-4cca-400e-99c5-ae24abca97d5"
+						"description": "Id del usuario",
+						"example": "479ec168013945d0b7042bc4e5d0c4fb"
 					},
 					{
 						"in": "path",
-						"name": "projectID",
+						"name": "budgetID",
 						"schema": {
 							"type": "string"
 						},
 						"required": true,
-						"description": "Project ID",
-						"example": "016fe969-4d2f-43f9-81b4-1bdcebd975e4"
-					},
-					{
-						"in": "path",
-						"name": "activityID",
-						"schema": {
-							"type": "string"
-						},
-						"required": true,
-						"description": "Activity ID",
-						"example": "afcc1b39-8887-4027-977d-5b1cbff2e533"
+						"description": "Id del presupuesto",
+						"example": "45a80dbbea714ce390b3-6761bcbf365c"
 					}
 				],
 				"requestBody": {
 					"content": {
 						"application/json": {
 							"schema": {
-								"title": "Actividad",
-								"type": "object",
-								"properties": {								
-									"rule": {
-										"type": "string",
-										"description": "Id de la regla",
-										"example": "6e10b138-9899-43cf-8a62-d6119456aa82"										
-									},
-									"payment": {
-										"type": "string",
-										"description": "Id del pago",
-										"example": "edf6a8f3-3081-414e-9b2f-4b6fa32eba2e"
-									},	
-									"project_name": {
-										"type": "string",
-										"description": "Nombre de la meta",
-										"example": "Meta de prueba"
-									},
-									"amount": {
-										"type": "number",
-										"description": "Cantidad",
-										"example": 10000
-									},
-									"title": {
-										"type": "string",
-										"description": "Título",
-										"example": "Titulo"
-									},
-									"message": {
-										"type": "string",
-										"description": "Mensaje",
-										"example": "Mensaje"
-									},
-									"footer": {
-										"type": "string",
-										"description": "Footer",
-										"example": "Footer"
-									},
-									"rule_name": {
-										"type": "string",
-										"description": "Nombre de la regla",
-										"example": "Pasión Futbolera"
-									},
-									"rule_icon": {
-										"type": "string",
-										"description": "Iconp de la regla",
-										"example": "./icon"
-									},
-									"activity_type": {
-										"type": "string",
-										"description": "Tipo de actividad. E -> Event, S -> Saving",
-										"enum": ["E", "S"]
-									}
-								},
-								"required": [
-									"user",
-									"project",
-									"rule",
-									"payment"
-								]
-							}
+								"$ref": "#/components/schemas/Presupuesto"
+							},
+                            "examples": {
+                                "Actualizar monto": {
+                                  "summary": "Ejemplo actualizar monto",
+                                  "value": {
+									  "user": "479ec168013945d0b7042bc4e5d0c4fb",
+									  "amount": 10000
+                                  }
+                                }                      
+                            }								
 						}
 					}
 				},				
@@ -436,73 +309,549 @@
 								}
 							}
 						},
-						"description": "Update activity"
+						"description": "Update budget"
 					}
 				},
 				"tags": [
-					"Actividades"
+					"Presupuestos"
 				]
 			}			
+		},
+		"/user/{userID}/transactions/?date_month={datemonth}": {
+			"get": {
+				"summary": "Transacciones del usuario filtrados por mes",
+				"operationId": "get_trnsactions_by_month",
+				"description": "",
+				"parameters": [{
+						"in": "path",
+						"name": "userID",
+						"schema": {
+							"type": "string"
+						},
+						"required": true,
+						"description": "Id del usuario",
+						"example": "479ec168013945d0b7042bc4e5d0c4fb"
+					},
+					{
+						"in": "path",
+						"name": "datemonth",
+						"schema": {
+							"type": "string"
+						},
+						"required": true,
+						"description": "Fecha",
+						"example": "2021-09"
+					}
+				],
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "array",
+									"items": {}
+								}
+							}
+						},
+						"description": "Permite obtener las transacciones del usuario filtrados por mes."
+					}
+				},
+				"tags": [
+					"Transacciones"
+				]
+			}
+		},
+		"/user/{userID}/transactions/categories/{categoryID}/?date_month={datemonth}": {
+			"get": {
+				"summary": "Transacciones del usuario filtrados por categoría y por mes",
+				"operationId": "get_transactions_by_category_month",
+				"description": "",
+				"parameters": [{
+						"in": "path",
+						"name": "userID",
+						"schema": {
+							"type": "string"
+						},
+						"required": true,
+						"description": "Id del usuario",
+						"example": "479ec168013945d0b7042bc4e5d0c4fb"
+					},
+					{
+						"in": "path",
+						"name": "categoryID",
+						"schema": {
+							"type": "string"
+						},
+						"required": true,
+						"description": "Id de la categoría",
+						"example": "22118f55-e6a9-46b0-ae8f-a063dda396e0"
+					},
+					{
+						"in": "path",
+						"name": "datemonth",
+						"schema": {
+							"type": "string"
+						},
+						"required": true,
+						"description": "Fecha",
+						"example": "2021-09"
+					}
+				],
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "array",
+									"items": {}
+								}
+							}
+						},
+						"description": "Permite obtener los Presupuestos del usuario filtrados por categoría y por mes."
+					}
+				},
+				"tags": [
+					"Transacciones"
+				]
+			}
+		},		
+		"/user/{userID}/transactions/{transactionID}/": {
+			"get": {
+				"summary": "Ver detalle de la transacción",
+				"operationId": "get_transaction_detail",
+				"description": "",
+				"parameters": [
+					{
+						"in": "path",
+						"name": "userID",
+						"schema": {
+							"type": "string"
+						},
+						"required": true,
+						"description": "Id del usuario",
+						"example": "479ec168013945d0b7042bc4e5d0c4fb"
+					},
+					{
+						"in": "path",
+						"name": "transactionID",
+						"schema": {
+							"type": "string"
+						},
+						"required": true,
+						"description": "Id de la transacción",
+						"example": "68e18783-8b51-4618-af83-50c77f25871d"
+					}
+				],
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "array",
+									"items": {}
+								}
+							}
+						},
+						"description": "Obtener detalle de la transacción"
+					}
+				},
+				"tags": [
+					"Transacciones"
+				]
+			},
+			"patch": {
+				"summary": "Actualizar transacción parcialmente.",
+				"operationId": "update_transaction",
+				"description": "",
+				"parameters": [
+					{
+						"in": "path",
+						"name": "userID",
+						"schema": {
+							"type": "string"
+						},
+						"required": true,
+						"description": "Id del usuario",
+						"example": "479ec168013945d0b7042bc4e5d0c4fb"
+					},
+					{
+						"in": "path",
+						"name": "transactionID",
+						"schema": {
+							"type": "string"
+						},
+						"required": true,
+						"description": "Id de la transacción",
+						"example": "68e18783-8b51-4618-af83-50c77f25871d"
+					}
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/Transaccion"
+							},
+                            "examples": {
+                                "Actualizar nota": {
+                                  "summary": "Ejemplo actualizar nota",
+                                  "value": {
+                                        "user_note": "Nota del usuario"
+                                  }
+                                }                      
+                            }							
+						}
+					}
+				},			
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "array",
+									"items": {}
+								}
+							}
+						},
+						"description": "Actualizar transacción"
+					}
+				},
+				"tags": [
+					"Transacciones"
+				]
+			},
+			"put": {
+				"summary": "Actualizar presupuesto.",
+				"operationId": "update_transaction_put",
+				"description": "",
+				"parameters": [
+					{
+						"in": "path",
+						"name": "userID",
+						"schema": {
+							"type": "string"
+						},
+						"required": true,
+						"description": "Id del usuario",
+						"example": "479ec168013945d0b7042bc4e5d0c4fb"
+					},
+					{
+						"in": "path",
+						"name": "transactionID",
+						"schema": {
+							"type": "string"
+						},
+						"required": true,
+						"description": "Id de la transacción",
+						"example": "68e18783-8b51-4618-af83-50c77f25871d"
+					}
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/Transaccion"
+							},
+                            "examples": {
+                                "Actualizar descripcion": {
+                                  	"summary": "Ejemplo actualizar monto",
+                                  	"value": {
+									  	"category": "22118f55-e6a9-46b0-ae8f-a063dda396e0",
+										"description": "Descripción transacción.",
+										"transaction_date": "2021-09-09T15:20:30-04:00",
+										"account": "910e8abd-1265-41ba-8125-f6c720bacde9",
+										"amount": 4000
+                                  	}
+                                }                      
+                            }								
+						}
+					}
+				},				
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "array",
+									"items": {}
+								}
+							}
+						},
+						"description": "Actualizar transacción"
+					}
+				},
+				"tags": [
+					"Transacciones"
+				]
+			}			
+		},
+		"/user/{userID}/transactions/summary/?date_month={datemonth}": {
+			"get": {
+				"summary": "Gasto Total mensual",
+				"operationId": "get_summary",
+				"description": "",
+				"parameters": [
+					{
+						"in": "path",
+						"name": "userID",
+						"schema": {
+							"type": "string"
+						},
+						"required": true,
+						"description": "Id del usuario",
+						"example": "479ec168013945d0b7042bc4e5d0c4fb"
+					},
+					{
+						"in": "path",
+						"name": "datemonth",
+						"schema": {
+							"type": "string"
+						},
+						"required": true,
+						"description": "Fecha",
+						"example": "2021-09"
+					}					
+				],
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "array",
+									"items": {}
+								}
+							}
+						},
+						"description": "Permite obtener el gasto total mensual."
+					}
+				},
+				"tags": [
+					"Transacciones"
+				]
+			}
+		},
+		"/user/{userID}/transactions/expenses/summary/?date_month={datemonth}": {
+			"get": {
+				"summary": "Gasto Total de egresos",
+				"operationId": "get_expenses_summary",
+				"description": "",
+				"parameters": [
+					{
+						"in": "path",
+						"name": "userID",
+						"schema": {
+							"type": "string"
+						},
+						"required": true,
+						"description": "Id del usuario",
+						"example": "479ec168013945d0b7042bc4e5d0c4fb"
+					},
+					{
+						"in": "path",
+						"name": "datemonth",
+						"schema": {
+							"type": "string"
+						},
+						"required": true,
+						"description": "Fecha",
+						"example": "2021-09"
+					}					
+				],
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "array",
+									"items": {}
+								}
+							}
+						},
+						"description": "Permite obtener el gasto total de egresos."
+					}
+				},
+				"tags": [
+					"Transacciones"
+				]
+			}
+		},
+		"/user/{userID}/transactions/balance/?year={year}": {
+			"get": {
+				"summary": "Balance Mensual",
+				"operationId": "get_balance",
+				"description": "",
+				"parameters": [
+					{
+						"in": "path",
+						"name": "userID",
+						"schema": {
+							"type": "string"
+						},
+						"required": true,
+						"description": "Id del usuario",
+						"example": "479ec168013945d0b7042bc4e5d0c4fb"
+					},
+					{
+						"in": "path",
+						"name": "year",
+						"schema": {
+							"type": "string"
+						},
+						"required": true,
+						"description": "Fecha",
+						"example": "2021"
+					}					
+				],
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "array",
+									"items": {}
+								}
+							}
+						},
+						"description": "Permite obtener el gasto total de egresos."
+					}
+				},
+				"tags": [
+					"Transacciones"
+				]
+			}
+		},
+        "/faqs/": {
+            "get": {
+                "summary": "Lista preguntas frecuentes",
+                "operationId": "listar_preguntas_frecuentes",
+                "description": "",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {}
+                                }
+                            }
+                        },
+                        "description": "Lista de preguntas frecuentes"
+                    }
+                },
+                "tags": [
+                    "Preguntas frecuentes"
+                ]
+            }
+		},
+        "/notifications/": {
+            "get": {
+                "summary": "Lista notificaciones",
+                "operationId": "listar_notificaciones",
+                "description": "",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {}
+                                }
+                            }
+                        },
+                        "description": "Lista de notificaciones"
+                    }
+                },
+                "tags": [
+                    "Notificaciones"
+                ]
+            }
+		},
+        "/tips/": {
+            "get": {
+                "summary": "Lista de consejos",
+                "operationId": "listar_consejos",
+                "description": "",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {}
+                                }
+                            }
+                        },
+                        "description": "Lista de consejos"
+                    }
+                },
+                "tags": [
+                    "Consejos"
+                ]
+            }
 		}
 	},
 	"components": {
 		"schemas": {
-			"Activity": {
-				"title": "Actividad",
+			"Presupuesto": {
+				"title": "Presupuesto ",
 				"type": "object",
 				"properties": {
 					"user": {
 						"type": "string",
-						"description": "User ID"
+						"description": "Id del usuario"
 					},
-					"project": {
+					"category": {
 						"type": "string",
-						"description": "Project ID"
-					},
-					"rule": {
-						"type": "string",
-						"description": "Rule ID"
-					},
-					"project_name": {
-						"type": "string",
-						"description": "Project name"
+						"description": "Id de la categoria"
 					},
 					"amount": {
 						"type": "number",
-						"description": "Activity amount"
+						"description": "Monto"
 					},
-					"title": {
+					"budget_date": {
 						"type": "string",
-						"description": "Title"
-					},
-					"message": {
-						"type": "string",
-						"description": "Message"
-					},
-					"footer": {
-						"type": "string",
-						"description": "Footer"
-					},
-					"rule_name": {
-						"type": "string",
-						"description": "Rule name"
-					},
-					"rule_icon": {
-						"type": "string",
-						"description": "Rule icon"
-					},
-					"activity_type": {
-						"type": "string",
-						"description": "Tipo de actividad."
+						"description": "Fecha"
 					}
 				},
 				"required": [
 					"user",
 					"project",
-					"rule",
-					"payment"
+					"amount",
+					"budget_date"
 				]
-			}
+			},
+			"Transaccion": {
+				"title": "Transacción ",
+				"type": "object",
+				"properties": {
+					"account": {
+						"type": "string",
+						"description": "Cuenta del usuario"
+					},
+					"category": {
+						"type": "string",
+						"description": "Id de la categoria"
+					},
+					"amount": {
+						"type": "number",
+						"description": "Monto"
+					},
+					"description": {
+						"type": "string",
+						"description": "description"
+					},
+					"transaction_date": {
+						"type": "string",
+						"description": "Fecha"
+					},
+					"user_note": {
+						"type": "string",
+						"description": "Nota del usuario"
+					}
+				}
+			}		
 		}
 	}
 }

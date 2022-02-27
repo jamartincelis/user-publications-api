@@ -21,7 +21,7 @@ class BudgetList(ListCreateAPIView):
 
     def get(self, request, user):
         budgets = self.get_queryset().filter(user=user)
-        date = self.request.query_params.get('date_month')
+        date = validate_date(self.request.query_params.get('date_month'))
         if not date:
             return Response({'400': "Invalid date format."}, status=status.HTTP_400_BAD_REQUEST)
         budgets = budgets.filter(budget_date__range=[date.start_of('month'), date.end_of('month')])
