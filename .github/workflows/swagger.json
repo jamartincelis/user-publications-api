@@ -43,7 +43,7 @@
                 ]
             }
 		},
-		"/user/{userID}/budgets/?date_month={datemonth}": {
+		"/user/{userID}/budgets/": {
 			"get": {
 				"summary": "Presupuestos del usuario filtrados por mes",
 				"operationId": "get_budgets_by_month",
@@ -59,18 +59,8 @@
 						"example": "479ec168013945d0b7042bc4e5d0c4fb"
 					},
 					{
-						"in": "path",
-						"name": "categoryID",
-						"schema": {
-							"type": "string"
-						},
-						"required": true,
-						"description": "Id de la categoría",
-						"example": "22118f55-e6a9-46b0-ae8f-a063dda396e0"
-					},
-					{
-						"in": "path",
-						"name": "datemonth",
+						"in": "query",
+						"name": "date_month",
 						"schema": {
 							"type": "string"
 						},
@@ -97,7 +87,7 @@
 				]
 			}
 		},			
-		"/user/{userID}/budgets/categories/{categoryID}/?date_month={datemonth}": {
+		"/user/{userID}/budgets/categories/{categoryID}/": {
 			"get": {
 				"summary": "Presupuestos del usuario filtrados por categoría y por mes",
 				"operationId": "get_budgets_by_category_month",
@@ -123,8 +113,8 @@
 						"example": "22118f55-e6a9-46b0-ae8f-a063dda396e0"
 					},
 					{
-						"in": "path",
-						"name": "datemonth",
+						"in": "query",
+						"name": "date_month",
 						"schema": {
 							"type": "string"
 						},
@@ -317,10 +307,10 @@
 				]
 			}			
 		},
-		"/user/{userID}/transactions/?date_month={datemonth}": {
+		"/user/{userID}/transactions/": {
 			"get": {
 				"summary": "Transacciones del usuario filtrados por mes",
-				"operationId": "get_trnsactions_by_month",
+				"operationId": "get_transactions_by_month",
 				"description": "",
 				"parameters": [{
 						"in": "path",
@@ -333,8 +323,8 @@
 						"example": "479ec168013945d0b7042bc4e5d0c4fb"
 					},
 					{
-						"in": "path",
-						"name": "datemonth",
+						"in": "query",
+						"name": "date_month",
 						"schema": {
 							"type": "string"
 						},
@@ -361,7 +351,7 @@
 				]
 			}
 		},
-		"/user/{userID}/transactions/categories/{categoryID}/?date_month={datemonth}": {
+		"/user/{userID}/transactions/categories/{categoryID}/": {
 			"get": {
 				"summary": "Transacciones del usuario filtrados por categoría y por mes",
 				"operationId": "get_transactions_by_category_month",
@@ -387,8 +377,8 @@
 						"example": "22118f55-e6a9-46b0-ae8f-a063dda396e0"
 					},
 					{
-						"in": "path",
-						"name": "datemonth",
+						"in": "query",
+						"name": "date_month",
 						"schema": {
 							"type": "string"
 						},
@@ -584,7 +574,7 @@
 				]
 			}			
 		},
-		"/user/{userID}/transactions/summary/?date_month={datemonth}": {
+		"/user/{userID}/transactions/summary/": {
 			"get": {
 				"summary": "Gasto Total mensual",
 				"operationId": "get_summary",
@@ -601,8 +591,8 @@
 						"example": "479ec168013945d0b7042bc4e5d0c4fb"
 					},
 					{
-						"in": "path",
-						"name": "datemonth",
+						"in": "query",
+						"name": "date_month",
 						"schema": {
 							"type": "string"
 						},
@@ -629,7 +619,7 @@
 				]
 			}
 		},
-		"/user/{userID}/transactions/expenses/summary/?date_month={datemonth}": {
+		"/user/{userID}/transactions/expenses/summary/": {
 			"get": {
 				"summary": "Gasto Total de egresos",
 				"operationId": "get_expenses_summary",
@@ -646,8 +636,8 @@
 						"example": "479ec168013945d0b7042bc4e5d0c4fb"
 					},
 					{
-						"in": "path",
-						"name": "datemonth",
+						"in": "query",
+						"name": "date_month",
 						"schema": {
 							"type": "string"
 						},
@@ -674,7 +664,7 @@
 				]
 			}
 		},
-		"/user/{userID}/transactions/balance/?year={year}": {
+		"/user/{userID}/transactions/balance/": {
 			"get": {
 				"summary": "Balance Mensual",
 				"operationId": "get_balance",
@@ -691,7 +681,7 @@
 						"example": "479ec168013945d0b7042bc4e5d0c4fb"
 					},
 					{
-						"in": "path",
+						"in": "query",
 						"name": "year",
 						"schema": {
 							"type": "string"
