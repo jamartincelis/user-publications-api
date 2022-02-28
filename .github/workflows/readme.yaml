@@ -1,4 +1,4 @@
-name: readme.io
+name: Sync OAS to ReadMe
 on:
   push:
     branches:
@@ -10,8 +10,4 @@ jobs:
       - uses: actions/checkout@v2
       - uses: readmeio/github-readme-sync@v2
         with:
-          readme-oas-key: w2yg4tCKPgXwKyuB9Db6j0eSgZVzMIWd:621918d2754e62c676496260
-           
-          # OPTIONAL CONFIG, use if necessary
-          # oas-file-path: './swagger.json'
-          # api-version: 'v1.0.0'
+          readme-oas-key: w2yg4tCKPgXwKyuB9Db6j0eSgZVzMIWd:621ae9d67e490f18108538c4
