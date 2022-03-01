@@ -1,9 +1,0 @@
-- model: 'account.Account'
-  fields:
-    id: 'e25736e4-b2db-4fa0-8917-86f5ec92463f'
-    user: '0390a508-dba5-4344-b77f-93e1227d42f4'
-
-- model: 'account.Account'
-  fields:
-    id: '910e8abd-1265-41ba-8125-f6c720bacde9'
-    user: '479ec168-0139-45d0-b704-2bc4e5d0c4fb'
