@@ -11,22 +11,26 @@ class BudgetList(ListCreateAPIView):
     """
     Devuelve la lista de presupuestos del usuario
     """
-    queryset = Budget.objects.all()
     serializer_class = BudgetSerializer
 
+    def get_queryset(self):
+        return Budget.objects.filter(user=self.kwargs['user'])
+
     def get(self, request, user):
-        budgets = self.get_queryset().filter(user=user)
+        budgets = self.get_queryset()
         date = validate_date(self.request.query_params.get('date_month'))
         if not date:
             return Response({'400': "Invalid date format."}, status=status.HTTP_400_BAD_REQUEST)
-        budgets = budgets.filter(budget_date__range=[date.start_of('month'), date.end_of('month')])
+        if budgets:
+            print(budgets)    
+            budgets = budgets.filter(budget_date__range=[date.start_of('month'), date.end_of('month')])
         serializer = BudgetSerializer(budgets, many=True)
         return Response(data=serializer.data, status=status.HTTP_200_OK)
 
     def create(self, request, *args, **kwargs):
         if 'category' and 'user' in request.data:
-            request.data['category_id'] = request.data.pop('category')
-            request.data['user_id'] = request.data.pop('user')
+            request.data['category'] = request.data.pop('category')
+            request.data['user'] = request.data.pop('user')
         else:
             return Response({'400': "Bad request."}, status=status.HTTP_400_BAD_REQUEST)
         instance = Budget.objects.create(**request.data)

@@ -1,27 +1,3 @@
-- model: 'budget.Budget'
-  fields:
-    id: '45a80dbb-ea71-4ce3-90b3-6761bcbf365c'
-    user: '0390a508-dba5-4344-b77f-93e1227d42f4'
-    category: '22118f55-e6a9-46b0-ae8f-a063dda396e0' # Shopping
-    amount: 5000
-    budget_date: '2021-09-09'
-
-- model: 'budget.Budget'
-  fields:
-    id: '64aad0df-2597-443a-9052-7be5a283ab7d'
-    user: '0390a508-dba5-4344-b77f-93e1227d42f4'
-    category: '9abd4759-ab14-4e09-adc2-9c5dea1041b1' # Entretenimiento
-    amount: 2400
-    budget_date: '2021-09-21'
-
-- model: 'budget.Budget'
-  fields:
-    id: '64aad0df-2597-443a-9052-7be5a283ab7d'
-    user: '0390a508-dba5-4344-b77f-93e1227d42f4'
-    category: 'cde589f3-6281-4671-9bb2-333168d5971d' # Hogar y familia
-    amount: 100
-    budget_date: '2021-09-21'
-
 - model: 'transaction.Transaction'
   fields:
     id: '6ff3b446-d218-43e2-8cee-8c1228de88dc'
@@ -30,6 +6,7 @@
     transaction_date: '2021-09-09T13:20:30-06:00'
     account: 'e25736e4-b2db-4fa0-8917-86f5ec92463f'
     category: '9abd4759-ab14-4e09-adc2-9c5dea1041b1' # Entretenimiento
+    user: '479ec168013945d0b7042bc4e5d0c4fb'
 
 - model: 'transaction.Transaction'
   fields:
@@ -39,6 +16,7 @@
     transaction_date: '2021-09-09T13:20:30-06:00'
     account: 'e25736e4-b2db-4fa0-8917-86f5ec92463f'
     category: '9abd4759-ab14-4e09-adc2-9c5dea1041b1' # Entretenimiento
+    user: '479ec168013945d0b7042bc4e5d0c4fb'
 
 - model: 'transaction.Transaction'
   fields:
@@ -48,6 +26,7 @@
     transaction_date: '2021-09-09T13:20:30-06:00'
     account: 'e25736e4-b2db-4fa0-8917-86f5ec92463f'
     category: '72fb8abb-d236-469d-a511-0e7d81c4af1e' # Ahorros & Inversión
+    user: '479ec168013945d0b7042bc4e5d0c4fb'
 
 - model: 'transaction.Transaction'
   fields:
@@ -57,6 +36,7 @@
     transaction_date: '2021-09-09T13:20:30-06:00'
     account: 'e25736e4-b2db-4fa0-8917-86f5ec92463f'
     category: '8442c4fa-64e6-4470-af7c-8d007d5f572f' # Consumo de luz, agua, gas, internet, telefonía...
+    user: '479ec168013945d0b7042bc4e5d0c4fb'
 
 - model: 'transaction.Transaction'
   fields:
@@ -66,6 +46,7 @@
     transaction_date: '2021-09-09T13:20:30-06:00'
     account: 'e25736e4-b2db-4fa0-8917-86f5ec92463f'
     category: 'cf01dce7-6d5e-4ad6-8e5a-8ba5c6d6f94c' # Seguros, comisiones, impuestos
+    user: '479ec168013945d0b7042bc4e5d0c4fb'
 
 - model: 'transaction.Transaction'
   fields:
@@ -75,6 +56,7 @@
     transaction_date: '2021-09-09T13:20:30-06:00'
     account: 'e25736e4-b2db-4fa0-8917-86f5ec92463f'
     category: '4419f198-e4d5-4352-aba6-c6f173b748b2' # Compra de divisas, pago tarjeta de crédito
+    user: '479ec168013945d0b7042bc4e5d0c4fb'
 
 - model: 'transaction.Transaction'
   fields:
@@ -84,6 +66,7 @@
     transaction_date: '2021-09-09T13:20:30-06:00'
     account: 'e25736e4-b2db-4fa0-8917-86f5ec92463f'
     category: 'a249c468-bb4d-4365-83f4-108d456bb494' # Apps de pedidos, restaurantes, bares y nightclubs
+    user: '479ec168013945d0b7042bc4e5d0c4fb'
 
 - model: 'transaction.Transaction'
   fields:
@@ -93,3 +76,4 @@
     transaction_date: '2021-09-09T13:20:30-06:00'
     account: 'e25736e4-b2db-4fa0-8917-86f5ec92463f'
     category: 'cde589f3-6281-4671-9bb2-333168d5971d' # Renta, hipotecario, educación, mascota, veterinario, colegio
+    user: '479ec168013945d0b7042bc4e5d0c4fb'

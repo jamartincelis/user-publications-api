@@ -2,76 +2,12 @@
 
 Endpoints del proyecto coopeuch salud financiera.
 
-## Obtener la lista de catalogos
-
-```bash
-curl --request GET \
-  --url http://localhost:8000/catalog/codes_list 
-```
-
-## Obtener la lista de tipos de catalogos
-
-```bash
-curl --request GET \
-  --url http://localhost:8000/catalog/codetypes_list/
-```
-
-## Obtener la lista de catalogos con sus tipos de catalogos asociados
-
-```bash
-curl --request GET \
-  --url http://localhost:8000/catalog/list/
-```
-
-## Obtener tipos de catalogos por nombre
-
-```bash
-curl --request GET \
-  --url http://localhost:8000/catalog/{name}/
-```
-ejemplo
-
-```bash
-curl --request GET \
-  --url http://localhost:8000/catalog/account_status/
-```
-
-## Obtener las categorias de ingresos de las transacciones
-
-```bash
-curl --request GET \
-  --url http://localhost:8000/catalog/incomes_categories/
-```
-
-## Obtener las categorias de egresos de las transacciones
-
-```bash
-curl --request GET \
-  --url http://localhost:8000/catalog/expenses_categories/
-```
-
-## Acceder a los datos del usuario
-
-```bash
-curl --request GET \
-  --url http://localhost:8000/user/479ec168013945d0b7042bc4e5d0c4fb/
-```
-
-respuesta
-
-```json
-{
-    "id": "479ec168-0139-45d0-b704-2bc4e5d0c4fb",
-    "optional_id": "479ec168013945d0b7042bc4e5d0c4fb",
-    "email": "correo@correo.com"
-}
-```
-
 ## Obtener los presupuestos del usuario filtrados por mes.
 
 ```bash
-curl --request GET \
-  --url 'http://localhost:8000/user/479ec168013945d0b7042bc4e5d0c4fb/budgets/?date_month=2021-09' \
+curl -X 'GET' \
+  'http://localhost:8000/pfm-service/user/479ec168013945d0b7042bc4e5d0c4fb/budgets/?date_month=2021-09' \
+  -H 'accept: application/json'
 ```
 
 respuesta
@@ -100,8 +36,9 @@ respuesta
 ## Obtener los presupuestos del usuario filtrados por categoría y por mes.
 
 ```bash
-curl --request GET \
-  --url 'http://localhost:8000/user/479ec168013945d0b7042bc4e5d0c4fb/budgets/categories/22118f55-e6a9-46b0-ae8f-a063dda396e0/?date_month=2021-09' \
+curl -X 'GET' \
+  'http://localhost:8000/pfm-service/user/479ec168013945d0b7042bc4e5d0c4fb/budgets/categories/22118f55-e6a9-46b0-ae8f-a063dda396e0/?date_month=2021-09' \
+  -H 'accept: application/json'
 ```
 
 respuesta
@@ -131,8 +68,9 @@ respuesta
 ## Detalle del presupuesto del usuario.
 
 ```bash
-curl --request GET \
-  --url http://localhost:8000/user/479ec168013945d0b7042bc4e5d0c4fb/budgets/45a80dbbea714ce390b3-6761bcbf365c/
+curl -X 'GET' \
+  'http://localhost:8000/pfm-service/user/479ec168013945d0b7042bc4e5d0c4fb/budgets/45a80dbbea714ce390b3-6761bcbf365c/' \
+  -H 'accept: application/json'
 ```
 respuesta
 
@@ -158,10 +96,15 @@ respuesta
 ## Crear presupuesto (revisar presupuestos). 
 
 ```bash
-curl --request POST \
-  --url http://localhost:8000/user/479ec168013945d0b7042bc4e5d0c4fb/budgets/ \
-  --header 'content-type: application/json' \
-  --data '{"amount": 3000,"budget_date": "2021-09-09T15:20:30-04:00","user": "479ec168-0139-45d0-b704-2bc4e5d0c4fb","category": "22118f55-e6a9-46b0-ae8f-a063dda396e0"}'
+curl -X 'POST' \
+  'http://localhost:8000/pfm-service/user/479ec168013945d0b7042bc4e5d0c4fb/budgets/' \
+  -H 'accept: */*' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "amount": 9000,
+  "user": "479ec168-0139-45d0-b704-2bc4e5d0c4fb",
+  "category": "22118f55-e6a9-46b0-ae8f-a063dda396e0"
+}'
 ```
 respuesta 
 
@@ -190,10 +133,13 @@ respuesta
 Forma 1
 
 ```bash
-curl --request PATCH \
-  --url http://localhost:8000/user/479ec168013945d0b7042bc4e5d0c4fb/budgets/45a80dbb-ea71-4ce3-90b3-6761bcbf365c/ \
-  --header 'content-type: application/json'
-  --data '{"amount" : 5100}'
+curl -X 'PATCH' \
+  'http://localhost:8000/pfm-service/user/479ec168013945d0b7042bc4e5d0c4fb/budgets/45a80dbbea714ce390b3-6761bcbf365c/' \
+  -H 'accept: application/json' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "amount": 9000
+}'
 ```
 respuesta 
 
@@ -213,10 +159,15 @@ respuesta
 Forma 2
 
 ```bash
-curl --request PUT \
-  --url http://localhost:8000/user/479ec168013945d0b7042bc4e5d0c4fb/budgets/45a80dbb-ea71-4ce3-90b3-6761bcbf365c/ \
-  --header 'content-type: application/json' 
-  --data '{"user": "479ec168-0139-45d0-b704-2bc4e5d0c4fb","category": "22118f55-e6a9-46b0-ae8f-a063dda396e0","amount" : 5100,"average": 450,"expenses_count": 3,"expenses_sum": 1100}'
+curl -X 'PUT' \
+  'http://localhost:8000/pfm-service/user/479ec168013945d0b7042bc4e5d0c4fb/budgets/45a80dbbea714ce390b3-6761bcbf365c/' \
+  -H 'accept: application/json' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "user": "479ec168013945d0b7042bc4e5d0c4fb",
+  "amount": 10000,
+  "category": "22118f55-e6a9-46b0-ae8f-a063dda396e0"
+}'
 ```
 respuesta 
 

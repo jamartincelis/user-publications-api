@@ -7,7 +7,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 
-from helpers.helpers import validate_date, months_dict
+from helpers.helpers import validate_date, months_dict, catalog_to_dict
 from budget.models import Budget
 from transaction.models import Transaction
 from transaction.serializers import TransactionSerializer, TransactionSummarySerializer
@@ -17,16 +17,17 @@ class TransactionList(ListAPIView):
     """
     Devuelve la lista de transacciones del usuario
     """
-    queryset = Transaction.objects.all()
     serializer_class = TransactionSerializer
     filterset_fields = ['date_month']
+
+    def get_queryset(self):
+        return Transaction.objects.filter(user=self.kwargs['user'])
 
     def get(self, request, user):
         date = validate_date(self.request.query_params.get('date_month'))
         if not date:
             return Response({'400': "Invalid date format."}, status=status.HTTP_400_BAD_REQUEST)
-        transactions = self.get_queryset().prefetch_related('category').filter(account__user=user)
-        transactions = transactions.filter(transaction_date__range=[date.start_of('month'), date.end_of('month')])
+        transactions = self.get_queryset().filter(transaction_date__range=[date.start_of('month'), date.end_of('month')])
         data = TransactionSerializer(transactions, many=True)
         return Response(data=data.data, status=status.HTTP_200_OK)
 
@@ -38,29 +39,25 @@ class TransactionDetail(RetrieveUpdateAPIView):
     queryset = Transaction.objects.all()
     serializer_class = TransactionSerializer
 
-    def patch(self, request, *args, **kwargs):
-        instance = Transaction.objects.get(id=kwargs['pk'])
-        if 'category' in request.data:
-            request.data['category_id'] = request.data['category']
-        instance.__dict__.update(request.data)
-        instance.save()
-        return Response(TransactionSerializer(instance).data, status=status.HTTP_200_OK)
-
+    def get_queryset(self):
+        return Transaction.objects.filter(user=self.kwargs['user'], pk=self.kwargs['pk'])
 
 class Category(ListAPIView):
     """
     Devuelve las transacciones del usuario filtradas por mes y categoría
     """
-    queryset = Transaction.objects.all()
     serializer_class = TransactionSerializer
     filterset_fields = ['date_month']
+    
+    def get_queryset(self):
+        return Transaction.objects.filter(user=self.kwargs['user'], 
+            category=self.kwargs['category'])
 
     def get(self, request, user, category):
         date = validate_date(self.request.query_params.get('date_month'))
         if date is False:
             return Response({'400': 'Invalid date format.'}, status=status.HTTP_400_BAD_REQUEST)
-        transactions = self.get_queryset().filter(account__user=user, category=category)
-        transactions = transactions.filter(transaction_date__range=[date.start_of('month'), date.end_of('month')])
+        transactions = self.get_queryset().filter(transaction_date__range=[date.start_of('month'), date.end_of('month')])
         data = TransactionSerializer(transactions, many=True)
         return Response(data=data.data, status=status.HTTP_200_OK)
 
@@ -77,7 +74,7 @@ class CategorySummary(ListAPIView):
         date = validate_date(self.request.query_params.get('date_month'))
         if not date:
             return Response({'400': "Invalid date format."}, status=status.HTTP_400_BAD_REQUEST)
-        transactions = self.get_queryset().filter(account__user=user,
+        transactions = self.get_queryset().filter(user=user,
             transaction_date__range=[date.start_of('month'), date.end_of('month')]
         ).values('category').order_by('category').annotate(total_spend=Sum('amount'),num_transaction=Count('category'))
         data = TransactionSummarySerializer(transactions, many=True)
@@ -137,7 +134,10 @@ class ExpenseSummaryView(APIView):
         }
 
     def merge_data(self):
-        categories = Code.objects.filter(code_type__name='expenses_categories')
+        #categories = Code.objects.filter(code_type__name='expenses_categories')
+        # se obtiene las categorias de egresos
+        categories = catalog_to_dict('transaction_category')
+        print(categories)
         for category in categories:
             expenses = self.get_expenses(category.id)
             budget = self.get_budget(category.id, expenses['amount'])
@@ -178,7 +178,7 @@ class ExpenseSummaryView(APIView):
             'categories': []
         }
         transactions = Transaction.objects.filter(
-            account__user=user,
+            user=user,
             transaction_date__range=[date.start_of('month'), date.end_of('month')],
             amount__lt=0
         ).values('amount', 'category').order_by('category')
@@ -208,7 +208,7 @@ class MonthlyBalanceView(APIView):
         }
 
     def get(self, request, user):
-        year = Transaction.objects.filter(account__user=user).order_by('transaction_date').first().transaction_date.year
+        year = Transaction.objects.filter(user=user).order_by('transaction_date').first().transaction_date.year
         start_date = pendulum.datetime(year, 1, 1)
         end_date = pendulum.now().end_of('year')
         dates = []
@@ -219,7 +219,7 @@ class MonthlyBalanceView(APIView):
         for date in dates:
             data = Transaction.objects.filter(
                 transaction_date__range=[date.start_of('month'), date.end_of('month')],
-                account__user=user,
+                    user=user,
                 ).aggregate(
                 incomes=Sum(Case(
                     When(amount__gt=0, then=F('amount')),
@@ -266,7 +266,7 @@ class MonthlyCategoryBalanceView(APIView):
 
     def get(self, request, user, category):
         year = Transaction.objects.filter(
-            account__user=user, category=category).order_by('transaction_date').first().transaction_date.year
+            user=user, category=category).order_by('transaction_date').first().transaction_date.year
         start_date = pendulum.datetime(year, 1, 1)
         end_date = pendulum.now().end_of('year')
         dates = []
@@ -283,7 +283,7 @@ class MonthlyCategoryBalanceView(APIView):
                 budget = None
             data = Transaction.objects.filter(
                 transaction_date__range=[date.start_of('month'), date.end_of('month')],
-                account__user=user,
+                user=user,
                 category=category
                 ).aggregate(
                 expenses_sum=Sum(Case(

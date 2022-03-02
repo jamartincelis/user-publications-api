@@ -5,44 +5,9 @@
 		"version": "v1.0.0"
 	},
 	"servers": [{
-		"url": "http://localhost:8000/"
+		"url": "http://localhost:8000/pfm-service"
 	}],
 	"paths": {
-        "/catalog/{name}/": {
-            "get": {
-                "summary": "Lista de catalogos por nombre",
-                "operationId": "listar_catalogos_por_nombre",
-                "description": "",
-                "parameters": [
-                    {
-                        "in": "path",
-                        "name": "name",
-                        "schema": {
-                            "type": "string"
-                        },
-                        "required": true,
-                        "description": "Nombre(s) de catalogo(s)",
-                        "example": "codetypes_list"       
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "array",
-                                    "items": {}
-                                }
-                            }
-                        },
-                        "description": "Lista de catálogos"
-                    }
-                },
-                "tags": [
-                    "Catalogos"
-                ]
-            }
-		},
 		"/user/{userID}/budgets/": {
 			"get": {
 				"summary": "Presupuestos del usuario filtrados por mes",
@@ -85,7 +50,50 @@
 				"tags": [
 					"Presupuestos"
 				]
-			}
+			},
+            "post": {
+                "summary": "Crear presupuesto",
+                "operationId": "crear_presupuesto",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "userID",
+                        "schema": {
+                            "type": "string"
+                        },
+                        "required": true,
+                        "description": "Id del usuario",
+                        "example": "479ec168013945d0b7042bc4e5d0c4fb"
+                    }
+                ],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/Presupuesto"
+							},
+                            "examples": {
+                                "Crear presupuesto": {
+                                  "summary": "Ejemplo crear presupuesto monto",
+                                  "value": {
+                                        "amount": 9000,
+										"user": "479ec168-0139-45d0-b704-2bc4e5d0c4fb",
+										"category": "22118f55-e6a9-46b0-ae8f-a063dda396e0"
+                                  }
+                                }                      
+                            }							
+						}
+					}
+				},	
+                "responses": {
+                    "201": {
+                        "description": "Created"
+                    }
+                },
+                "tags": [
+                    "Presupuestos"
+                ]
+            } 
 		},			
 		"/user/{userID}/budgets/categories/{categoryID}/": {
 			"get": {
@@ -154,7 +162,7 @@
 							"type": "string"
 						},
 						"required": true,
-						"description": "Id del presupuesto",
+						"description": "Id del usuario",
 						"example": "479ec168013945d0b7042bc4e5d0c4fb"
 					},
 					{
@@ -282,7 +290,8 @@
                                   "summary": "Ejemplo actualizar monto",
                                   "value": {
 									  "user": "479ec168013945d0b7042bc4e5d0c4fb",
-									  "amount": 10000
+									  "amount": 10000,
+									  "category": "22118f55-e6a9-46b0-ae8f-a063dda396e0"
                                   }
                                 }                      
                             }								
@@ -374,7 +383,7 @@
 						},
 						"required": true,
 						"description": "Id de la categoría",
-						"example": "22118f55-e6a9-46b0-ae8f-a063dda396e0"
+						"example": "9abd4759-ab14-4e09-adc2-9c5dea1041b1"
 					},
 					{
 						"in": "query",
@@ -429,7 +438,7 @@
 						},
 						"required": true,
 						"description": "Id de la transacción",
-						"example": "68e18783-8b51-4618-af83-50c77f25871d"
+						"example": "6ff3b446-d218-43e2-8cee-8c1228de88dc"
 					}
 				],
 				"responses": {
@@ -472,7 +481,7 @@
 						},
 						"required": true,
 						"description": "Id de la transacción",
-						"example": "68e18783-8b51-4618-af83-50c77f25871d"
+						"example": "6ff3b446-d218-43e2-8cee-8c1228de88dc"
 					}
 				],
 				"requestBody": {
@@ -532,7 +541,7 @@
 						},
 						"required": true,
 						"description": "Id de la transacción",
-						"example": "68e18783-8b51-4618-af83-50c77f25871d"
+						"example": "6ff3b446-d218-43e2-8cee-8c1228de88dc"
 					}
 				],
 				"requestBody": {
@@ -708,78 +717,6 @@
 					"Transacciones"
 				]
 			}
-		},
-        "/faqs/": {
-            "get": {
-                "summary": "Lista preguntas frecuentes",
-                "operationId": "listar_preguntas_frecuentes",
-                "description": "",
-                "parameters": [],
-                "responses": {
-                    "200": {
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "array",
-                                    "items": {}
-                                }
-                            }
-                        },
-                        "description": "Lista de preguntas frecuentes"
-                    }
-                },
-                "tags": [
-                    "Preguntas frecuentes"
-                ]
-            }
-		},
-        "/notifications/": {
-            "get": {
-                "summary": "Lista notificaciones",
-                "operationId": "listar_notificaciones",
-                "description": "",
-                "parameters": [],
-                "responses": {
-                    "200": {
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "array",
-                                    "items": {}
-                                }
-                            }
-                        },
-                        "description": "Lista de notificaciones"
-                    }
-                },
-                "tags": [
-                    "Notificaciones"
-                ]
-            }
-		},
-        "/tips/": {
-            "get": {
-                "summary": "Lista de consejos",
-                "operationId": "listar_consejos",
-                "description": "",
-                "parameters": [],
-                "responses": {
-                    "200": {
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "type": "array",
-                                    "items": {}
-                                }
-                            }
-                        },
-                        "description": "Lista de consejos"
-                    }
-                },
-                "tags": [
-                    "Consejos"
-                ]
-            }
 		}
 	},
 	"components": {
@@ -809,7 +746,7 @@
 					"user",
 					"project",
 					"amount",
-					"budget_date"
+					"category"
 				]
 			},
 			"Transaccion": {
