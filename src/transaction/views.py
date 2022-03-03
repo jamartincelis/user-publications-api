@@ -134,17 +134,16 @@ class ExpenseSummaryView(APIView):
         }
 
     def merge_data(self):
-        #categories = Code.objects.filter(code_type__name='expenses_categories')
+        # categories = Code.objects.filter(code_type__name='expenses_categories')
         # se obtiene las categorias de egresos
         categories = catalog_to_dict('transaction_category')
-        print(categories)
         for category in categories:
             expenses = self.get_expenses(category.id)
             budget = self.get_budget(category.id, expenses['amount'])
             percentage = expenses['amount'] / self.data['global_expenses'] if self.data['global_expenses'] != 0 else 0.0
             self.data['categories'].append(
                 {
-                    'category': CodeSerializer(category).data,
+                    'category': category,
                     'budget': budget,
                     'expenses': expenses,
                     'percentage': round(abs(percentage)*100, 2),
