@@ -150,7 +150,6 @@ STATIC_URL = '/static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CORS_ORIGIN_ALLOW_ALL = True
-
 if DEBUG is False:
     sentry_sdk.init(
         dsn=environ.get('SENTRY_DSN'),
