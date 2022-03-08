@@ -13,7 +13,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='transaction',
             name='user',
-            field=models.UUIDField(db_index=True, default='479ec168013945d0b7042bc4e5d0c4fb'),
+            field=models.UUIDField(db_index=True, default='b9e605ee-4cca-400e-99c5-ae24abca97d5'),
             preserve_default=False,
         ),
     ]

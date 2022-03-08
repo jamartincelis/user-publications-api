@@ -7,7 +7,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 
-from helpers.helpers import validate_date, months_dict, catalog_to_dict
+from helpers.helpers import validate_date, months_dict, catalog_to_dict, get_catalog
 from budget.models import Budget
 from transaction.models import Transaction
 from transaction.serializers import TransactionSerializer, TransactionSummarySerializer
@@ -124,6 +124,9 @@ class ExpenseSummaryView(APIView):
             budget = self.budgets.get(category=category)
         except Budget.DoesNotExist:
             budget = False
+        except Budget.MultipleObjectsReturned:
+            budget = False
+        
         return {
             'id': str(budget.id) if budget else None,
             'amount': budget.amount if budget else 0.0,
@@ -134,12 +137,12 @@ class ExpenseSummaryView(APIView):
         }
 
     def merge_data(self):
-        # categories = Code.objects.filter(code_type__name='expenses_categories')
         # se obtiene las categorias de egresos
-        categories = catalog_to_dict('transaction_category')
+        categories = get_catalog('expenses_categories')
+        categories = categories['expenses_categories']
         for category in categories:
-            expenses = self.get_expenses(category.id)
-            budget = self.get_budget(category.id, expenses['amount'])
+            expenses = self.get_expenses(category['id'])
+            budget = self.get_budget(category['id'], expenses['amount'])
             percentage = expenses['amount'] / self.data['global_expenses'] if self.data['global_expenses'] != 0 else 0.0
             self.data['categories'].append(
                 {

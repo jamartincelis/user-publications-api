@@ -6,6 +6,7 @@
     transaction_date: '2021-01-09T13:20:30-06:00'
     account: '910e8abd-1265-41ba-8125-f6c720bacde9'
     category: '9abd4759-ab14-4e09-adc2-9c5dea1041b1' # Entretenimiento
+    user: 'b9e605ee-4cca-400e-99c5-ae24abca97d5'
 
 - model: 'transaction.Transaction'
   fields:
@@ -15,6 +16,7 @@
     transaction_date: '2021-01-09T13:20:30-06:00'
     account: 'e25736e4-b2db-4fa0-8917-86f5ec92463f'
     category: '22118f55-e6a9-46b0-ae8f-a063dda396e0' # Shopping
+    user: 'b9e605ee-4cca-400e-99c5-ae24abca97d5'
 
 
 - model: 'transaction.Transaction'
@@ -25,6 +27,7 @@
     transaction_date: '2021-01-09T13:20:30-06:00'
     account: '910e8abd-1265-41ba-8125-f6c720bacde9'
     category: '9abd4759-ab14-4e09-adc2-9c5dea1041b1' # Entretenimiento
+    user: 'b9e605ee-4cca-400e-99c5-ae24abca97d5'
 
 - model: 'transaction.Transaction'
   fields:
@@ -34,6 +37,7 @@
     transaction_date: '2021-01-09T13:20:30-06:00'
     account: 'e25736e4-b2db-4fa0-8917-86f5ec92463f'
     category: '22118f55-e6a9-46b0-ae8f-a063dda396e0' # Shopping
+    user: 'b9e605ee-4cca-400e-99c5-ae24abca97d5'
 
 - model: 'transaction.Transaction'
   fields:
@@ -43,6 +47,7 @@
     transaction_date: '2021-02-09T13:20:30-06:00'
     account: '910e8abd-1265-41ba-8125-f6c720bacde9'
     category: '9abd4759-ab14-4e09-adc2-9c5dea1041b1' # Entretenimiento
+    user: 'b9e605ee-4cca-400e-99c5-ae24abca97d5'
 
 - model: 'transaction.Transaction'
   fields:
@@ -52,6 +57,7 @@
     transaction_date: '2021-02-09T13:20:30-06:00'
     account: 'e25736e4-b2db-4fa0-8917-86f5ec92463f'
     category: '22118f55-e6a9-46b0-ae8f-a063dda396e0' # Shopping
+    user: 'b9e605ee-4cca-400e-99c5-ae24abca97d5'
 
 
 - model: 'transaction.Transaction'
@@ -62,6 +68,7 @@
     transaction_date: '2021-02-09T13:20:30-06:00'
     account: '910e8abd-1265-41ba-8125-f6c720bacde9'
     category: '9abd4759-ab14-4e09-adc2-9c5dea1041b1' # Entretenimiento
+    user: 'b9e605ee-4cca-400e-99c5-ae24abca97d5'
 
 - model: 'transaction.Transaction'
   fields:
@@ -80,6 +87,7 @@
     transaction_date: '2021-03-09T13:20:30-06:00'
     account: '910e8abd-1265-41ba-8125-f6c720bacde9'
     category: '9abd4759-ab14-4e09-adc2-9c5dea1041b1' # Entretenimiento
+    user: 'b9e605ee-4cca-400e-99c5-ae24abca97d5'
 
 - model: 'transaction.Transaction'
   fields:
@@ -89,6 +97,7 @@
     transaction_date: '2021-03-09T13:20:30-06:00'
     account: 'e25736e4-b2db-4fa0-8917-86f5ec92463f'
     category: '22118f55-e6a9-46b0-ae8f-a063dda396e0' # Shopping
+    user: 'b9e605ee-4cca-400e-99c5-ae24abca97d5'
 
 - model: 'transaction.Transaction'
   fields:
@@ -98,6 +107,7 @@
     transaction_date: '2021-03-09T13:20:30-06:00'
     account: '910e8abd-1265-41ba-8125-f6c720bacde9'
     category: '9abd4759-ab14-4e09-adc2-9c5dea1041b1' # Entretenimiento
+    user: 'b9e605ee-4cca-400e-99c5-ae24abca97d5'
 
 - model: 'transaction.Transaction'
   fields:
@@ -107,6 +117,7 @@
     transaction_date: '2021-03-09T13:20:30-06:00'
     account: 'e25736e4-b2db-4fa0-8917-86f5ec92463f'
     category: '22118f55-e6a9-46b0-ae8f-a063dda396e0' # Shopping
+    user: 'b9e605ee-4cca-400e-99c5-ae24abca97d5'
 
 - model: 'transaction.Transaction'
   fields:
@@ -116,6 +127,7 @@
     transaction_date: '2021-04-09T13:20:30-06:00'
     account: '910e8abd-1265-41ba-8125-f6c720bacde9'
     category: '9abd4759-ab14-4e09-adc2-9c5dea1041b1' # Entretenimiento
+    user: 'b9e605ee-4cca-400e-99c5-ae24abca97d5'
 
 - model: 'transaction.Transaction'
   fields:
@@ -125,6 +137,7 @@
     transaction_date: '2021-04-09T13:20:30-06:00'
     account: 'e25736e4-b2db-4fa0-8917-86f5ec92463f'
     category: '22118f55-e6a9-46b0-ae8f-a063dda396e0' # Shopping
+    user: 'b9e605ee-4cca-400e-99c5-ae24abca97d5'
 
 - model: 'transaction.Transaction'
   fields:
@@ -134,6 +147,7 @@
     transaction_date: '2021-04-09T13:20:30-06:00'
     account: '910e8abd-1265-41ba-8125-f6c720bacde9'
     category: '9abd4759-ab14-4e09-adc2-9c5dea1041b1' # Entretenimiento
+    user: 'b9e605ee-4cca-400e-99c5-ae24abca97d5'
 
 - model: 'transaction.Transaction'
   fields:
@@ -143,6 +157,7 @@
     transaction_date: '2021-04-09T13:20:30-06:00'
     account: 'e25736e4-b2db-4fa0-8917-86f5ec92463f'
     category: '22118f55-e6a9-46b0-ae8f-a063dda396e0' # Shopping
+    user: 'b9e605ee-4cca-400e-99c5-ae24abca97d5'
 
 - model: 'transaction.Transaction'
   fields:
@@ -152,6 +167,7 @@
     transaction_date: '2021-05-09T13:20:30-06:00'
     account: '910e8abd-1265-41ba-8125-f6c720bacde9'
     category: '9abd4759-ab14-4e09-adc2-9c5dea1041b1' # Entretenimiento
+    user: 'b9e605ee-4cca-400e-99c5-ae24abca97d5'
 
 - model: 'transaction.Transaction'
   fields:
@@ -161,6 +177,7 @@
     transaction_date: '2021-05-09T13:20:30-06:00'
     account: 'e25736e4-b2db-4fa0-8917-86f5ec92463f'
     category: '22118f55-e6a9-46b0-ae8f-a063dda396e0' # Shopping
+    user: 'b9e605ee-4cca-400e-99c5-ae24abca97d5'
 
 - model: 'transaction.Transaction'
   fields:
@@ -170,6 +187,7 @@
     transaction_date: '2021-05-09T13:20:30-06:00'
     account: '910e8abd-1265-41ba-8125-f6c720bacde9'
     category: '9abd4759-ab14-4e09-adc2-9c5dea1041b1' # Entretenimiento
+    user: 'b9e605ee-4cca-400e-99c5-ae24abca97d5'
 
 
 - model: 'transaction.Transaction'
@@ -180,6 +198,7 @@
     transaction_date: '2021-05-09T13:20:30-06:00'
     account: 'e25736e4-b2db-4fa0-8917-86f5ec92463f'
     category: '22118f55-e6a9-46b0-ae8f-a063dda396e0' # Shopping
+    user: 'b9e605ee-4cca-400e-99c5-ae24abca97d5'
 
 - model: 'transaction.Transaction'
   fields:
@@ -189,6 +208,7 @@
     transaction_date: '2021-06-09T13:20:30-06:00'
     account: '910e8abd-1265-41ba-8125-f6c720bacde9'
     category: '9abd4759-ab14-4e09-adc2-9c5dea1041b1' # Entretenimiento
+    user: 'b9e605ee-4cca-400e-99c5-ae24abca97d5'
 
 - model: 'transaction.Transaction'
   fields:
@@ -198,6 +218,7 @@
     transaction_date: '2021-06-09T13:20:30-06:00'
     account: 'e25736e4-b2db-4fa0-8917-86f5ec92463f'
     category: '22118f55-e6a9-46b0-ae8f-a063dda396e0' # Shopping
+    user: 'b9e605ee-4cca-400e-99c5-ae24abca97d5'
 
 - model: 'transaction.Transaction'
   fields:
@@ -207,6 +228,7 @@
     transaction_date: '2021-06-09T13:20:30-06:00'
     account: '910e8abd-1265-41ba-8125-f6c720bacde9'
     category: '9abd4759-ab14-4e09-adc2-9c5dea1041b1' # Entretenimiento
+    user: 'b9e605ee-4cca-400e-99c5-ae24abca97d5'
 
 - model: 'transaction.Transaction'
   fields:
@@ -216,6 +238,7 @@
     transaction_date: '2021-06-09T13:20:30-06:00'
     account: 'e25736e4-b2db-4fa0-8917-86f5ec92463f'
     category: '22118f55-e6a9-46b0-ae8f-a063dda396e0' # Shopping
+    user: 'b9e605ee-4cca-400e-99c5-ae24abca97d5'
 
 - model: 'transaction.Transaction'
   fields:
@@ -225,6 +248,7 @@
     transaction_date: '2021-07-09T13:20:30-06:00'
     account: '910e8abd-1265-41ba-8125-f6c720bacde9'
     category: '9abd4759-ab14-4e09-adc2-9c5dea1041b1' # Entretenimiento
+    user: 'b9e605ee-4cca-400e-99c5-ae24abca97d5'
 
 - model: 'transaction.Transaction'
   fields:
@@ -234,6 +258,7 @@
     transaction_date: '2021-07-09T13:20:30-06:00'
     account: 'e25736e4-b2db-4fa0-8917-86f5ec92463f'
     category: '22118f55-e6a9-46b0-ae8f-a063dda396e0' # Shopping
+    user: 'b9e605ee-4cca-400e-99c5-ae24abca97d5'
 
 - model: 'transaction.Transaction'
   fields:
@@ -243,6 +268,7 @@
     transaction_date: '2021-07-09T13:20:30-06:00'
     account: '910e8abd-1265-41ba-8125-f6c720bacde9'
     category: '9abd4759-ab14-4e09-adc2-9c5dea1041b1' # Entretenimiento
+    user: 'b9e605ee-4cca-400e-99c5-ae24abca97d5'
 
 - model: 'transaction.Transaction'
   fields:
@@ -252,6 +278,7 @@
     transaction_date: '2021-07-09T13:20:30-06:00'
     account: 'e25736e4-b2db-4fa0-8917-86f5ec92463f'
     category: '22118f55-e6a9-46b0-ae8f-a063dda396e0' # Shopping
+    user: 'b9e605ee-4cca-400e-99c5-ae24abca97d5'
 
 - model: 'transaction.Transaction'
   fields:
@@ -261,6 +288,7 @@
     transaction_date: '2021-08-09T13:20:30-06:00'
     account: '910e8abd-1265-41ba-8125-f6c720bacde9'
     category: '9abd4759-ab14-4e09-adc2-9c5dea1041b1' # Entretenimiento
+    user: 'b9e605ee-4cca-400e-99c5-ae24abca97d5'
 
 - model: 'transaction.Transaction'
   fields:
@@ -270,6 +298,7 @@
     transaction_date: '2021-08-09T13:20:30-06:00'
     account: 'e25736e4-b2db-4fa0-8917-86f5ec92463f'
     category: '22118f55-e6a9-46b0-ae8f-a063dda396e0' # Shopping
+    user: 'b9e605ee-4cca-400e-99c5-ae24abca97d5'
 
 - model: 'transaction.Transaction'
   fields:
@@ -279,6 +308,7 @@
     transaction_date: '2021-08-09T13:20:30-06:00'
     account: '910e8abd-1265-41ba-8125-f6c720bacde9'
     category: '9abd4759-ab14-4e09-adc2-9c5dea1041b1' # Entretenimiento
+    user: 'b9e605ee-4cca-400e-99c5-ae24abca97d5'
 
 - model: 'transaction.Transaction'
   fields:
@@ -288,6 +318,7 @@
     transaction_date: '2021-08-09T13:20:30-06:00'
     account: 'e25736e4-b2db-4fa0-8917-86f5ec92463f'
     category: '22118f55-e6a9-46b0-ae8f-a063dda396e0' # Shopping
+    user: 'b9e605ee-4cca-400e-99c5-ae24abca97d5'
 #
 - model: 'transaction.Transaction'
   fields:
@@ -297,6 +328,7 @@
     transaction_date: '2021-09-09T13:20:30-06:00'
     account: '910e8abd-1265-41ba-8125-f6c720bacde9'
     category: '9abd4759-ab14-4e09-adc2-9c5dea1041b1' # Entretenimiento
+    user: 'b9e605ee-4cca-400e-99c5-ae24abca97d5'
 
 - model: 'transaction.Transaction'
   fields:
@@ -306,6 +338,7 @@
     transaction_date: '2021-09-09T13:20:30-06:00'
     account: 'e25736e4-b2db-4fa0-8917-86f5ec92463f'
     category: '22118f55-e6a9-46b0-ae8f-a063dda396e0' # Shopping
+    user: 'b9e605ee-4cca-400e-99c5-ae24abca97d5'
 
 - model: 'transaction.Transaction'
   fields:
@@ -315,6 +348,7 @@
     transaction_date: '2021-09-09T13:20:30-06:00'
     account: 'e25736e4-b2db-4fa0-8917-86f5ec92463f'
     category: '9abd4759-ab14-4e09-adc2-9c5dea1041b1' # Entretenimiento
+    user: 'b9e605ee-4cca-400e-99c5-ae24abca97d5'
 
 - model: 'transaction.Transaction'
   fields:
@@ -324,6 +358,7 @@
     transaction_date: '2021-09-09T13:20:30-06:00'
     account: 'e25736e4-b2db-4fa0-8917-86f5ec92463f'
     category: '9abd4759-ab14-4e09-adc2-9c5dea1041b1' # Entretenimiento
+    user: 'b9e605ee-4cca-400e-99c5-ae24abca97d5'
 
 - model: 'transaction.Transaction'
   fields:
@@ -333,6 +368,7 @@
     transaction_date: '2021-09-09T13:20:30-06:00'
     account: 'e25736e4-b2db-4fa0-8917-86f5ec92463f'
     category: '9abd4759-ab14-4e09-adc2-9c5dea1041b1' # Entretenimiento
+    user: 'b9e605ee-4cca-400e-99c5-ae24abca97d5'
 
 - model: 'transaction.Transaction'
   fields:
@@ -342,6 +378,7 @@
     transaction_date: '2020-09-09T13:20:30-06:00'
     account: 'e25736e4-b2db-4fa0-8917-86f5ec92463f'
     category: '9abd4759-ab14-4e09-adc2-9c5dea1041b1' # Entretenimiento
+    user: 'b9e605ee-4cca-400e-99c5-ae24abca97d5'
 
 - model: 'transaction.Transaction'
   fields:
@@ -351,6 +388,7 @@
     transaction_date: '2018-02-09T13:20:30-06:00'
     account: 'e25736e4-b2db-4fa0-8917-86f5ec92463f'
     category: '9abd4759-ab14-4e09-adc2-9c5dea1041b1' # Entretenimiento
+    user: 'b9e605ee-4cca-400e-99c5-ae24abca97d5'
 
 - model: 'transaction.Transaction'
   fields:
@@ -360,6 +398,7 @@
     transaction_date: '2021-09-09T13:20:30-06:00'
     account: 'e25736e4-b2db-4fa0-8917-86f5ec92463f'
     category: '22118f55-e6a9-46b0-ae8f-a063dda396e0' # Shopping
+    user: 'b9e605ee-4cca-400e-99c5-ae24abca97d5'
 
 - model: 'transaction.Transaction'
   fields:
@@ -369,6 +408,7 @@
     transaction_date: '2021-09-09T13:20:30-06:00'
     account: 'e25736e4-b2db-4fa0-8917-86f5ec92463f'
     category: '22118f55-e6a9-46b0-ae8f-a063dda396e0' # Shopping
+    user: 'b9e605ee-4cca-400e-99c5-ae24abca97d5'
 
 - model: 'transaction.Transaction'
   fields:
@@ -378,6 +418,7 @@
     transaction_date: '2021-09-09T13:20:30-06:00'
     account: 'e25736e4-b2db-4fa0-8917-86f5ec92463f'
     category: '22118f55-e6a9-46b0-ae8f-a063dda396e0' # Shopping
+    user: 'b9e605ee-4cca-400e-99c5-ae24abca97d5'
 
 - model: 'transaction.Transaction'
   fields:
@@ -387,6 +428,7 @@
     transaction_date: '2021-09-09T13:20:30-06:00'
     account: 'e25736e4-b2db-4fa0-8917-86f5ec92463f'
     category: '9abd4759-ab14-4e09-adc2-9c5dea1041b1' # Entretenimiento
+    user: 'b9e605ee-4cca-400e-99c5-ae24abca97d5'
 
 - model: 'transaction.Transaction'
   fields:
@@ -396,6 +438,7 @@
     transaction_date: '2021-10-09T13:20:30-06:00'
     account: '910e8abd-1265-41ba-8125-f6c720bacde9'
     category: '9abd4759-ab14-4e09-adc2-9c5dea1041b1' # Entretenimiento
+    user: 'b9e605ee-4cca-400e-99c5-ae24abca97d5'
 
 - model: 'transaction.Transaction'
   fields:
@@ -405,6 +448,7 @@
     transaction_date: '2021-10-09T13:20:30-06:00'
     account: 'e25736e4-b2db-4fa0-8917-86f5ec92463f'
     category: '22118f55-e6a9-46b0-ae8f-a063dda396e0' # Shopping
+    user: 'b9e605ee-4cca-400e-99c5-ae24abca97d5'
 
 - model: 'transaction.Transaction'
   fields:
@@ -414,6 +458,7 @@
     transaction_date: '2021-10-09T13:20:30-06:00'
     account: '910e8abd-1265-41ba-8125-f6c720bacde9'
     category: '9abd4759-ab14-4e09-adc2-9c5dea1041b1' # Entretenimiento
+    user: 'b9e605ee-4cca-400e-99c5-ae24abca97d5'
 
 - model: 'transaction.Transaction'
   fields:
@@ -423,6 +468,7 @@
     transaction_date: '2021-10-09T13:20:30-06:00'
     account: 'e25736e4-b2db-4fa0-8917-86f5ec92463f'
     category: '22118f55-e6a9-46b0-ae8f-a063dda396e0' # Shopping
+    user: 'b9e605ee-4cca-400e-99c5-ae24abca97d5'
 
 - model: 'transaction.Transaction'
   fields:
@@ -432,6 +478,7 @@
     transaction_date: '2021-11-09T13:20:30-06:00'
     account: '910e8abd-1265-41ba-8125-f6c720bacde9'
     category: '9abd4759-ab14-4e09-adc2-9c5dea1041b1' # Entretenimiento
+    user: 'b9e605ee-4cca-400e-99c5-ae24abca97d5'
 
 - model: 'transaction.Transaction'
   fields:
@@ -441,6 +488,7 @@
     transaction_date: '2021-11-09T13:20:30-06:00'
     account: 'e25736e4-b2db-4fa0-8917-86f5ec92463f'
     category: '22118f55-e6a9-46b0-ae8f-a063dda396e0' # Shopping
+    user: 'b9e605ee-4cca-400e-99c5-ae24abca97d5'
 
 - model: 'transaction.Transaction'
   fields:
@@ -450,6 +498,7 @@
     transaction_date: '2021-11-09T13:20:30-06:00'
     account: '910e8abd-1265-41ba-8125-f6c720bacde9'
     category: '9abd4759-ab14-4e09-adc2-9c5dea1041b1' # Entretenimiento
+    user: 'b9e605ee-4cca-400e-99c5-ae24abca97d5'
 
 - model: 'transaction.Transaction'
   fields:
@@ -459,6 +508,7 @@
     transaction_date: '2021-11-09T13:20:30-06:00'
     account: 'e25736e4-b2db-4fa0-8917-86f5ec92463f'
     category: '22118f55-e6a9-46b0-ae8f-a063dda396e0' # Shopping
+    user: 'b9e605ee-4cca-400e-99c5-ae24abca97d5'
 
 - model: 'transaction.Transaction'
   fields:
@@ -468,6 +518,7 @@
     transaction_date: '2021-12-09T13:20:30-06:00'
     account: '910e8abd-1265-41ba-8125-f6c720bacde9'
     category: '9abd4759-ab14-4e09-adc2-9c5dea1041b1' # Entretenimiento
+    user: 'b9e605ee-4cca-400e-99c5-ae24abca97d5'
 
 - model: 'transaction.Transaction'
   fields:
@@ -477,6 +528,7 @@
     transaction_date: '2021-12-09T13:20:30-06:00'
     account: 'e25736e4-b2db-4fa0-8917-86f5ec92463f'
     category: '22118f55-e6a9-46b0-ae8f-a063dda396e0' # Shopping
+    user: 'b9e605ee-4cca-400e-99c5-ae24abca97d5'
 
 - model: 'transaction.Transaction'
   fields:
@@ -486,6 +538,7 @@
     transaction_date: '2021-12-09T13:20:30-06:00'
     account: '910e8abd-1265-41ba-8125-f6c720bacde9'
     category: '9abd4759-ab14-4e09-adc2-9c5dea1041b1' # Entretenimiento
+    user: 'b9e605ee-4cca-400e-99c5-ae24abca97d5'
 
 - model: 'transaction.Transaction'
   fields:
@@ -495,3 +548,4 @@
     transaction_date: '2021-12-09T13:20:30-06:00'
     account: 'e25736e4-b2db-4fa0-8917-86f5ec92463f'
     category: '22118f55-e6a9-46b0-ae8f-a063dda396e0' # Shopping
+    user: 'b9e605ee-4cca-400e-99c5-ae24abca97d5'

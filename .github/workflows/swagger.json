@@ -428,7 +428,7 @@
 						},
 						"required": true,
 						"description": "Id del usuario",
-						"example": "479ec168013945d0b7042bc4e5d0c4fb"
+						"example": "b9e605ee-4cca-400e-99c5-ae24abca97d5"
 					},
 					{
 						"in": "path",
@@ -438,7 +438,7 @@
 						},
 						"required": true,
 						"description": "Id de la transacción",
-						"example": "6ff3b446-d218-43e2-8cee-8c1228de88dc"
+						"example": "c7e78eb2-4bef-4dde-b61c-822fe0257003"
 					}
 				],
 				"responses": {
@@ -471,7 +471,7 @@
 						},
 						"required": true,
 						"description": "Id del usuario",
-						"example": "479ec168013945d0b7042bc4e5d0c4fb"
+						"example": "b9e605ee-4cca-400e-99c5-ae24abca97d5"
 					},
 					{
 						"in": "path",
@@ -481,7 +481,7 @@
 						},
 						"required": true,
 						"description": "Id de la transacción",
-						"example": "6ff3b446-d218-43e2-8cee-8c1228de88dc"
+						"example": "c7e78eb2-4bef-4dde-b61c-822fe0257003"
 					}
 				],
 				"requestBody": {
@@ -531,7 +531,7 @@
 						},
 						"required": true,
 						"description": "Id del usuario",
-						"example": "479ec168013945d0b7042bc4e5d0c4fb"
+						"example": "b9e605ee-4cca-400e-99c5-ae24abca97d5"
 					},
 					{
 						"in": "path",
@@ -541,7 +541,7 @@
 						},
 						"required": true,
 						"description": "Id de la transacción",
-						"example": "6ff3b446-d218-43e2-8cee-8c1228de88dc"
+						"example": "c7e78eb2-4bef-4dde-b61c-822fe0257003"
 					}
 				],
 				"requestBody": {

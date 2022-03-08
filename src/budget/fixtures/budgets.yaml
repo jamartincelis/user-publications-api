@@ -2,7 +2,7 @@
   fields:
     id: '64aad0df2597443a90527be5a283ab7d'
     budget_date: '2021-09-09'
-    user: '0390a508dba54344b77f93e1227d42f4'
+    user: '479ec168013945d0b7042bc4e5d0c4fb'
     category: '9abd4759ab144e09adc29c5dea1041b1' # Entretenimiento
 
 - model: 'budget.Budget'
@@ -15,7 +15,7 @@
 - model: 'budget.Budget'
   fields:
     id: '46a80dbb-ea71-4ce3-90b3-6761bcbf365c'
-    user: '0390a508-dba5-4344-b77f-93e1227d42f4'
+    user: '479ec168013945d0b7042bc4e5d0c4fb'
     category: '22118f55-e6a9-46b0-ae8f-a063dda396e0' # Shopping
     amount: 5000
     budget_date: '2021-09-09'
@@ -23,7 +23,7 @@
 - model: 'budget.Budget'
   fields:
     id: '64aad0df-2597-443a-9052-7be5a283ab7d'
-    user: '0390a508-dba5-4344-b77f-93e1227d42f4'
+    user: '479ec168013945d0b7042bc4e5d0c4fb'
     category: '9abd4759-ab14-4e09-adc2-9c5dea1041b1' # Entretenimiento
     amount: 2400
     budget_date: '2021-09-21'
@@ -31,7 +31,7 @@
 - model: 'budget.Budget'
   fields:
     id: '64aad0df-2597-443a-9052-7be5a283ab7e'
-    user: '0390a508-dba5-4344-b77f-93e1227d42f4'
+    user: '479ec168013945d0b7042bc4e5d0c4fb'
     category: 'cde589f3-6281-4671-9bb2-333168d5971d' # Hogar y familia
     amount: 100
     budget_date: '2021-09-21'

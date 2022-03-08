@@ -1,7 +1,7 @@
 from os import environ
 
 import pendulum
-
+import requests
 
 months_dict = {
     1: 'Enero',
@@ -38,7 +38,7 @@ def catalog_to_dict(catalog_name):
             data[item['id']] = item
         print('CATALOG DATA LOADED')
         return data
-    except Exception:
+    except Exception as e:
         return {}
 
 def get_catalog(catalog_name):
