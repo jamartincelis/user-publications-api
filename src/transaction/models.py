@@ -3,6 +3,7 @@ import uuid
 from django.db import models
 from django.db.models.fields import UUIDField
 
+
 class Transaction(models.Model):
     id = models.UUIDField(default=uuid.uuid4, unique=True, primary_key=True)
     account = models.UUIDField(db_index=True, null=False)
@@ -12,7 +13,7 @@ class Transaction(models.Model):
     description = models.CharField(max_length=100)
     transaction_date = models.DateTimeField()
     user_note = models.CharField(max_length=100, null=True, default=None, blank=True)
-    
+
     class Meta:
         managed = True
         db_table = 'transactions'

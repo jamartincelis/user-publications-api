@@ -1,19 +1,13 @@
 version: '3'
 
 services:
-    pfm-service_local:
-        container_name: pfm-service_local
+    pfm-service:
+        container_name: pfm-service
         build: .
-        command: >
-            sh -c "python src/manage.py makemigrations
-            && python src/manage.py migrate
-            && python src/manage.py loaddata src/budget/fixtures/*.yaml
-            && python src/manage.py loaddata src/transaction/fixtures/*.yaml
-            && python src/manage.py runserver 0.0.0.0:8000"
+        command: "python src/manage.py runserver 0.0.0.0:8000"
         volumes:
             - .:/code
         env_file:
             - .env
-        expose:
-            - 8000
-        network_mode: host
+        ports:
+            - 8000:8000

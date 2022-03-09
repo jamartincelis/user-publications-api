@@ -78,6 +78,7 @@
     transaction_date: '2021-02-09T13:20:30-06:00'
     account: 'e25736e4-b2db-4fa0-8917-86f5ec92463f'
     category: '22118f55-e6a9-46b0-ae8f-a063dda396e0' # Shopping
+    user: 'b9e605ee-4cca-400e-99c5-ae24abca97d5'
 
 - model: 'transaction.Transaction'
   fields:
