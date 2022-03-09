@@ -5,7 +5,7 @@
 		"version": "v1.0.0"
 	},
 	"servers": [{
-		"url": "http://localhost:8000/pfm-service"
+		"url": "https://widgets.getxerpa.com/pfm-service/"
 	}],
 	"paths": {
 		"/user/{userID}/budgets/": {
