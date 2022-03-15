@@ -8,7 +8,7 @@ class Transaction(models.Model):
     id = models.UUIDField(default=uuid.uuid4, unique=True, primary_key=True)
     account = models.UUIDField(db_index=True, null=False)
     user = models.UUIDField(db_index=True, null=False)
-    category = models.UUIDField(db_index=True, null=False)
+    category = models.UUIDField(db_index=True, null=True, default=None)
     amount = models.DecimalField(decimal_places=2, max_digits=12)
     description = models.CharField(max_length=100)
     transaction_date = models.DateTimeField()
