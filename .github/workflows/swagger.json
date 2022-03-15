@@ -8,6 +8,54 @@
 		"url": "https://widgets.getxerpa.com/pfm-service/"
 	}],
 	"paths": {
+		"/monitoring/health-check/": {
+			"get": {
+				"summary": "Health check",
+				"operationId": "health_check",
+				"description": "",
+				"parameters": [],
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "array",
+									"items": {}
+								}
+							}
+						},
+						"description": "Permite verificiar si el servicio está activo"
+					}
+				},
+				"tags": [
+					"Monitoreo"
+				]
+			}
+		},
+		"/monitoring/sentry/": {
+			"get": {
+				"summary": "Sentry",
+				"operationId": "sentry",
+				"description": "",
+				"parameters": [],
+				"responses": {
+					"200": {
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "array",
+									"items": {}
+								}
+							}
+						},
+						"description": "Permite determinar si el servicio está conectado con Sentry."
+					}
+				},
+				"tags": [
+					"Monitoreo"
+				]
+			}
+		},
 		"/user/{userID}/budgets/": {
 			"get": {
 				"summary": "Presupuestos del usuario filtrados por mes",
