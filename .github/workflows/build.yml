@@ -29,4 +29,4 @@ jobs:
 
         docker build -t $IMG .
         docker tag $IMG:latest $ECR_REGISTRY/$ECR_REPOSITORY:latest
-        docker push $ECR_REGISTRY/$ECR_REPOSITORY:latestPOSITORY:$IMAGE_TAG-$GITHUB_SHA
+        docker push $ECR_REGISTRY/$ECR_REPOSITORY:latest
