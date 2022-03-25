@@ -1,4 +1,8 @@
+from os import environ
+
 import pendulum
+
+import requests
 
 from django.db.models import Sum, Count, Q, Case, When, F, FloatField, IntegerField
 
@@ -319,3 +323,37 @@ class MonthlyCategoryBalanceView(APIView):
             if month > 12:
                month = 1 
         return Response([v for k, v in years_dict.items()], status=status.HTTP_200_OK)
+
+
+class NewTransaction(APIView):
+    """
+    Permite crear una transacción a aprtir de un número de cuenta
+    """
+
+    core_url = environ.get('CORE_SERVICE_URL')
+
+    def get_account_details(self, account_number):
+        try:
+            r = requests.get(self.core_url+'accounts/?number={}'.format(account_number), timeout=1)
+            if r.status_code == 200:
+                return r.json()
+            return False
+        except requests.exceptions.RequestException:
+            return False
+
+    def post(self, request):
+        data = request.data
+        account = self.get_account_details(data['account_number'])
+        if account is not False:
+            try:
+                t = Transaction.objects.create(
+                    account=account['id'],
+                    user=account['user'],
+                    amount=data['amount'],
+                    description=data['description'],
+                    transaction_date=data['transaction_date']
+                )
+                return Response(TransactionSerializer(t).data, status=status.HTTP_201_CREATED)
+            except KeyError:
+                return Response('Bad request', status=status.HTTP_400_BAD_REQUEST)
+        return Response('Account not found', status=status.HTTP_404_NOT_FOUND)
