@@ -9,7 +9,9 @@ class BudgetSerializer(serializers.ModelSerializer):
     """
     class Meta:
         model = Budget
-        fields = '__all__' 
+        exclude = [
+            'status'
+        ]
 
 
 class BudgetDetailSerializer(serializers.ModelSerializer):
@@ -18,4 +20,6 @@ class BudgetDetailSerializer(serializers.ModelSerializer):
     """
     class Meta:
         model = Budget
-        fields = '__all__' 
+        exclude = [
+            'status'
+        ]

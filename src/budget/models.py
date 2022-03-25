@@ -9,7 +9,9 @@ class Budget(models.Model):
     user = models.UUIDField(db_index=True, null=False)
     category = models.UUIDField(db_index=True, null=False)
     amount = models.DecimalField(decimal_places=2, max_digits=12, default=0.0)
+    status = models.UUIDField(db_index=True, null=False, default='cbf5eacb-6b1c-42f4-bdba-5a6f6276e0ac')
     budget_date = models.DateField(auto_now_add=True)
+    created_at = models.DateTimeField(null=True, default=None)
 
     class Meta:
         managed = True

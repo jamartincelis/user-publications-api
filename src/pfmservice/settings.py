@@ -16,7 +16,6 @@ from os import environ
 
 import sentry_sdk
 
-from sentry_sdk.integrations.django import DjangoIntegration
 import sys
 
 
@@ -95,10 +94,9 @@ if 'test' in sys.argv or 'test_coverage' in sys.argv: #Covers regular testing an
         'default': {
             'ENGINE': 'django.db.backends.sqlite3'
         }
-    }    
+    }
 else:
     TIME_ZONE = environ.get('TIME_ZONE')
-    
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
@@ -150,6 +148,7 @@ STATIC_URL = '/static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CORS_ORIGIN_ALLOW_ALL = True
+
 if DEBUG is False:
     sentry_sdk.init(
         dsn=environ.get('SENTRY_DSN'),

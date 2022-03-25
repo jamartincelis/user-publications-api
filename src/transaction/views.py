@@ -8,9 +8,19 @@ from rest_framework.response import Response
 from rest_framework import status
 
 from helpers.helpers import validate_date, months_dict, catalog_to_dict, get_catalog
+
 from budget.models import Budget
+
 from transaction.models import Transaction
 from transaction.serializers import TransactionSerializer, TransactionSummarySerializer
+
+
+expenses_categories = get_catalog('expenses_categories')
+
+
+class TransactionsBulkCreate(APIView):
+    def post(self, request):
+        return TransactionSerializer()
 
 
 class TransactionList(ListAPIView):
@@ -41,6 +51,7 @@ class TransactionDetail(RetrieveUpdateAPIView):
 
     def get_queryset(self):
         return Transaction.objects.filter(user=self.kwargs['user'], pk=self.kwargs['pk'])
+
 
 class Category(ListAPIView):
     """
@@ -126,7 +137,6 @@ class ExpenseSummaryView(APIView):
             budget = False
         except Budget.MultipleObjectsReturned:
             budget = False
-        
         return {
             'id': str(budget.id) if budget else None,
             'amount': budget.amount if budget else 0.0,
@@ -138,8 +148,7 @@ class ExpenseSummaryView(APIView):
 
     def merge_data(self):
         # se obtiene las categorias de egresos
-        categories = get_catalog('expenses_categories')
-        categories = categories['expenses_categories']
+        categories = expenses_categories['expenses_categories']
         for category in categories:
             expenses = self.get_expenses(category['id'])
             budget = self.get_budget(category['id'], expenses['amount'])

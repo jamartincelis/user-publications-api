@@ -25,6 +25,7 @@ def validate_date(value):
     except (ValueError, TypeError):
         return False
 
+
 def catalog_to_dict(catalog_name):
     """
     Consulta un catálogo y lo convierte a diccionario para simular un sistema de cache propio del
@@ -32,14 +33,18 @@ def catalog_to_dict(catalog_name):
     """
     try:
         catalog_url = environ.get('CATALOG_SERVICE_URL')
-        r = requests.get(catalog_url+'?catalog={}'.format(catalog_name)).json()
-        data = {}
-        for item in r[catalog_name]:
-            data[item['id']] = item
-        print('CATALOG DATA LOADED')
-        return data
-    except Exception as e:
-        return {}
+        r = requests.get(catalog_url+'?catalog={}'.format(catalog_name), timeout=1)
+        if r.status_code == 200:
+            r = r.json()
+            data = {}
+            for item in r[catalog_name]:
+                data[item['id']] = item
+            print('Catalog {} Loaded'.format(catalog_name).upper())
+            return data
+        raise Exception('Failed to load catalog {}'.format(catalog_name).upper())
+    except requests.exceptions.RequestException:
+        raise Exception('Failed to load catalog {}'.format(catalog_name).upper())
+
 
 def get_catalog(catalog_name):
     """
@@ -48,7 +53,10 @@ def get_catalog(catalog_name):
     """
     catalog_url = environ.get('CATALOG_SERVICE_URL')
     try:
-        print('CATALOG DATA LOADED')
-        return requests.get(catalog_url+'?catalog={}'.format(catalog_name)).json()
+        r = requests.get(catalog_url+'?catalog={}'.format(catalog_name))
+        if r.status_code == 200:
+            print('Catalog {} Loaded'.format(catalog_name).upper())
+            return r.json()
+        raise Exception('Failed to load catalog {}'.format(catalog_name).upper())
     except requests.exceptions.RequestException:
-        return {}
+        raise Exception('Failed to load catalog {}'.format(catalog_name).upper())
