@@ -51,8 +51,10 @@ class TransactionSerializer(serializers.ModelSerializer):
             reciba el paquete completo
         """
         data = super(TransactionSerializer, self).to_representation(instance)
-        data['category'] = self.get_object_category(data['category'])
-        data.update(data)
+        # Reviso categoria ya que es un campo que puede ser nulo
+        if data['category']:
+            data['category'] = self.get_object_category(data['category'])
+            data.update(data)
 
         return data
     def update(self, instance, validated_data):
