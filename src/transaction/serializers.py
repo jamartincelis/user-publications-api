@@ -1,6 +1,7 @@
 from rest_framework import serializers
 from transaction.models import Transaction
 from os import environ
+from helpers.helpers import catalog_to_dict
 import requests
 
 class TransactionSerializer(serializers.ModelSerializer):
@@ -10,6 +11,8 @@ class TransactionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Transaction
         fields = '__all__'
+
+    transaction_type_catalogs = {**catalog_to_dict('expenses_categories'), **catalog_to_dict('income_categories')}
 
     def validate(self, data):
         core_url = environ.get('CORE_SERVICE_URL')
@@ -30,6 +33,28 @@ class TransactionSerializer(serializers.ModelSerializer):
 
         return super().to_internal_value(data)
 
+    def get_object_category(self, category_id):
+        """
+        Busca en el diccionary en memory el objeto relacionado con el id de la
+        Category
+        """
+        try:
+            r = self.transaction_type_catalogs[str(category_id)]
+        except TypeError:
+            r = self.transaction_type_catalogs[(str(category_id))]
+        return r
+
+    def to_representation(self, instance):
+        """
+            Permite alterar la representacion del modelo de Transaction
+            para `pegar` un objecto del modelo de Category de modo que el front
+            reciba el paquete completo
+        """
+        data = super(TransactionSerializer, self).to_representation(instance)
+        data['category'] = self.get_object_category(data['category'])
+        data.update(data)
+
+        return data
     def update(self, instance, validated_data):
         return super().update(instance, validated_data)
 
