@@ -47,7 +47,10 @@ INSTALLED_APPS = [
     'rest_framework',
     'monitoring',
     'budget',
-    'transaction'
+    'transaction',
+    'faq',
+    'tip',
+    'notification'    
 ]
 
 MIDDLEWARE = [
@@ -87,26 +90,12 @@ WSGI_APPLICATION = 'pfmservice.wsgi.application'
 
 # se desactiva el uso de zona horaria
 # para evitar errores en los querys
-USE_TZ = False
-
-if 'test' in sys.argv or 'test_coverage' in sys.argv: #Covers regular testing and django-coverage
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3'
-        }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': environ.get('DATABASE_NAME')
     }
-else:
-    TIME_ZONE = environ.get('TIME_ZONE')
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'NAME': environ.get('DATABASE_NAME'),
-            'USER': environ.get('DATABASE_USER'),
-            'PASSWORD': environ.get('DATABASE_PASSWORD'),
-            'HOST': environ.get('DATABASE_HOST'),
-            'PORT': environ.get('DATABASE_PORT'),
-        }
-    }
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators

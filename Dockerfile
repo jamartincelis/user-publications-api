@@ -1,11 +1,20 @@
+# pull official base image
 FROM python:3.10.2-alpine3.15
 
-ENV PYTHONUNBUFFERED 1
-
+# upgrade alpine
 RUN apk update
 RUN apk upgrade --available
-RUN mkdir /code
-WORKDIR /code
-ADD . /code/
 
-RUN pip install -r requirements.txt
+# set work directory
+WORKDIR /code
+
+# set environment variables
+ENV PYTHONUNBUFFERED 1
+
+# install dependencies
+RUN pip install --upgrade pip
+COPY ./requirements.txt /code/requirements.txt
+RUN pip install --no-cache-dir --upgrade -r /code/requirements.txt
+
+# copy project
+COPY . /code/
