@@ -12,7 +12,7 @@ class TransactionSerializer(serializers.ModelSerializer):
         model = Transaction
         fields = '__all__'
 
-    transaction_type_catalogs = {**catalog_to_dict('expenses_categories'), **catalog_to_dict('income_categories')}
+    transaction_type_catalogs = {**catalog_to_dict('expenses_categories'), **catalog_to_dict('incomes_categories')}
 
     def validate(self, data):
         core_url = environ.get('CORE_SERVICE_URL')
@@ -42,6 +42,8 @@ class TransactionSerializer(serializers.ModelSerializer):
             r = self.transaction_type_catalogs[str(category_id)]
         except TypeError:
             r = self.transaction_type_catalogs[(str(category_id))]
+        except KeyError:
+            r = self.transaction_type_catalogs
         return r
 
     def to_representation(self, instance):
