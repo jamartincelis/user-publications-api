@@ -1,5 +1,5 @@
 # pull official base image
-FROM python:3.10.3-alpine3.15
+FROM python:3.11.0a6-alpine3.15
 
 # upgrade alpine
 RUN apk update
