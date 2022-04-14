@@ -198,7 +198,8 @@ class ExpenseSummaryView(APIView):
             amount__lt=0
         ).values('amount', 'category').order_by('category')
         self.budgets = Budget.objects.filter(
-            user=user, budget_date__range=[date.start_of('month'), date.end_of('month')])
+            user=user,
+            budget_date__range=[date.start_of('month').strftime('%Y-%m-%d'), date.end_of('month').strftime('%Y-%m-%d')])
         self.group_transactions(transactions)
         self.merge_data()
         self.get_other_expenses()

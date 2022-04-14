@@ -1,8 +1,13 @@
-from rest_framework import serializers
-from transaction.models import Transaction
 from os import environ
-from helpers.helpers import catalog_to_dict
+
 import requests
+
+from rest_framework import serializers
+
+from transaction.models import Transaction
+
+from helpers.helpers import catalog_to_dict
+
 
 class TransactionSerializer(serializers.ModelSerializer):
     """
@@ -20,7 +25,6 @@ class TransactionSerializer(serializers.ModelSerializer):
         r = requests.get(path, timeout=5)
         if r.status_code == 404:
             raise serializers.ValidationError("Usuario invalido")
-
         return data
 
     def to_internal_value(self, data):
@@ -30,7 +34,6 @@ class TransactionSerializer(serializers.ModelSerializer):
         data['user'] = self.context.get("request").parser_context["kwargs"]["user"]
         if 'category' in data:
             data['category_id'] = data['category']
-
         return super().to_internal_value(data)
 
     def get_object_category(self, category_id):
@@ -54,13 +57,18 @@ class TransactionSerializer(serializers.ModelSerializer):
         """
         data = super(TransactionSerializer, self).to_representation(instance)
         # Reviso categoria ya que es un campo que puede ser nulo
-        if data['category']:
+        if data['category'] is None:
+            # indica que una transacción tiene valor nulo como categoría
+            data['category'] = self.get_object_category('f37b6770-7fc5-43e0-a837-50926e1ee459')
+            data.update(data)
+        else:
             data['category'] = self.get_object_category(data['category'])
             data.update(data)
 
         return data
     def update(self, instance, validated_data):
         return super().update(instance, validated_data)
+
 
 class TransactionSummarySerializer(serializers.Serializer):
     """
