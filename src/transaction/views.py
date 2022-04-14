@@ -112,7 +112,7 @@ class ExpenseSummaryView(APIView):
         # por categoría
         for transaction in transactions:
             amount = float(transaction['amount'])
-            category = transaction['category']
+            category = str(transaction['category'])
             try:
                 self.grouped_expenses[category]['amount'] += amount
                 self.grouped_expenses[category]['count'] += 1
@@ -199,7 +199,8 @@ class ExpenseSummaryView(APIView):
         ).values('amount', 'category').order_by('category')
         self.budgets = Budget.objects.filter(
             user=user,
-            budget_date__range=[date.start_of('month').strftime('%Y-%m-%d'), date.end_of('month').strftime('%Y-%m-%d')])
+            budget_date__range=[date.start_of('month').strftime('%Y-%m-%d'), date.end_of('month').strftime('%Y-%m-%d')]
+        )
         self.group_transactions(transactions)
         self.merge_data()
         self.get_other_expenses()
