@@ -14,6 +14,7 @@ class Transaction(models.Model):
     transaction_date = models.DateTimeField()
     ignore_pfm = models.BooleanField(default=False)
     created_at = models.DateTimeField(null=True, default=None)
+    user_note = models.CharField(max_length=100, null=True, default=None, blank=True)
 
     class Meta:
         managed = True
