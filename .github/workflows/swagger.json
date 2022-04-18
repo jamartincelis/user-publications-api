@@ -683,8 +683,10 @@
                 "parameters": [
                 ],
 				"requestBody": {
+                    "description": "Config object",
+                    "required": true,
 					"content": {
-						"text/plain": {
+						"applications/json": {
 							"schema": {
 								"type": "string" 
 							}
@@ -692,16 +694,9 @@
 					}
 				},	
                 "responses": {
-				"201": {
-						"content": {
-							"application/json": {
-								"schema": {
-									"$ref": "#/components/schemas/Transaction"
-								}
-							}
-						},
-                        "description": "Created"
-                    }
+					"201": {
+                    	"description": "Created"
+					}
                 },
                 "tags": [
                     "Transaction"
@@ -802,7 +797,7 @@
 			"get": {
 				"summary": "Balance Mensual por categoria",
 				"operationId": "get_balance_category",
-				"description": "",
+				"description": "Balance mensual por categoria",
 				"parameters": [
 					{
 						"in": "path",
