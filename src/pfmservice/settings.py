@@ -14,9 +14,11 @@ from pathlib import Path
 
 from os import environ
 
+import sys
+
 import sentry_sdk
 
-import sys
+from sentry_sdk.integrations.django import DjangoIntegration
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
