@@ -1,6 +1,6 @@
 # Project name
 
-Coopeuch Salud Financiera
+Finanzas personales.
 
 # Version 
 
@@ -8,7 +8,7 @@ Versión en desarrollo v.0.133
 
 ## Description
 
-Desarrollo de endpoints para el proyecto coopeuch salud financiera.
+Desarrollo de endpoints para el proyecto finanzas personales.
 
 ## Requirements and Installation
 
