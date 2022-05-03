@@ -22,17 +22,12 @@ class BudgetList(ListCreateAPIView):
         if not date:
             return Response({'400': "Invalid date format."}, status=status.HTTP_400_BAD_REQUEST)
         if budgets:
-            print(budgets)    
             budgets = budgets.filter(budget_date__range=[date.start_of('month'), date.end_of('month')])
         serializer = BudgetSerializer(budgets, many=True)
         return Response(data=serializer.data, status=status.HTTP_200_OK)
 
     def create(self, request, *args, **kwargs):
-        if 'category' and 'user' in request.data:
-            request.data['category'] = request.data.pop('category')
-            request.data['user'] = request.data.pop('user')
-        else:
-            return Response({'400': "Bad request."}, status=status.HTTP_400_BAD_REQUEST)
+        request.data['user'] = self.kwargs['user']
         instance = Budget.objects.create(**request.data)
         return Response(BudgetSerializer(instance).data, status=status.HTTP_201_CREATED)
 

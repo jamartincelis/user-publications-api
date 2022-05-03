@@ -91,7 +91,7 @@ class CategorySummary(ListAPIView):
             return Response({'400': "Invalid date format."}, status=status.HTTP_400_BAD_REQUEST)
         transactions = self.get_queryset().filter(user=user,
             transaction_date__range=[date.start_of('month'), date.end_of('month')]
-        ).values('category').order_by('category').annotate(total_spend=Sum('amount'),num_transaction=Count('category'))
+        ).values('category').order_by('category').annotate(total_spend=Sum('amount'), num_transaction=Count('category'))
         data = TransactionSummarySerializer(transactions, many=True)
         return Response(data=data.data, status=status.HTTP_200_OK)
 
@@ -225,8 +225,8 @@ class MonthlyBalanceView(APIView):
         }
 
     def get(self, request, user):
-        year = Transaction.objects.filter(user=user).order_by('transaction_date').first().transaction_date.year
-        start_date = pendulum.datetime(year, 1, 1)
+        now = pendulum.now().subtract(years=1)
+        start_date = pendulum.datetime(now.year, now.month, 1)
         end_date = pendulum.now().end_of('year')
         dates = []
         while start_date.year <= end_date.year:
@@ -336,8 +336,8 @@ class NewTransaction(APIView):
 
     def get_account_details(self, account_number):
         try:
-            r = requests.get(self.core_url+'accounts/?number={}'.format(account_number), timeout=1)
-            if r.status_code == 200:
+            response = requests.get(self.core_url+'accounts/?number={}'.format(account_number), timeout=1)
+            if response.status_code == 200:
                 return r.json()
             return False
         except requests.exceptions.RequestException:
@@ -348,14 +348,14 @@ class NewTransaction(APIView):
         account = self.get_account_details(data['account_number'])
         if account is not False:
             try:
-                t = Transaction.objects.create(
+                transaction = Transaction.objects.create(
                     account=account['id'],
                     user=account['user'],
                     amount=data['amount'],
                     description=data['description'],
                     transaction_date=data['transaction_date']
                 )
-                return Response(TransactionSerializer(t).data, status=status.HTTP_201_CREATED)
+                return Response(TransactionSerializer(transaction).data, status=status.HTTP_201_CREATED)
             except KeyError:
                 return Response('Bad request', status=status.HTTP_400_BAD_REQUEST)
         return Response('Account not found', status=status.HTTP_404_NOT_FOUND)

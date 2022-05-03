@@ -31,7 +31,7 @@ class TransactionSerializer(serializers.ModelSerializer):
         """
         Permite inicializar los valores de la peticion
         """
-        data['user'] = self.context.get("request").parser_context["kwargs"]["user"]
+        data['user'] = self.context.get('request').parser_context['kwargs']['user']
         if 'category' in data:
             data['category_id'] = data['category']
         return super().to_internal_value(data)
