@@ -282,9 +282,8 @@ class MonthlyCategoryBalanceView(APIView):
         }
 
     def get(self, request, user, category):
-        year = Transaction.objects.filter(
-            user=user, category=category).order_by('transaction_date').first().transaction_date.year
-        start_date = pendulum.datetime(year, 1, 1)
+        now = pendulum.now().subtract(years=1)
+        start_date = pendulum.datetime(now.year, now.month, 1)
         end_date = pendulum.now().end_of('year')
         dates = []
         while start_date.year <= end_date.year:
