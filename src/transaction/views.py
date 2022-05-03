@@ -337,7 +337,7 @@ class NewTransaction(APIView):
         try:
             response = requests.get(self.core_url+'accounts/?number={}'.format(account_number), timeout=1)
             if response.status_code == 200:
-                return r.json()
+                return response.json()
             return False
         except requests.exceptions.RequestException:
             return False
