@@ -56,7 +56,7 @@
 				]
 			}
 		},
-		"/user/{userID}/budgets/": {
+		"/users/{userID}/budgets/": {
 			"get": {
 				"summary": "Presupuestos del usuario filtrados por mes",
 				"operationId": "get_budgets_by_month",
@@ -143,7 +143,7 @@
                 ]
             } 
 		},			
-		"/user/{userID}/budgets/categories/{categoryID}/": {
+		"/users/{userID}/budgets/categories/{categoryID}/": {
 			"get": {
 				"summary": "Presupuestos del usuario filtrados por categoría y por mes",
 				"operationId": "get_budgets_by_category_month",
@@ -197,7 +197,7 @@
 				]
 			}
 		},
-		"/user/{userID}/budgets/{budgetID}/": {
+		"/users/{userID}/budgets/{budgetID}/": {
 			"get": {
 				"summary": "Ver detalle del presupuesto",
 				"operationId": "get_budget_detail",
@@ -362,7 +362,7 @@
 				]
 			}			
 		},
-		"/user/{userID}/transactions/": {
+		"/users/{userID}/transactions/": {
 			"get": {
 				"summary": "Transacciones del usuario filtrados por mes",
 				"operationId": "get_transactions_by_month",
@@ -406,7 +406,7 @@
 				]
 			}
 		},
-		"/user/{userID}/transactions/categories/{categoryID}/": {
+		"/users/{userID}/transactions/categories/{categoryID}/": {
 			"get": {
 				"summary": "Transacciones del usuario filtrados por categoría y por mes",
 				"operationId": "get_transactions_by_category_month",
@@ -460,7 +460,7 @@
 				]
 			}
 		},		
-		"/user/{userID}/transactions/{transactionID}/": {
+		"/users/{userID}/transactions/{transactionID}/": {
 			"get": {
 				"summary": "Ver detalle de la transacción",
 				"operationId": "get_transaction_detail",
@@ -565,7 +565,7 @@
 				]
 			}
 		},
-		"/user/{userID}/transactions/summary/": {
+		"/users/{userID}/transactions/summary/": {
 			"get": {
 				"summary": "Gasto Total mensual",
 				"operationId": "get_summary",
@@ -637,7 +637,7 @@
                 ]
             } 
 		},
-		"/user/{userID}/transactions/expenses/summary/": {
+		"/users/{userID}/transactions/expenses/summary/": {
 			"get": {
 				"summary": "Gasto Total de egresos",
 				"operationId": "get_expenses_summary",
@@ -682,7 +682,7 @@
 				]
 			}
 		},
-		"/user/{userID}/transactions/balance/": {
+		"/users/{userID}/transactions/balance/": {
 			"get": {
 				"summary": "Balance Mensual",
 				"operationId": "get_balance",
@@ -727,7 +727,7 @@
 				]
 			}
 		},
-		"/user/{userID}/transactions/balance/category/{categoryID}": {
+		"/users/{userID}/transactions/balance/category/{categoryID}": {
 			"get": {
 				"summary": "Balance Mensual por categoria",
 				"operationId": "get_balance_category",
