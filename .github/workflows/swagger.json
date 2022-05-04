@@ -439,7 +439,7 @@
 						},
 						"required": true,
 						"description": "Fecha",
-						"example": "2022-095"
+						"example": "2022-05"
 					}
 				],
 				"responses": {
