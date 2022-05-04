@@ -41,7 +41,10 @@ class TransactionList(ListAPIView):
         date = validate_date(self.request.query_params.get('date_month'))
         if not date:
             return Response({'400': "Invalid date format."}, status=status.HTTP_400_BAD_REQUEST)
-        transactions = self.get_queryset().filter(transaction_date__range=[date.start_of('month'), date.end_of('month')])
+        transactions = self.get_queryset().filter(
+            transaction_date__range=[date.start_of('month'),
+            date.end_of('month')]
+        )
         data = TransactionSerializer(transactions, many=True)
         return Response(data=data.data, status=status.HTTP_200_OK)
 

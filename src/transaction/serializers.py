@@ -42,12 +42,12 @@ class TransactionSerializer(serializers.ModelSerializer):
         Category
         """
         try:
-            r = self.transaction_type_catalogs[str(category_id)]
+            category = self.transaction_type_catalogs[str(category_id)]
         except TypeError:
-            r = self.transaction_type_catalogs[(str(category_id))]
+            category = self.transaction_type_catalogs[(str(category_id))]
         except KeyError:
-            r = self.transaction_type_catalogs
-        return r
+            category = self.transaction_type_catalogs['f37b6770-7fc5-43e0-a837-50926e1ee459']
+        return category
 
     def to_representation(self, instance):
         """

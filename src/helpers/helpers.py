@@ -33,7 +33,7 @@ def catalog_to_dict(catalog_name):
     """
     try:
         catalog_url = environ.get('CATALOG_SERVICE_URL')
-        r = requests.get(catalog_url+'?catalog={}'.format(catalog_name), timeout=1)
+        r = requests.get(catalog_url+'backend/?catalog={}'.format(catalog_name), timeout=1)
         if r.status_code == 200:
             r = r.json()
             data = {}
