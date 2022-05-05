@@ -21,8 +21,9 @@ months_dict = {
 
 def validate_date(value):
     try:
-        return pendulum.from_format(value+'-01', 'YYYY-MM-DD')
-    except (ValueError, TypeError):
+        value = value.split('-')
+        return pendulum.datetime(int(value[0]), int(value[1]), 1, tz=environ.get('TIME_ZONE'))
+    except (ValueError, TypeError, AttributeError):
         return False
 
 

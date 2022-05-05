@@ -3,6 +3,7 @@ from rest_framework.response import Response
 from rest_framework import status
 
 from helpers.helpers import validate_date
+
 from budget.serializers import BudgetSerializer, BudgetDetailSerializer
 from budget.models import Budget
 
@@ -41,15 +42,13 @@ class Category(ListAPIView):
         date = validate_date(self.request.query_params.get('date_month'))
         if not date:
             return Response({'400': "Invalid date format."}, status=status.HTTP_400_BAD_REQUEST)
-        print(date.start_of('month'), date.end_of('month'), user, category)
         budgets = Budget.objects.filter(
             user=user,
             category=category,
             budget_date__range=[date.start_of('month'), date.end_of('month')]
         )
-        print(budgets)
-        # data = BudgetSerializer(budgets, many=True)
-        # return Response(data=data.data, status=status.HTTP_200_OK)
+        data = BudgetSerializer(budgets, many=True)
+        return Response(data=data.data, status=status.HTTP_200_OK)
         return Response('OK', status=status.HTTP_200_OK)
 
 
