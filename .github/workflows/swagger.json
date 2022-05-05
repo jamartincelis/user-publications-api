@@ -633,7 +633,7 @@
 					}
                 },
                 "tags": [
-                    "Transaction"
+                    "Transacciones"
                 ]
             } 
 		},
@@ -727,11 +727,11 @@
 				]
 			}
 		},
-		"/users/{userID}/transactions/balance/category/{categoryID}": {
+		"/users/{userID}/transactions/balance/category/{categoryID}/": {
 			"get": {
-				"summary": "Balance Mensual por categoria",
+				"summary": "Balance Mensual por categoría",
 				"operationId": "get_balance_category",
-				"description": "Balance mensual por categoria",
+				"description": "Balance mensual por categoría",
 				"parameters": [
 					{
 						"in": "path",
@@ -774,9 +774,9 @@
 		},
 		"/tips/": {
 			"get": {
-				"summary": "Get all tips",
+				"summary": "Obtiene el listado de tips",
 				"operationId": "get_tips",
-				"description": "Get all tips",
+				"description": "Obtiene el listado de tips",
 				"parameters": [
 				],
 				"responses": {
@@ -789,19 +789,19 @@
 								}
 							}
 						},
-						"description": "Lista de tips"
+						"description": "Listado de tips"
 					}
 				},
 				"tags": [
-					"Transacciones"
+					"Tips"
 				]
 			}
 		},
 		"/faqs/": {
 			"get": {
-				"summary": "Get all FAQ",
+				"summary": "Obtiene el listado de preguntas frecuentes",
 				"operationId": "get_faqs",
-				"description": "Get all FAQS",
+				"description": "Obtiene el listado de preguntas frecuentes",
 				"parameters": [
 				],
 				"responses": {
@@ -814,19 +814,19 @@
 								}
 							}
 						},
-						"description": "Lista de FAQS"
+						"description": "Listado de preguntas frecuentes"
 					}
 				},
 				"tags": [
-					"Transacciones"
+					"Preguntas frecuentes"
 				]
 			}
 		},
 		"/notifications/": {
 			"get": {
-				"summary": "Get all notifications",
+				"summary": "Obtiene un listado de notificaciones",
 				"operationId": "get_notifications",
-				"description": "Get all notifications",
+				"description": "Obtiene un listado de notificaciones",
 				"parameters": [
 				],
 				"responses": {
@@ -839,11 +839,11 @@
 								}
 							}
 						},
-						"description": "Lista de notificaciones"
+						"description": "Listado de notificaciones"
 					}
 				},
 				"tags": [
-					"Transacciones"
+					"Notificaciones"
 				]
 			}
 		}

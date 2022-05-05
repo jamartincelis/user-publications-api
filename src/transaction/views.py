@@ -287,7 +287,7 @@ class MonthlyCategoryBalanceView(APIView):
     def get(self, request, user, category):
         now = pendulum.now().subtract(years=1)
         start_date = pendulum.datetime(now.year, now.month, 1)
-        end_date = pendulum.now().subtract(months=1).end_of('mont')
+        end_date = pendulum.now().subtract(months=1).end_of('month')
         dates = []
         while start_date < end_date:
             dates.append(start_date)
