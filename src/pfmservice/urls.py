@@ -6,11 +6,11 @@ from transaction.views import NewTransaction
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('pfm-service/monitoring/', include('monitoring.urls')),
-    path('pfm-service/users/<str:user>/budgets/', include('budget.urls')),
-    path('pfm-service/users/<str:user>/transactions/', include('transaction.urls')),
-    path('pfm-service/new-transaction/', NewTransaction.as_view()),
-    path('pfm-service/faqs/', include('faq.urls')),
-    path('pfm-service/tips/', include('tip.urls')),
-    path('pfm-service/notifications/', include('notification.urls')),    
+    path('monitoring/', include('monitoring.urls')),
+    path('users/<str:user>/budgets/', include('budget.urls')),
+    path('users/<str:user>/transactions/', include('transaction.urls')),
+    path('new-transaction/', NewTransaction.as_view()),
+    path('faqs/', include('faq.urls')),
+    path('tips/', include('tip.urls')),
+    path('notifications/', include('notification.urls')),    
 ]
