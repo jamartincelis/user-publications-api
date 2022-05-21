@@ -6,8 +6,6 @@ from rest_framework import serializers
 
 from transaction.models import Transaction
 
-from helpers.helpers import catalog_to_dict
-
 
 class TransactionSerializer(serializers.ModelSerializer):
     """
@@ -16,8 +14,6 @@ class TransactionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Transaction
         fields = '__all__'
-
-    transaction_type_catalogs = {**catalog_to_dict('expenses_categories'), **catalog_to_dict('incomes_categories')}
 
     def validate(self, data):
         core_url = environ.get('CORE_SERVICE_URL')

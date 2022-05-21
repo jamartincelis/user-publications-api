@@ -11,15 +11,10 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 
-from helpers.helpers import validate_date, months_dict, catalog_to_dict, get_catalog
-
 from budget.models import Budget
 
 from transaction.models import Transaction
 from transaction.serializers import TransactionSerializer, TransactionSummarySerializer
-
-
-expenses_categories = get_catalog('expenses_categories')
 
 
 class TransactionsBulkCreate(APIView):

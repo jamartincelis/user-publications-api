@@ -1,0 +1,269 @@
+- model: 'catalog.Item'
+  fields:
+    id: '22118f55-e6a9-46b0-ae8f-a063dda396e0'
+    catalog: '1ec6a6b5-65d5-4a8c-85d0-4364c141aefd'
+    item_name: 'Shopping'
+    description: 'Deportes, electrónica, vestuario y calzado'
+    metadata: {
+      "icon": "/assets/xerpa/global/img/categories/shopping.svg",
+      "color": "#7C2582",
+      "active": true,
+      "short_name": "SHOPPING"
+    }
+    active: true
+    process_name: null
+
+- model: 'catalog.Item'
+  fields:
+    id: '53566d37-4b4d-4598-8b6c-09f5970c33cd'
+    catalog: '1ec6a6b5-65d5-4a8c-85d0-4364c141aefd'
+    item_name: 'Automóvil & Transporte'
+    description: 'Gasolina, estacionamiento, seguro auto, app taxi'
+    metadata: {
+      "icon": "/assets/xerpa/global/img/categories/transporte.svg",
+      "color": "#8C6700",
+      "active": true,
+      "short_name": "AUTOMOVIL_TRANSPORTE"
+    }
+    active: true
+    process_name: null
+
+- model: 'catalog.Item'
+  fields:
+    id: '8442c4fa-64e6-4470-af7c-8d007d5f572f'
+    catalog: '1ec6a6b5-65d5-4a8c-85d0-4364c141aefd'
+    item_name: 'Cuentas & Servicios'
+    description: 'Consumo de luz, agua, gas, internet, telefonía'
+    metadata: {
+      "icon": "/assets/xerpa/global/img/categories/servicios.svg",
+      "color": "#BF6100",
+      "active": true,
+      "short_name": "CUENTA_SERVICIO"
+    }
+    active: true
+    process_name: null
+
+- model: 'catalog.Item'
+  fields:
+    id: '9abd4759-ab14-4e09-adc2-9c5dea1041b1'
+    catalog: '1ec6a6b5-65d5-4a8c-85d0-4364c141aefd'
+    item_name: 'Entretenimiento'
+    description: 'Netflix, spotify, cine, apps store, videojuegos'
+    metadata: {
+      "icon": "/assets/xerpa/global/img/categories/entretenimiento.svg",
+      "color": "#ED888A",
+      "active": true,
+      "short_name": "ENTRETENIMIENTO"
+    }
+    active: true
+    process_name: null
+
+- model: 'catalog.Item'
+  fields:
+    id: '72fb8abb-d236-469d-a511-0e7d81c4af1e'
+    catalog: '1ec6a6b5-65d5-4a8c-85d0-4364c141aefd'
+    item_name: 'Ahorros & Inversión'
+    description: 'Ahorro, inversión, ffmm, deposito a plazo, compra acciones'
+    metadata: {
+      "icon": "/assets/xerpa/global/img/categories/ahorro.svg",
+      "color": "#FF8300",
+      "active": true,
+      "short_name": "AHORRO_INVERSION"
+    }
+    active: true
+    process_name: null
+
+- model: 'catalog.Item'
+  fields:
+    id: '72fb8abb-d236-469d-a511-0e7d81c4af1e'
+    catalog: '1ec6a6b5-65d5-4a8c-85d0-4364c141aefd'
+    item_name: 'Hogar & Familia'
+    description: 'Renta, hipotecario, educación, mascota, veterinario, colegio'
+    metadata: {
+      "icon": "/assets/xerpa/global/img/categories/hogar.svg",
+      "color": "#00A1DF",
+      "active": true,
+      "short_name": "HOGAR_FAMILIA"
+    }
+    active: true
+    process_name: null
+
+- model: 'catalog.Item'
+  fields:
+    id: 'cf01dce7-6d5e-4ad6-8e5a-8ba5c6d6f94c'
+    catalog: '1ec6a6b5-65d5-4a8c-85d0-4364c141aefd'
+    item_name: 'Gastos Financieros & Seguros'
+    description: 'Seguros, comisiones, impuestos'
+    metadata: {
+      "icon": "/assets/xerpa/global/img/categories/finanzas.svg",
+      "color": "#420456",
+      "active": true,
+      "short_name": "GASTO_FINANCIERO_SEGURO"
+    }
+    active: true
+    process_name: null
+
+- model: 'catalog.Item'
+  fields:
+    id: 'd26e9eb4-5c2a-45f2-af03-571af93ae7e2'
+    catalog: '1ec6a6b5-65d5-4a8c-85d0-4364c141aefd'
+    item_name: 'Transferencias & Retiros'
+    description: 'Transferencias a terceros, retiros en cajeros, retiros en caja'
+    metadata: {
+      "icon": "/assets/xerpa/global/img/categories/retiros.svg",
+      "color": "#C9A71C",
+      "active": true,
+      "short_name": "TRANSFERENCIA_RETIRO"
+    }
+    active: true
+    process_name: null
+
+- model: 'catalog.Item'
+  fields:
+    id: 'a249c468-bb4d-4365-83f4-108d456bb494'
+    catalog: '1ec6a6b5-65d5-4a8c-85d0-4364c141aefd'
+    item_name: 'Restaurantes'
+    description: 'Apps de pedidos, restaurantes, bares y nightclubs'
+    metadata: {
+      "icon": "/assets/xerpa/global/img/categories/restaurantes.svg",
+      "color": "#B00009",
+      "active": true,
+      "short_name": "RESTAURANT"
+    }
+    active: true
+    process_name: null
+
+- model: 'catalog.Item'
+  fields:
+    id: 'a249c468-bb4d-4365-83f4-108d456bb494'
+    catalog: '1ec6a6b5-65d5-4a8c-85d0-4364c141aefd'
+    item_name: 'Supermercados'
+    description: 'Tienda de comestibles, panaderia, pasteleria'
+    metadata: {
+      "icon": "/assets/xerpa/global/img/categories/supermercados.svg",
+      "color": "#E81E2B",
+      "active": true,
+      "short_name": "SUPERMERCADO"
+    }
+    active: true
+    process_name: null
+
+- model: 'catalog.Item'
+  fields:
+    id: '84e6fa2f-8790-4d94-8f65-6944c7bcba10'
+    catalog: '1ec6a6b5-65d5-4a8c-85d0-4364c141aefd'
+    item_name: 'Vacaciones & Viajes'
+    description: 'Plataformas de viajes, hoteles, cabañas, arriendo de auto'
+    metadata: {
+      "icon": "/assets/xerpa/global/img/categories/viajes.svg",
+      "color": "#FFC700",
+      "active": true,
+      "short_name": "VACACION_VIAJE"
+    }
+    active: true
+    process_name: null
+
+- model: 'catalog.Item'
+  fields:
+    id: 'bf50dc35-43d0-4f60-9860-770b8afc96f4'
+    catalog: '1ec6a6b5-65d5-4a8c-85d0-4364c141aefd'
+    item_name: 'Ignorar'
+    description: 'Transacciones que no quieres que se agreguen a una categoría'
+    metadata: {
+      "icon": "/assets/img/category/ignore.svg",
+      "color": "#CFA7DC",
+      "active": true,
+      "short_name": "IGNORE"
+    }
+    active: true
+    process_name: null
+
+- model: 'catalog.Item'
+  fields:
+    id: '4419f198-e4d5-4352-aba6-c6f173b748b2'
+    catalog: '1ec6a6b5-65d5-4a8c-85d0-4364c141aefd'
+    item_name: 'Pago Tarjeta de Crédito'
+    description: 'Compra de divisas, pago tarjeta de crédito'
+    metadata: {
+      "icon": "/assets/xerpa/global/img/categories/credit_card.svg",
+      "color": "#005D8F",
+      "active": true,
+      "short_name": "PAGO_TARJETA_CREDITO"
+    }
+    active: true
+    process_name: null
+
+- model: 'catalog.Item'
+  fields:
+    id: 'f0eae548-64e6-45b4-9bfd-4059d2b9d4df'
+    catalog: '1ec6a6b5-65d5-4a8c-85d0-4364c141aefd'
+    item_name: 'Salud & Bienestar'
+    description: 'Farmacia, doctores, dentista, gimnasio, salon de belleza, peluqueria'
+    metadata: {
+      "icon": "/assets/xerpa/global/img/categories/salud.svg",
+      "color": "#870F38",
+      "active": true,
+      "short_name": "SALUD_BIENESTAR"
+    }
+    active: true
+    process_name: null
+
+- model: 'catalog.Item'
+  fields:
+    id: '38e570af-1241-426c-afa5-f874b1c49128'
+    catalog: '1ec6a6b5-65d5-4a8c-85d0-4364c141aefd'
+    item_name: 'Otros'
+    description: 'Otros'
+    metadata: {
+      "icon": "/assets/xerpa/global/img/categories/ahorro.svg",
+      "color": "#9C9A9F",
+      "active": true,
+      "short_name": "OTROS"
+    }
+    active: false
+    process_name: null
+
+- model: 'catalog.Item'
+  fields:
+    id: '4cdad960-1ec7-4a9b-aae8-71eeb6ba2ad7'
+    catalog: '1ec6a6b5-65d5-4a8c-85d0-4364c141aefd'
+    item_name: 'Transferencias entre Cuentas Propias'
+    description: 'Transferencias entre mis cuentas personales'
+    metadata: {
+      "icon": "/assets/xerpa/global/img/categories/ahorro.svg",
+      "color": "#9C9A9F",
+      "active": true,
+      "short_name": "OTROS"
+    }
+    active: false
+    process_name: null
+
+- model: 'catalog.Item'
+  fields:
+    id: 'f37b6770-7fc5-43e0-a837-50926e1ee459'
+    catalog: '1ec6a6b5-65d5-4a8c-85d0-4364c141aefd'
+    item_name: 'Sin categoría'
+    description: 'Transacción sin categoría'
+    metadata: {
+      "icon": "/assets/xerpa/global/img/categories/ahorro.svg",
+      "color": "#9C9A9F",
+      "active": false,
+      "short_name": "SIN_CATEGORIA"
+    }
+    active: false
+    process_name: null
+
+- model: 'catalog.Item'
+  fields:
+    id: 'f7f2f8aa-2297-41a2-9fcf-d65aa9cfb180'
+    catalog: '1ec6a6b5-65d5-4a8c-85d0-4364c141aefd'
+    item_name: 'Donaciones & Regalos'
+    description: 'Donaciones, regalos a terceros'
+    metadata: {
+      "icon": "/assets/xerpa/global/img/categories/ahorro.svg",
+      "color": "#9C9A9F",
+      "active": false,
+      "short_name": "DONACIONES"
+    }
+    active: false
+    process_name: null

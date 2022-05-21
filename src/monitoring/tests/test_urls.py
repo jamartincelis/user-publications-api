@@ -1,6 +1,8 @@
 from django.test import TestCase
 from django.urls import reverse
+
 import monitoring.tests.constants as constants
+
 
 class TestMonitoringAppUrls(TestCase):
     def test_resolution_for_health_check(self):        

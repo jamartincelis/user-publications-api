@@ -1,10 +1,10 @@
 from django.urls import path
 
-from budget.views import BudgetList, BudgetDetail, Category
+from budget.views import BudgetsList, BudgetDetail, BudgetByMonthAndCategory
 
 
 urlpatterns = [
-    path('', BudgetList.as_view()),
+    path('', BudgetsList.as_view()),
     path('<str:pk>/', BudgetDetail.as_view()),
-    path('categories/<str:category>/', Category.as_view())
+    path('categories/<str:category_id>/', BudgetByMonthAndCategory.as_view())
 ]
