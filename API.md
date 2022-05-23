@@ -6,7 +6,7 @@ Endpoints del proyecto coopeuch salud financiera.
 
 ```bash
 curl -X 'GET' \
-  'http://localhost:8000/pfm-service/user/479ec168013945d0b7042bc4e5d0c4fb/budgets/?date_month=2021-09' \
+  'http://localhost:8000/pfm-service/users/479ec168013945d0b7042bc4e5d0c4fb/budgets/?date_month=2021-09' \
   -H 'accept: application/json'
 ```
 
@@ -189,7 +189,7 @@ respuesta
 
 ```bash
 curl --request GET \
-  --url 'http://localhost:8000/user/479ec168013945d0b7042bc4e5d0c4fb/transactions/balance/?year=2021'
+  --url 'http://localhost:8000/pfm-service/users/479ec168013945d0b7042bc4e5d0c4fb/transactions/balance/?year=2021'
 ```
 respuesta
 

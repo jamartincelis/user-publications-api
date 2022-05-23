@@ -4,7 +4,7 @@ from rest_framework import status
 
 from helpers.helpers import validate_date
 
-from budget.serializers import BudgetSerializer, BudgetDetailSerializer
+from budget.serializers import BudgetSerializer
 from budget.models import Budget
 
 
@@ -49,7 +49,6 @@ class Category(ListAPIView):
         )
         data = BudgetSerializer(budgets, many=True)
         return Response(data=data.data, status=status.HTTP_200_OK)
-        return Response('OK', status=status.HTTP_200_OK)
 
 
 class BudgetDetail(RetrieveUpdateAPIView):
@@ -57,4 +56,4 @@ class BudgetDetail(RetrieveUpdateAPIView):
     Permite retornar, actualizar o borrar un Presupuesto.
     """
     queryset = Budget.objects.all()
-    serializer_class = BudgetDetailSerializer
+    serializer_class = BudgetSerializer
