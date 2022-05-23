@@ -348,6 +348,5 @@ class NewTransaction(APIView):
                 )
                 return Response(TransactionSerializer(transaction).data, status=status.HTTP_201_CREATED)
             except KeyError as e:
-                print(e)
                 return Response('Bad request', status=status.HTTP_400_BAD_REQUEST)
         return Response('Account not found', status=status.HTTP_404_NOT_FOUND)
