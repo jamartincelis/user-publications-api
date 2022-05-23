@@ -10,5 +10,6 @@ urlpatterns = [
     path('new-transaction/', NewTransaction.as_view()),
     path('faqs/', include('faq.urls')),
     path('tips/', include('tip.urls')),
-    path('notifications/', include('notification.urls')),    
+    path('notifications/', include('notification.urls')),
+    path('catalogs/', include('catalog.urls')),
 ]

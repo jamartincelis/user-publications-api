@@ -15,7 +15,7 @@ class Catalog(models.Model):
 
 class Item(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid4, editable=False)
-    catalog_id = models.ForeignKey(Catalog, on_delete=models.CASCADE, related_name='items')
+    catalog = models.ForeignKey(Catalog, on_delete=models.CASCADE, related_name='items')
     item_name = models.CharField(max_length=40)
     description = models.CharField(max_length=100)
     metadata = models.JSONField()
