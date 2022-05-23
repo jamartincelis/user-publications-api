@@ -17,54 +17,50 @@ from transaction.models import Transaction
 from transaction.serializers import TransactionSerializer, TransactionSummarySerializer
 
 
-class TransactionsBulkCreate(APIView):
-    def post(self, request):
-        return TransactionSerializer()
-
-
-class TransactionList(ListAPIView):
+class TransactionsByMonth(ListAPIView):
     """
-    Devuelve la lista de transacciones del usuario
+    Devuelve la lista de transacciones del usuario de un mes en específico
     """
-    serializer_class = TransactionSerializer
-    filterset_fields = ['date_month']
-
-    def get_queryset(self):
-        return Transaction.objects.filter(user=self.kwargs['user'])
 
     def get(self, request, user):
         date = validate_date(self.request.query_params.get('date_month'))
         if not date:
             return Response({'400': "Invalid date format."}, status=status.HTTP_400_BAD_REQUEST)
-        transactions = self.get_queryset().filter(
-            transaction_date__range=[date.start_of('month'),
-            date.end_of('month')]
+        transactions = Transaction.objects.prefetch_related('transaction_category').filter(
+            user=self.kwargs['user_id'],
+            transaction_date__range=[date.start_of('month'), date.end_of('month')]
         )
-        data = TransactionSerializer(transactions, many=True)
-        return Response(data=data.data, status=status.HTTP_200_OK)
+        return Response(data=TransactionSerializer(transactions, many=True).data, status=status.HTTP_200_OK)
 
 
 class TransactionDetail(RetrieveUpdateAPIView):
     """
     Permite retornar, actualizar o borrar una Transaccion.
     """
-    queryset = Transaction.objects.all()
-    serializer_class = TransactionSerializer
+    def get(self):
+        try:
+            transaction = Transaction.objects.prefetch_related('transaction_category').get(
+                pk=self.kwargs['pk'],
+                user_id=self.kwargs['user_id']
+            )
+            return Response(TransactionSerializer(transaction).data, status=status.HTTP_200_OK)
+        except Transaction.DoesnotExist:
+            return Response('Transaction not found', status=status.HTTP_404_NOT_FOUND)
 
-    def get_queryset(self):
-        return Transaction.objects.filter(user=self.kwargs['user'], pk=self.kwargs['pk'])
 
 
-class Category(ListAPIView):
+class TransactionsByCategoryAndMonth(ListAPIView):
     """
     Devuelve las transacciones del usuario filtradas por mes y categoría
     """
     serializer_class = TransactionSerializer
     filterset_fields = ['date_month']
-    
+
     def get_queryset(self):
-        return Transaction.objects.filter(user=self.kwargs['user'], 
-            category=self.kwargs['category'])
+        return Transaction.objects.filter(
+            user_id=self.kwargs['user_id'], 
+            category_id=self.kwargs['category_id']
+        )
 
     def get(self, request, user, category):
         date = validate_date(self.request.query_params.get('date_month'))
@@ -75,7 +71,7 @@ class Category(ListAPIView):
         return Response(data=data.data, status=status.HTTP_200_OK)
 
 
-class CategorySummary(ListAPIView):
+class TransactionsCategoriesSummarybyMonth(ListAPIView):
     """
     Devuelve el resumen de transacciones por categorías del mes solicitado
     """
@@ -94,7 +90,7 @@ class CategorySummary(ListAPIView):
         return Response(data=data.data, status=status.HTTP_200_OK)
 
 
-class ExpenseSummaryView(APIView):
+class ExpensesSummary(APIView):
     """
     Devuelve el resumen de egresos y presupuestos por categoría.
     """
@@ -205,7 +201,7 @@ class ExpenseSummaryView(APIView):
         return Response(self.data, status=status.HTTP_200_OK)
 
 
-class MonthlyBalanceView(APIView):
+class MonthlyBalance(APIView):
     """
     Permite retornar el balance mensual del usuario.
     """
@@ -257,7 +253,7 @@ class MonthlyBalanceView(APIView):
         return Response([v for k, v in years_dict.items()], status=status.HTTP_200_OK)
 
 
-class MonthlyCategoryBalanceView(APIView):
+class MonthlyCategoriesBalance(APIView):
     """
     Permite retornar el balance mensual por categoría del usuario.
     """
@@ -329,10 +325,9 @@ class NewTransaction(APIView):
     Permite crear una transacción a aprtir de un número de cuenta
     """
 
-    core_url = environ.get('CORE_SERVICE_URL')
-
     def get_account_details(self, account_number):
         try:
+            core_url = environ.get('CORE_SERVICE_URL')
             response = requests.get(self.core_url+'accounts/?number={}'.format(account_number), timeout=1)
             if response.status_code == 200:
                 return response.json()
@@ -347,7 +342,7 @@ class NewTransaction(APIView):
             try:
                 transaction = Transaction.objects.create(
                     account=account['id'],
-                    user=account['user'],
+                    user_id=account['user_'],
                     amount=data['amount'],
                     description=data['description'],
                     transaction_date=data['transaction_date']

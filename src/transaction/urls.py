@@ -1,14 +1,15 @@
 from django.urls import path, include
 
-from transaction import views
+from transaction.views import TransactionsByMonth, TransactionDetail, TransactionsByCategoryAndMonth,\
+    TransactionsCategoriesSummarybyMonth, ExpensesSummary, MonthlyBalance, MonthlyCategoriesBalance
 
 
 urlpatterns = [
-    path('', views.TransactionList.as_view()),
-    path('expenses/summary/', views.ExpenseSummaryView.as_view()),
-    path('summary/', views.CategorySummary.as_view()),
-    path('balance/', views.MonthlyBalanceView.as_view()),
-    path('<str:pk>/', views.TransactionDetail.as_view()),
-    path('categories/<str:category>/', views.Category.as_view()),
-    path('balance/category/<str:category>/', views.MonthlyCategoryBalanceView.as_view()),
+    path('', TransactionsByMonth.as_view()),
+    path('expenses/summary/', ExpensesSummary.as_view()),
+    path('summary/', TransactionsCategoriesSummarybyMonth.as_view()),
+    path('balance/', MonthlyBalance.as_view()),
+    path('categories/<str:category>/', TransactionsByCategoryAndMonth.as_view()),
+    path('balance/category/<str:category>/', MonthlyCategoriesBalance.as_view()),
+    path('<str:pk>/', TransactionDetail.as_view())
 ]

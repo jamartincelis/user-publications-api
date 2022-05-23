@@ -18,7 +18,7 @@ class BudgetsList(ListCreateAPIView):
         date = validate_date(self.request.query_params.get('date_month'))
         if not date:
             return Response({'400': "Invalid date format."}, status=status.HTTP_400_BAD_REQUEST)
-        budgets = budgets.filter(
+        budgets = Budgets.objects.prefetch_related('budget_status').filter(
             user_id=self.kwargs['user_id'],
             budget_date__range=[date.start_of('month'), date.end_of('month')]
         )
@@ -39,7 +39,7 @@ class BudgetsByMonthAndCategory(ListAPIView):
         date = validate_date(self.request.query_params.get('date_month'))
         if not date:
             return Response({'400': "Invalid date format."}, status=status.HTTP_400_BAD_REQUEST)
-        budgets = Budget.objects.filter(
+        budgets = Budget.objects.prefetch_related('budget_status').filter(
             user_id=user_id,
             category_id=category_id,
             budget_date__range=[date.start_of('month'), date.end_of('month')]
@@ -52,5 +52,5 @@ class BudgetDetail(RetrieveUpdateAPIView):
     """
     Permite retornar, actualizar o borrar un Presupuesto.
     """
-    queryset = Budget.objects.all()
+    queryset = Budget.objects.prefetch_related('budget_status').all()
     serializer_class = BudgetSerializer
