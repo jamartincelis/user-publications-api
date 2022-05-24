@@ -1,31 +1,20 @@
 from os import environ
-
 import pendulum
-
 import requests
-
 from django.db.models import Sum, Count, Q, Case, When, F, FloatField, IntegerField
-
 from rest_framework.generics import RetrieveUpdateAPIView, ListAPIView
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-
-from helpers.helpers import validate_date, months_dict, catalog_to_dict, get_catalog
-
+from helpers.helpers import validate_date, months_dict
 from budget.models import Budget
-
 from transaction.models import Transaction
 from transaction.serializers import TransactionSerializer, TransactionSummarySerializer
-
-
-expenses_categories = get_catalog('expenses_categories')
-
+from django.conf import settings
 
 class TransactionsBulkCreate(APIView):
     def post(self, request):
         return TransactionSerializer()
-
 
 class TransactionList(ListAPIView):
     """
@@ -155,7 +144,7 @@ class ExpenseSummaryView(APIView):
 
     def merge_data(self):
         # se obtiene las categorias de egresos
-        categories = expenses_categories['expenses_categories']
+        categories = settings.TRANSACTION_CATEGORIES['expenses_categories']
         for category in categories:
             expenses = self.get_expenses(category['id'])
             budget = self.get_budget(category['id'], expenses['amount'])
@@ -358,6 +347,6 @@ class NewTransaction(APIView):
                     transaction_date=data['transaction_date']
                 )
                 return Response(TransactionSerializer(transaction).data, status=status.HTTP_201_CREATED)
-            except KeyError:
+            except KeyError as e:
                 return Response('Bad request', status=status.HTTP_400_BAD_REQUEST)
         return Response('Account not found', status=status.HTTP_404_NOT_FOUND)

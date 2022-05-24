@@ -1,13 +1,8 @@
 from os import environ
-
 import requests
-
 from rest_framework import serializers
-
 from transaction.models import Transaction
-
-from helpers.helpers import catalog_to_dict
-
+from django.conf import settings
 
 class TransactionSerializer(serializers.ModelSerializer):
     """
@@ -17,7 +12,7 @@ class TransactionSerializer(serializers.ModelSerializer):
         model = Transaction
         fields = '__all__'
 
-    transaction_type_catalogs = {**catalog_to_dict('expenses_categories'), **catalog_to_dict('incomes_categories')}
+    transaction_type_catalogs = settings.TRANSACTION_TYPE_CATALOGS
 
     def validate(self, data):
         core_url = environ.get('CORE_SERVICE_URL')

@@ -1,8 +1,8 @@
 {
 	"openapi": "3.0.1",
 	"info": {
-		"title": "Xerpa pfm-service",
-		"version": "v1.1"
+		"title": "PFM",
+		"version": "v1.0.0"
 	},
 	"servers": [{
 		"url": "https://ciyu9u9i9l.execute-api.us-east-1.amazonaws.com/test/pfm-service/"
@@ -69,7 +69,7 @@
 						},
 						"required": true,
 						"description": "Id del usuario",
-						"example": "b9e605ee-4cca-400e-99c5-ae24abca97d5"
+						"example": "479ec168013945d0b7042bc4e5d0c4fb"
 					},
 					{
 						"in": "query",
@@ -79,7 +79,7 @@
 						},
 						"required": true,
 						"description": "Fecha",
-						"example": "2022-05"
+						"example": "2021-09"
 					}
 				],
 				"responses": {
@@ -88,11 +88,13 @@
 							"application/json": {
 								"schema": {
 									"type": "array",
-									"items": {}
+									"items": {
+										"$ref": "#/components/schemas/PresupuestoResponse"
+									}
 								}
 							}
 						},
-						"description": "Permite obtener los Presupuestos del usuario filtrados por mes."
+						"description": "Lista de presupuestos."
 					}
 				},
 				"tags": [
@@ -111,7 +113,7 @@
                         },
                         "required": true,
                         "description": "Id del usuario",
-                        "example": "b9e605ee-4cca-400e-99c5-ae24abca97d5"
+                        "example": "479ec168013945d0b7042bc4e5d0c4fb"
                     }
                 ],
 				"requestBody": {
@@ -122,21 +124,31 @@
 							},
                             "examples": {
                                 "Crear presupuesto": {
-                                  "summary": "Ejemplo para crear un presupuesto de la categoría shopping para el mes actual.",
-                                  "value": {
-                                        "amount": 4000,
-										"user": "b9e605ee-4cca-400e-99c5-ae24abca97d5",
-										"category": "22118f55-e6a9-46b0-ae8f-a063dda396e0"
-                                  }
-                                }
-                            }
+                                  	"summary": "Ejemplo crear presupuesto",
+									"value": {
+										"amount": 9000,
+										"user": "479ec168-0139-45d0-b704-2bc4e5d0c4fb",
+										"category": "22118f55-e6a9-46b0-ae8f-a063dda396e0",
+										"budget_date": "2021-09-21"
+								  	}   
+                                }                      
+                            }							
 						}
 					}
 				},	
                 "responses": {
-                    "201": {
-                        "description": "Created"
-                    }
+					"201": {
+						"description": "Presupuesto creado.",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"$ref": "#/components/schemas/PresupuestoResponse"
+									
+								}								
+							}
+						}
+					}					
                 },
                 "tags": [
                     "Presupuestos"
@@ -156,7 +168,7 @@
 						},
 						"required": true,
 						"description": "Id del usuario",
-						"example": "b9e605ee-4cca-400e-99c5-ae24abca97d5"
+						"example": "479ec168013945d0b7042bc4e5d0c4fb"
 					},
 					{
 						"in": "path",
@@ -175,8 +187,8 @@
 							"type": "string"
 						},
 						"required": true,
-						"description": "Mes a consultar",
-						"example": "2022-05"
+						"description": "Fecha",
+						"example": "2021-09"
 					}
 				],
 				"responses": {
@@ -185,7 +197,9 @@
 							"application/json": {
 								"schema": {
 									"type": "array",
-									"items": {}
+									"items": {
+										"$ref": "#/components/schemas/PresupuestoResponse"
+									}
 								}
 							}
 						},
@@ -211,7 +225,7 @@
 						},
 						"required": true,
 						"description": "Id del usuario",
-						"example": "b9e605ee-4cca-400e-99c5-ae24abca97d5"
+						"example": "479ec168013945d0b7042bc4e5d0c4fb"
 					},
 					{
 						"in": "path",
@@ -221,20 +235,20 @@
 						},
 						"required": true,
 						"description": "Id del presupuesto",
-						"example": "ea6b42a9-cde1-4e03-94ba-6818c21e5328"
+						"example": "45a80dbbea714ce390b3-6761bcbf365c"
 					}
 				],
 				"responses": {
 					"200": {
+						"description": "Obtener detalle del presupuesto",
 						"content": {
 							"application/json": {
 								"schema": {
-									"type": "array",
-									"items": {}
-								}
+									"type": "object",
+									"$ref": "#/components/schemas/PresupuestoResponse"
+								}								
 							}
-						},
-						"description": "Obtener detalle del presupuesto"
+						}					
 					}
 				},
 				"tags": [
@@ -286,15 +300,15 @@
 				},			
 				"responses": {
 					"200": {
+						"description": "Actualizar presupuesto",
 						"content": {
 							"application/json": {
 								"schema": {
-									"type": "array",
-									"items": {}
+									"type": "object",
+									"$ref": "#/components/schemas/PresupuestoResponse"
 								}
 							}
-						},
-						"description": "Actualizar presupuesto"
+						}
 					}
 				},
 				"tags": [
@@ -314,7 +328,7 @@
 						},
 						"required": true,
 						"description": "Id del usuario",
-						"example": "b9e605ee-4cca-400e-99c5-ae24abca97d5"
+						"example": "479ec168013945d0b7042bc4e5d0c4fb"
 					},
 					{
 						"in": "path",
@@ -324,7 +338,7 @@
 						},
 						"required": true,
 						"description": "Id del presupuesto",
-						"example": "ea6b42a9-cde1-4e03-94ba-6818c21e5328"
+						"example": "45a80dbbea714ce390b3-6761bcbf365c"
 					}
 				],
 				"requestBody": {
@@ -337,7 +351,9 @@
                                 "Actualizar monto": {
                                   "summary": "Ejemplo actualizar monto",
                                   "value": {
-									  "amount": 2000
+									  "user": "479ec168013945d0b7042bc4e5d0c4fb",
+									  "amount": 10000,
+									  "category": "22118f55-e6a9-46b0-ae8f-a063dda396e0"
                                   }
                                 }                      
                             }								
@@ -346,15 +362,15 @@
 				},				
 				"responses": {
 					"200": {
+						"description": "Actualizar presupuesto",
 						"content": {
 							"application/json": {
 								"schema": {
-									"type": "array",
-									"items": {}
+									"type": "object",
+									"$ref": "#/components/schemas/PresupuestoResponse"
 								}
 							}
-						},
-						"description": "Update budget"
+						}
 					}
 				},
 				"tags": [
@@ -375,7 +391,7 @@
 						},
 						"required": true,
 						"description": "Id del usuario",
-						"example": "b9e605ee-4cca-400e-99c5-ae24abca97d5"
+						"example": "479ec168013945d0b7042bc4e5d0c4fb"
 					},
 					{
 						"in": "query",
@@ -385,20 +401,22 @@
 						},
 						"required": true,
 						"description": "Fecha",
-						"example": "2022-05"
+						"example": "2021-09"
 					}
 				],
 				"responses": {
 					"200": {
+						"description": "Permite obtener las transacciones del usuario filtrados por mes.",
 						"content": {
 							"application/json": {
 								"schema": {
 									"type": "array",
-									"items": {}
+									"items": {
+										"$ref": "#/components/schemas/TransaccionResponse"
+									}
 								}
 							}
-						},
-						"description": "Permite obtener las transacciones del usuario filtrados por mes."
+						}
 					}
 				},
 				"tags": [
@@ -419,7 +437,7 @@
 						},
 						"required": true,
 						"description": "Id del usuario",
-						"example": "b9e605ee-4cca-400e-99c5-ae24abca97d5"
+						"example": "479ec168013945d0b7042bc4e5d0c4fb"
 					},
 					{
 						"in": "path",
@@ -429,7 +447,7 @@
 						},
 						"required": true,
 						"description": "Id de la categoría",
-						"example": "22118f55-e6a9-46b0-ae8f-a063dda396e0"
+						"example": "9abd4759-ab14-4e09-adc2-9c5dea1041b1"
 					},
 					{
 						"in": "query",
@@ -439,20 +457,22 @@
 						},
 						"required": true,
 						"description": "Fecha",
-						"example": "2022-05"
+						"example": "2021-09"
 					}
 				],
 				"responses": {
 					"200": {
+						"description": "Permite obtener los Presupuestos del usuario filtrados por categoría y por mes.",
 						"content": {
 							"application/json": {
 								"schema": {
 									"type": "array",
-									"items": {}
+									"items": {
+										"$ref": "#/components/schemas/TransaccionResponse"
+									}
 								}
 							}
-						},
-						"description": "Permite obtener los Presupuestos del usuario filtrados por categoría y por mes."
+						}
 					}
 				},
 				"tags": [
@@ -484,20 +504,20 @@
 						},
 						"required": true,
 						"description": "Id de la transacción",
-						"example": "f1b95404-f638-4a26-b19b-6f3c8a29e115"
+						"example": "c7e78eb2-4bef-4dde-b61c-822fe0257003"
 					}
 				],
 				"responses": {
 					"200": {
+						"description": "Obtener detalle de la transacción",
 						"content": {
 							"application/json": {
 								"schema": {
-									"type": "array",
-									"items": {}
+									"type": "object",
+									"$ref": "#/components/schemas/TransaccionResponse"
 								}
 							}
-						},
-						"description": "Obtener detalle de la transacción"
+						}
 					}
 				},
 				"tags": [
@@ -527,7 +547,7 @@
 						},
 						"required": true,
 						"description": "Id de la transacción",
-						"example": "f1b95404-f638-4a26-b19b-6f3c8a29e115"
+						"example": "c7e78eb2-4bef-4dde-b61c-822fe0257003"
 					}
 				],
 				"requestBody": {
@@ -538,9 +558,9 @@
 							},
                             "examples": {
                                 "Actualizar nota": {
-                                  "summary": "Ejemplo para actualizar nota",
+                                  "summary": "Ejemplo actualizar nota",
                                   "value": {
-                                        "user_note": "Estoy agregando una nota."
+                                        "user_note": "Nota del usuario"
                                   }
                                 }                      
                             }							
@@ -549,21 +569,86 @@
 				},			
 				"responses": {
 					"200": {
+						"description": "Actualizar transacción",
 						"content": {
 							"application/json": {
 								"schema": {
-									"type": "array",
-									"items": {}
+									"type": "object",
+									"$ref": "#/components/schemas/TransaccionResponse"
 								}
 							}
-						},
-						"description": "Actualizar transacción"
+						}
 					}
 				},
 				"tags": [
 					"Transacciones"
 				]
-			}
+			},
+			"put": {
+				"summary": "Actualizar transaccion.",
+				"operationId": "update_transaction_put",
+				"description": "",
+				"parameters": [
+					{
+						"in": "path",
+						"name": "userID",
+						"schema": {
+							"type": "string"
+						},
+						"required": true,
+						"description": "Id del usuario",
+						"example": "b9e605ee-4cca-400e-99c5-ae24abca97d5"
+					},
+					{
+						"in": "path",
+						"name": "transactionID",
+						"schema": {
+							"type": "string"
+						},
+						"required": true,
+						"description": "Id de la transacción",
+						"example": "c7e78eb2-4bef-4dde-b61c-822fe0257003"
+					}
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/Transaccion"
+							},
+                            "examples": {
+                                "Actualizar descripcion": {
+                                  	"summary": "Ejemplo actualizar monto",
+                                  	"value": {
+									  	"category": "22118f55-e6a9-46b0-ae8f-a063dda396e0",
+										"description": "Descripción transacción.",
+										"transaction_date": "2021-09-09T15:20:30-04:00",
+										"account": "910e8abd-1265-41ba-8125-f6c720bacde9",
+										"amount": 4000
+                                  	}
+                                }                      
+                            }								
+						}
+					}
+				},				
+				"responses": {
+					"200": {
+						"description": "Actualizar transacción",
+						"content": {
+							"application/json": {
+								"schema": {
+									"type": "object",
+									"$ref": "#/components/schemas/TransaccionResponse"
+								}
+
+							}
+						}
+					}
+				},
+				"tags": [
+					"Transacciones"
+				]
+			}			
 		},
 		"/users/{userID}/transactions/summary/": {
 			"get": {
@@ -579,7 +664,7 @@
 						},
 						"required": true,
 						"description": "Id del usuario",
-						"example": "b9e605ee-4cca-400e-99c5-ae24abca97d5"
+						"example": "479ec168013945d0b7042bc4e5d0c4fb"
 					},
 					{
 						"in": "query",
@@ -589,20 +674,20 @@
 						},
 						"required": true,
 						"description": "Fecha",
-						"example": "2022-05"
+						"example": "2021-09"
 					}					
 				],
 				"responses": {
 					"200": {
+						"description": "Permite obtener el gasto total mensual.",
 						"content": {
 							"application/json": {
 								"schema": {
-									"type": "array",
-									"items": {}
+									"type": "object",
+									"$ref": "#/components/schemas/GastoTotalMensual"
 								}
 							}
-						},
-						"description": "Permite obtener el gasto total mensual."
+						}
 					}
 				},
 				"tags": [
@@ -620,9 +705,9 @@
                     "description": "Config object",
                     "required": true,
 					"content": {
-						"applications/json": {
+						"multipart/form-data": {
 							"schema": {
-								"type": "string" 
+								"$ref": "#/components/schemas/Transaccion"
 							}
 						}
 					}
@@ -633,7 +718,7 @@
 					}
                 },
                 "tags": [
-                    "Transacciones"
+                    "Transaction"
                 ]
             } 
 		},
@@ -651,7 +736,7 @@
 						},
 						"required": true,
 						"description": "Id del usuario",
-						"example": "b9e605ee-4cca-400e-99c5-ae24abca97d5"
+						"example": "479ec168013945d0b7042bc4e5d0c4fb"
 					},
 					{
 						"in": "query",
@@ -661,20 +746,20 @@
 						},
 						"required": true,
 						"description": "Fecha",
-						"example": "2022-05"
+						"example": "2021-09"
 					}					
 				],
 				"responses": {
 					"200": {
+						"description": "Permite obtener el gasto total de egresos.",
 						"content": {
 							"application/json": {
 								"schema": {
-									"type": "array",
-									"items": {}
+									"type": "object",
+									"$ref": "#/components/schemas/GastoTotalEgresos"
 								}
 							}
-						},
-						"description": "Permite obtener el gasto total de egresos."
+						}
 					}
 				},
 				"tags": [
@@ -696,30 +781,30 @@
 						},
 						"required": true,
 						"description": "Id del usuario",
-						"example": "b9e605ee-4cca-400e-99c5-ae24abca97d5"
+						"example": "479ec168013945d0b7042bc4e5d0c4fb"
 					},
 					{
 						"in": "query",
-						"name": "year",
+						"name": "transaction_date",
 						"schema": {
 							"type": "string"
 						},
 						"required": true,
 						"description": "Fecha",
-						"example": "2022-05"
+						"example": "2021-01-09"
 					}					
 				],
 				"responses": {
 					"200": {
+						"description": "Permite obtener el balance mensual.",
 						"content": {
 							"application/json": {
 								"schema": {
 									"type": "array",
-									"items": {}
+									"$ref": "#/components/schemas/BalanceMensual"
 								}
 							}
-						},
-						"description": "Permite obtener el gasto total de egresos."
+						}
 					}
 				},
 				"tags": [
@@ -729,9 +814,9 @@
 		},
 		"/users/{userID}/transactions/balance/category/{categoryID}/": {
 			"get": {
-				"summary": "Balance Mensual por categoría",
+				"summary": "Balance Mensual por categoria",
 				"operationId": "get_balance_category",
-				"description": "Balance mensual por categoría",
+				"description": "Balance mensual por categoria",
 				"parameters": [
 					{
 						"in": "path",
@@ -741,7 +826,7 @@
 						},
 						"required": true,
 						"description": "Id del usuario",
-						"example": "b9e605ee-4cca-400e-99c5-ae24abca97d5"
+						"example": "479ec168013945d0b7042bc4e5d0c4fb"
 					},
 					{
 						"in": "path",
@@ -751,99 +836,36 @@
 						},
 						"required": true,
 						"description": "Id de categoria",
-						"example": "22118f55-e6a9-46b0-ae8f-a063dda396e0"
-					}
+						"example": "9abd4759-ab14-4e09-adc2-9c5dea1041b1"
+					},
+					{
+						"in": "query",
+						"name": "transaction_date",
+						"schema": {
+							"type": "string"
+						},
+						"required": true,
+						"description": "Fecha",
+						"example": "2021-01-09"
+					}											
 				],
 				"responses": {
 					"200": {
+						"description": "Permite obtener el gasto total de egresos por categoria",
 						"content": {
 							"application/json": {
 								"schema": {
 									"type": "array",
-									"items": {}
+									"items": {
+										"$ref": "#/components/schemas/BalanceMensualPorCategoria"
+									}
 								}
 							}
-						},
-						"description": "Permite obtener el gasto total de egresos por categoria"
+						}
 					}
 				},
 				"tags": [
 					"Transacciones"
-				]
-			}
-		},
-		"/tips/": {
-			"get": {
-				"summary": "Obtiene el listado de tips",
-				"operationId": "get_tips",
-				"description": "Obtiene el listado de tips",
-				"parameters": [
-				],
-				"responses": {
-					"200": {
-						"content": {
-							"application/json": {
-								"schema": {
-									"type": "array",
-									"items": {}
-								}
-							}
-						},
-						"description": "Listado de tips"
-					}
-				},
-				"tags": [
-					"Tips"
-				]
-			}
-		},
-		"/faqs/": {
-			"get": {
-				"summary": "Obtiene el listado de preguntas frecuentes",
-				"operationId": "get_faqs",
-				"description": "Obtiene el listado de preguntas frecuentes",
-				"parameters": [
-				],
-				"responses": {
-					"200": {
-						"content": {
-							"application/json": {
-								"schema": {
-									"type": "array",
-									"items": {}
-								}
-							}
-						},
-						"description": "Listado de preguntas frecuentes"
-					}
-				},
-				"tags": [
-					"Preguntas frecuentes"
-				]
-			}
-		},
-		"/notifications/": {
-			"get": {
-				"summary": "Obtiene un listado de notificaciones",
-				"operationId": "get_notifications",
-				"description": "Obtiene un listado de notificaciones",
-				"parameters": [
-				],
-				"responses": {
-					"200": {
-						"content": {
-							"application/json": {
-								"schema": {
-									"type": "array",
-									"items": {}
-								}
-							}
-						},
-						"description": "Listado de notificaciones"
-					}
-				},
-				"tags": [
-					"Notificaciones"
 				]
 			}
 		}
@@ -878,36 +900,496 @@
 					"category"
 				]
 			},
+			"PresupuestoResponse": {
+				"title": "Presupuesto ",
+				"type": "object",
+				"properties": {
+					"id": {
+						"type": "string",
+						"description": "Id interno",
+						"example": "64aad0df-2597-443a-9052-7be5a283ab7d"
+					},
+					"user": {
+						"type": "string",
+						"description": "Id del usuario",
+						"example": "479ec168-0139-45d0-b704-2bc4e5d0c4fb"
+					},
+					"category": {
+						"type": "object",
+						"description": "Categoria del presupuesto",
+						"example": {
+							"id": "9abd4759-ab14-4e09-adc2-9c5dea1041b1",
+							"name": "Entretenimiento",
+							"description": "Netflix, spotify, cine, apps store, videojuegos",
+							"metadata":  {
+								"short_name":"ENTRETENIMIENTO",
+								"icon": "icon.png",
+								"active": "True",
+								"color": "#ED888A"
+							},
+							"active": true,
+							"process_name": "",
+							"catalog": "1ec6a6b5-65d5-4a8c-85d0-4364c141aefd"
+						}
+					},
+					"amount": {
+						"type": "number",
+						"description": "Monto",
+						"example": "2400.00"
+					},
+					"budget_date": {
+						"type": "string",
+						"description": "Fecha",
+						"example": "2021-09-21"
+
+					}
+				}
+			},			
 			"Transaccion": {
 				"title": "Transacción ",
 				"type": "object",
 				"properties": {
-					"account": {
+					"account_number": {
 						"type": "string",
-						"description": "Cuenta del usuario"
+						"description": "Cuenta del usuario",
+						"example": "CUENTA_TEST"
 					},
-					"category": {
-						"type": "string",
-						"description": "Id de la categoria"
-					},
+
 					"amount": {
 						"type": "number",
-						"description": "Monto"
+						"description": "Monto",
+						"example": 30000
 					},
 					"description": {
 						"type": "string",
-						"description": "description"
+						"description": "description",
+						"example": "Ejemplo"
 					},
 					"transaction_date": {
 						"type": "string",
-						"description": "Fecha"
+						"description": "Fecha",
+						"example": "2022-03-24 17:34:58.971 -0600"
+					}
+				}
+			},
+			"TransaccionResponse": {
+				"title": "TransaccionResponse",
+				"type": "object",
+				"properties": {
+					"account": {
+						"type": "string",
+						"description": "Cuenta del usuario",
+						"example": "e25736e4-b2db-4fa0-8917-86f5ec92463f"
+					},
+					"category": {
+						"type": "object",
+						"description": "Categoria del presupuesto",
+						"example": {
+							"id": "9abd4759-ab14-4e09-adc2-9c5dea1041b1",
+							"name": "Entretenimiento",
+							"description": "Netflix, spotify, cine, apps store, videojuegos",
+							"metadata":  {
+								"short_name":"ENTRETENIMIENTO",
+								"icon": "icon.png",
+								"active": "True",
+								"color": "#ED888A"
+							},
+							"active": true,
+							"process_name": "",
+							"catalog": "1ec6a6b5-65d5-4a8c-85d0-4364c141aefd"
+						}
+					},
+					"amount": {
+						"type": "number",
+						"description": "Monto",
+						"example": "2400.00"
+					},
+					"description": {
+						"type": "string",
+						"description": "CINEPOLIS"
+					},
+					"transaction_date": {
+						"type": "string",
+						"description": "Fecha",
+						"example": "2021-09-09T14:20:30-05:00"
 					},
 					"user_note": {
 						"type": "string",
-						"description": "Nota del usuario"
+						"description": "Nota del usuario",
+						"example": "Nota del usuario"
 					}
 				}
-			}		
+			},
+			"GastoTotalMensual": {
+				"title": "GastoTotalMensual",
+				"type": "object",
+				"properties": {
+					"total_spend": {
+						"type": "string",
+						"description": "Total gastado",
+						"example": "-62280"
+					},
+					"num_transaction": {
+						"type": "string",
+						"description": "Numero de transacciones",
+						"example": "16"
+					}				
+				}
+			},
+			"GastoTotalEgresos": {
+				"title": "Gasto Total Egresos",
+				"type": "object",
+				"properties": {
+					"global_expenses": {
+						"type": "number",
+						"description": "Total gastado",
+						"example": "68780"
+					},
+					"categories": {
+						"type": "array",
+						"description": "Categorias",
+						"example": {
+							"category": {
+								"id": "9abd4759-ab14-4e09-adc2-9c5dea1041b1",
+								"name": "Entretenimiento",
+								"description": "Netflix, spotify, cine, apps store, videojuegos",
+								"metadata":  {
+									"short_name":"ENTRETENIMIENTO",
+									"icon": "icon.png",
+									"active": "True",
+									"color": "#ED888A"
+								},
+								"active": true,
+								"process_name": "",
+								"catalog": "1ec6a6b5-65d5-4a8c-85d0-4364c141aefd"
+							},
+							"budget": {
+								"id": "64aad0df-2597-443a-9052-7be5a283ab7d",
+								"amount": 2400,
+								"budget_date": "2021-09-21",
+								"category": "9abd4759-ab14-4e09-adc2-9c5dea1041b1",
+								"has_budget": true,
+								"budget_spent": 1332.5								
+							},
+							"other_expenses": {
+								"amount": -700,
+								"percentage": -1.02,
+								"disabled": false
+							}																														
+						}
+					}				
+				}
+			},
+			"BalanceMensual": {
+				"title": "Balance Mensual",
+				"type": "object",
+				"properties": {
+					"year": {
+						"type": "number",
+						"description": "Año",
+						"example": "2021"
+					},
+					"months": {
+						"type": "array",
+						"description": "Meses",
+						"items": {
+							"$ref": "#/components/schemas/BalanceMensualItem"
+						},
+						"example":[
+							{
+								"year": 2021,
+								"month": "Enero",
+								"incomes": 3800,
+								"expenses": -3500,
+								"balance": 300,
+								"disabled": false
+							  },
+							  {
+								"year": 2021,
+								"month": "Febrero",
+								"incomes": 3700,
+								"expenses": -12000,
+								"balance": -8300,
+								"disabled": false
+							  },
+							  {
+								"year": 2021,
+								"month": "Marzo",
+								"incomes": 2100,
+								"expenses": -1100,
+								"balance": 1000,
+								"disabled": false
+							  },
+							  {
+								"year": 2021,
+								"month": "Abril",
+								"incomes": 55000,
+								"expenses": -800,
+								"balance": 54200,
+								"disabled": false
+							  },
+							  {
+								"year": 2021,
+								"month": "Mayo",
+								"incomes": 0,
+								"expenses": -542000,
+								"balance": -542000,
+								"disabled": false
+							  },
+							  {
+								"year": 2021,
+								"month": "Junio",
+								"incomes": 1500,
+								"expenses": -171700,
+								"balance": -170200,
+								"disabled": false
+							  },
+							  {
+								"year": 2021,
+								"month": "Julio",
+								"incomes": 321007,
+								"expenses": -28006,
+								"balance": 293001,
+								"disabled": false
+							  },
+							  {
+								"year": 2021,
+								"month": "Agosto",
+								"incomes": 31006,
+								"expenses": -19600,
+								"balance": 11406,
+								"disabled": false
+							  },
+							  {
+								"year": 2021,
+								"month": "Septiembre",
+								"incomes": 6500,
+								"expenses": -68780,
+								"balance": -62280,
+								"disabled": false
+							  },
+							  {
+								"year": 2021,
+								"month": "Octubre",
+								"incomes": 10100,
+								"expenses": -6300,
+								"balance": 3800,
+								"disabled": false
+							  },
+							  {
+								"year": 2021,
+								"month": "Noviembre",
+								"incomes": 2405,
+								"expenses": -1900,
+								"balance": 505,
+								"disabled": false
+							  },
+							  {
+								"year": 2021,
+								"month": "Diciembre",
+								"incomes": 32100,
+								"expenses": -1800,
+								"balance": 30300,
+								"disabled": false
+							  }					
+						]
+					}				
+				}
+			},
+			"BalanceMensualItem": {
+				"title": "Balance Mensual Item",
+				"type": "object",
+				"properties": {
+					"year": {
+						"type": "number",
+						"description": "Año"
+					},
+					"months": {
+						"type": "string",
+						"description": "Month"
+					},
+					"incomes": {
+						"type": "number",
+						"description": "Incomes"
+					},
+					"expenses": {
+						"type": "number",
+						"description": "Expenses"
+					},
+					"balance": {
+						"type": "number",
+						"description": "Balance"
+					},
+					"disabled": {
+						"type": "boolean",
+						"description": "Month"
+					}				
+				}
+			},
+			"BalanceMensualPorCategoria": {
+				"title": "Balance mensual por categoría",
+				"type": "object",
+				"properties": {
+					"year": {
+						"type": "number",
+						"description": "Año",
+						"example": "2021"
+					},
+					"months": {
+						"type": "array",
+						"description": "Meses",
+						"items": {
+							"$ref": "#/components/schemas/BalanceMensualItem"
+						},
+						"example":[
+							{
+								"year": 2021,
+								"month": "Enero",
+								"expenses_sum": 1200,
+								"expenses_count": 1,
+								"average": 1200,
+								"budget": 2400,
+								"budget_spent": 50,
+								"has_budget": true,
+								"budget_id": "64aad0df-2597-443a-9052-7be5a283ab7d",
+								"disabled": false
+							},
+							{
+								"year": 2021,
+								"month": "Febrero",
+								"expenses_sum": 12000,
+								"expenses_count": 1,
+								"average": 12000,
+								"budget": 2400,
+								"budget_spent": 500,
+								"has_budget": true,
+								"budget_id": "64aad0df-2597-443a-9052-7be5a283ab7d",
+								"disabled": false
+							},
+							{
+								"year": 2021,
+								"month": "Marzo",
+								"expenses_sum": 1100,
+								"expenses_count": 1,
+								"average": 1100,
+								"budget": 2400,
+								"budget_spent": 45.83,
+								"has_budget": true,
+								"budget_id": "64aad0df-2597-443a-9052-7be5a283ab7d",
+								"disabled": false
+							},
+							{
+								"year": 2021,
+								"month": "Abril",
+								"expenses_sum": 100,
+								"expenses_count": 1,
+								"average": 100,
+								"budget": 2400,
+								"budget_spent": 4.17,
+								"has_budget": true,
+								"budget_id": "64aad0df-2597-443a-9052-7be5a283ab7d",
+								"disabled": false
+							},
+							{
+								"year": 2021,
+								"month": "Mayo",
+								"expenses_sum": 315000,
+								"expenses_count": 2,
+								"average": 157500,
+								"budget": 2400,
+								"budget_spent": 13125,
+								"has_budget": true,
+								"budget_id": "64aad0df-2597-443a-9052-7be5a283ab7d",
+								"disabled": false
+							},
+							{
+								"year": 2021,
+								"month": "Junio",
+								"expenses_sum": 1700,
+								"expenses_count": 1,
+								"average": 1700,
+								"budget": 2400,
+								"budget_spent": 70.83,
+								"has_budget": true,
+								"budget_id": "64aad0df-2597-443a-9052-7be5a283ab7d",
+								"disabled": false
+							},
+							{
+								"year": 2021,
+								"month": "Julio",
+								"expenses_sum": 11004,
+								"expenses_count": 1,
+								"average": 11004,
+								"budget": 2400,
+								"budget_spent": 458.5,
+								"has_budget": true,
+								"budget_id": "64aad0df-2597-443a-9052-7be5a283ab7d",
+								"disabled": false
+							},
+							{
+								"year": 2021,
+								"month": "Agosto",
+								"expenses_sum": 18900,
+								"expenses_count": 1,
+								"average": 18900,
+								"budget": 2400,
+								"budget_spent": 787.5,
+								"has_budget": true,
+								"budget_id": "64aad0df-2597-443a-9052-7be5a283ab7d",
+								"disabled": false
+							},
+							{
+								"year": 2021,
+								"month": "Septiembre",
+								"expenses_sum": 31980,
+								"expenses_count": 5,
+								"average": 6396,
+								"budget": 2400,
+								"budget_spent": 1332.5,
+								"has_budget": true,
+								"budget_id": "64aad0df-2597-443a-9052-7be5a283ab7d",
+								"disabled": false
+							},
+							{
+								"year": 2021,
+								"month": "Octubre",
+								"expenses_sum": 6100,
+								"expenses_count": 1,
+								"average": 6100,
+								"budget": 2400,
+								"budget_spent": 254.17,
+								"has_budget": true,
+								"budget_id": "64aad0df-2597-443a-9052-7be5a283ab7d",
+								"disabled": false
+							},
+							{
+								"year": 2021,
+								"month": "Noviembre",
+								"expenses_sum": 1100,
+								"expenses_count": 1,
+								"average": 1100,
+								"budget": 2400,
+								"budget_spent": 45.83,
+								"has_budget": true,
+								"budget_id": "64aad0df-2597-443a-9052-7be5a283ab7d",
+								"disabled": false
+							},
+							{
+								"year": 2021,
+								"month": "Diciembre",
+								"expenses_sum": 11000,
+								"expenses_count": 1,
+								"average": 11000,
+								"budget": 2400,
+								"budget_spent": 458.33,
+								"has_budget": true,
+								"budget_id": "64aad0df-2597-443a-9052-7be5a283ab7d",
+								"disabled": false
+							}	
+						]
+					}				
+				}
+			}						
 		}
 	}
 }
