@@ -15,6 +15,7 @@ from budget.models import Budget
 
 from transaction.models import Transaction
 from transaction.serializers import TransactionSerializer, TransactionSummarySerializer
+from catalog.helpers import validate_user_accounts
 
 
 class TransactionsByMonth(ListAPIView):
@@ -325,19 +326,9 @@ class NewTransaction(APIView):
     Permite crear una transacción a aprtir de un número de cuenta
     """
 
-    def get_account_details(self, account_number):
-        try:
-            core_url = environ.get('CORE_SERVICE_URL')
-            response = requests.get(self.core_url+'accounts/?number={}'.format(account_number), timeout=1)
-            if response.status_code == 200:
-                return response.json()
-            return False
-        except requests.exceptions.RequestException:
-            return False
-
     def post(self, request):
         data = request.data
-        account = self.get_account_details(data['account_number'])
+        account = validate_user_accounts(data['account_number'])
         if account is not False:
             try:
                 transaction = Transaction.objects.create(
