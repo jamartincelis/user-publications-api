@@ -1,7 +1,7 @@
 from os import environ
 
 import pendulum
-import requests
+
 
 months_dict = {
     1: 'Enero',
@@ -20,6 +20,10 @@ months_dict = {
 
 
 def validate_date(value):
+    """Recibe un valor date_month tipo string con el formato 2022-05 y regresa un objeto date."""
+    # recibimos como queryparam un valor date_month con el formato 2022-01
+    # tenemos que validar que el dato se pueda convertir a un tipo fecha
+    # para filtrar las transacciones y presupuestos por mes
     try:
         value = value.split('-')
         return pendulum.datetime(int(value[0]), int(value[1]), 1, tz=environ.get('TIME_ZONE'))

@@ -14,18 +14,18 @@ class BudgetsList(ListCreateAPIView):
     """
     serializer_class = BudgetSerializer
 
-    def get(self, request, user):
+    def get(self, request, user_id):
         date = validate_date(self.request.query_params.get('date_month'))
         if not date:
-            return Response({'400': "Invalid date format."}, status=status.HTTP_400_BAD_REQUEST)
-        budgets = Budgets.objects.prefetch_related('budget_status').filter(
-            user_id=self.kwargs['user_id'],
+            return Response({'400': 'Invalid date format.'}, status=status.HTTP_400_BAD_REQUEST)
+        budgets = Budget.objects.select_related('status').filter(
+            user_id=user_id,
             budget_date__range=[date.start_of('month'), date.end_of('month')]
         )
         return Response(data=BudgetSerializer(budgets, many=True).data, status=status.HTTP_200_OK)
 
-    def create(self, request, *args, **kwargs):
-        request.data['user_id'] = self.kwargs['user_id']
+    def create(self, request, user_id):
+        request.data['user_id'] = user_id
         instance = Budget.objects.create(**request.data)
         return Response(BudgetSerializer(instance).data, status=status.HTTP_201_CREATED)
 
@@ -39,7 +39,7 @@ class BudgetsByMonthAndCategory(ListAPIView):
         date = validate_date(self.request.query_params.get('date_month'))
         if not date:
             return Response({'400': "Invalid date format."}, status=status.HTTP_400_BAD_REQUEST)
-        budgets = Budget.objects.prefetch_related('budget_status').filter(
+        budgets = Budget.objects.select_related('status', 'category').filter(
             user_id=user_id,
             category_id=category_id,
             budget_date__range=[date.start_of('month'), date.end_of('month')]
@@ -52,5 +52,5 @@ class BudgetDetail(RetrieveUpdateAPIView):
     """
     Permite retornar, actualizar o borrar un Presupuesto.
     """
-    queryset = Budget.objects.prefetch_related('budget_status').all()
+    queryset = Budget.objects.select_related('status', 'category').all()
     serializer_class = BudgetSerializer

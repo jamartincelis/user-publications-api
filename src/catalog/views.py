@@ -27,7 +27,7 @@ class CatalogApiView(APIView):
             data = {}
             for catalog in catalogs.split(self.catalog_separator):
                 data[catalog] = ItemSerializer(
-                    Item.objects.filter(catalog_id__catalog_name=catalog, active=True),
+                    Item.objects.filter(catalog__catalog_name=catalog, active=True),
                     many=True
                 ).data
             return Response(data, status=status.HTTP_200_OK)

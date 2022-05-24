@@ -7,7 +7,8 @@ from budget.models import Budget
 
 class BudgetSerializer(serializers.ModelSerializer):
 
-    status_id = ItemSerializer()
+    budget_status = ItemSerializer(source='status', read_only=True)
+    budget_category = ItemSerializer(source='category', read_only=True)
 
     class Meta:
         model = Budget
