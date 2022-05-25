@@ -31,7 +31,6 @@ DEBUG = True if environ.get('DEBUG') == 'True' else False
 
 ALLOWED_HOSTS = [environ.get('ALLOWED_HOSTS'), ]
 
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -139,6 +138,13 @@ STATIC_URL = '/static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CORS_ORIGIN_ALLOW_ALL = True
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'LOCATION': 'unique-snowflake',
+    }
+}
 
 if DEBUG is False:
     import sentry_sdk

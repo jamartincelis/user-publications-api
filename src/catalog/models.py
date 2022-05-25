@@ -1,6 +1,7 @@
 from uuid import uuid4
 
 from django.db import models
+from django.core.cache import caches
 
 
 class Catalog(models.Model):

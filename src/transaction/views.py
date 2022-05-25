@@ -1,8 +1,4 @@
-from os import environ
-
 import pendulum
-
-import requests
 
 from django.db.models import Sum, Count, Q, Case, When, F, FloatField, IntegerField
 
@@ -11,11 +7,15 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 
+from helpers.helpers import validate_date
+
+from catalog.models import Item
+
 from budget.models import Budget
 
 from transaction.models import Transaction
 from transaction.serializers import TransactionSerializer, TransactionSummarySerializer
-from catalog.helpers import validate_user_accounts
+from transaction.helpers import BuildExpensesSummaryByMonthResponse
 
 
 class TransactionsByMonth(ListAPIView):
@@ -23,15 +23,38 @@ class TransactionsByMonth(ListAPIView):
     Devuelve la lista de transacciones del usuario de un mes en específico
     """
 
-    def get(self, request, user):
+    def get(self, request, user_id):
         date = validate_date(self.request.query_params.get('date_month'))
         if not date:
             return Response({'400': "Invalid date format."}, status=status.HTTP_400_BAD_REQUEST)
-        transactions = Transaction.objects.prefetch_related('transaction_category').filter(
-            user=self.kwargs['user_id'],
+        transactions = Transaction.objects.select_related('category', 'account_type').filter(
+            user_id=user_id,
             transaction_date__range=[date.start_of('month'), date.end_of('month')]
         )
         return Response(data=TransactionSerializer(transactions, many=True).data, status=status.HTTP_200_OK)
+
+
+class ExpensesSummarybyMonth(APIView):
+    """
+    Devuelve el resumen de egresos y presupuestos por categoría de un mes específico
+    """
+
+    def get(self, request, user_id):
+        date = validate_date(self.request.query_params.get('date_month'))
+        if not date:
+            return Response({'400': "Invalid date format."}, status=status.HTTP_400_BAD_REQUEST)
+        transactions = Transaction.objects.filter(
+            user_id=user_id,
+            transaction_date__range=[date.start_of('month'), date.end_of('month')],
+            amount__lt=0
+        ).values('amount', 'category').order_by('category')
+        budgets = Budget.objects.filter(
+            user_id=user_id,
+            budget_date__range=[date.start_of('month'), date.end_of('month')]
+        )
+        response = BuildExpensesSummaryByMonthResponse(transactions, budgets)
+        data = response.get_data()
+        return Response(data, status=status.HTTP_200_OK)
 
 
 class TransactionDetail(RetrieveUpdateAPIView):
@@ -89,117 +112,6 @@ class TransactionsCategoriesSummarybyMonth(ListAPIView):
         ).values('category').order_by('category').annotate(total_spend=Sum('amount'), num_transaction=Count('category'))
         data = TransactionSummarySerializer(transactions, many=True)
         return Response(data=data.data, status=status.HTTP_200_OK)
-
-
-class ExpensesSummary(APIView):
-    """
-    Devuelve el resumen de egresos y presupuestos por categoría.
-    """
-    grouped_expenses = {}
-    budgets = []
-    data = {
-        'global_expenses': 0.0,
-        'categories': []
-    }
-
-    def group_transactions(self, transactions):
-        # Se genera un diccionario con la suma del monto y la suma del número de transacciones y se agrupan
-        # por categoría
-        for transaction in transactions:
-            amount = float(transaction['amount'])
-            category = str(transaction['category'])
-            try:
-                self.grouped_expenses[category]['amount'] += amount
-                self.grouped_expenses[category]['count'] += 1
-                self.grouped_expenses[category]['average'] = 1000 
-            except KeyError:
-                self.grouped_expenses[category] = {
-                    'amount': amount,
-                    'count': 1,
-                    'average': 1000
-                }
-            self.data['global_expenses'] += abs(amount)
-
-    def get_expenses(self, category):
-        try:
-            return self.grouped_expenses[category]
-        except KeyError:
-            return {
-                'amount': 0.0,
-                'count': 0
-            }
-
-    def get_budget(self, category, amount):
-        try:
-            budget = self.budgets.get(category=category)
-        except Budget.DoesNotExist:
-            budget = False
-        except Budget.MultipleObjectsReturned:
-            budget = False
-        return {
-            'id': str(budget.id) if budget else None,
-            'amount': budget.amount if budget else 0.0,
-            'budget_date': str(budget.budget_date) if budget else None,
-            'category': str(category) if budget else None,
-            'has_budget': True if budget else False,
-            'budget_spent': round(abs(amount/float(budget.amount))*100, 2) if budget and amount != 0 else 0.0
-        }
-
-    def merge_data(self):
-        # se obtiene las categorias de egresos
-        categories = expenses_categories['expenses_categories']
-        for category in categories:
-            expenses = self.get_expenses(category['id'])
-            budget = self.get_budget(category['id'], expenses['amount'])
-            percentage = expenses['amount'] / self.data['global_expenses'] if self.data['global_expenses'] != 0 else 0.0
-            self.data['categories'].append(
-                {
-                    'category': category,
-                    'budget': budget,
-                    'expenses': expenses,
-                    'percentage': round(abs(percentage)*100, 2),
-                    'disabled': True if abs(expenses['amount']) < 1 else False,
-                    'amount': expenses['amount']
-                }
-            )
-        self.data['categories'] = sorted(self.data['categories'], key=lambda x:x['amount'])
-
-    def get_other_expenses(self):
-        amount = 0.0
-        percentage = 0.0
-        if len(self.grouped_expenses) > 5:
-            for x in self.data['categories'][5:]:
-                amount += x['amount']
-            percentage = round(amount / self.data['global_expenses'] * 100, 2)
-        self.data['other_expenses'] = {
-            'amount': amount,
-            'percentage': percentage,
-            'disabled': True if amount == 0 else False
-        }
-
-    def get(self, request, user):
-        date = validate_date(self.request.query_params.get('date_month'))
-        if not date:
-            return Response({'400': "Invalid date format."}, status=status.HTTP_400_BAD_REQUEST)
-        self.grouped_expenses = {}
-        self.budgets = []
-        self.data = {
-            'global_expenses': 0.0,
-            'categories': []
-        }
-        transactions = Transaction.objects.filter(
-            user=user,
-            transaction_date__range=[date.start_of('month'), date.end_of('month')],
-            amount__lt=0
-        ).values('amount', 'category').order_by('category')
-        self.budgets = Budget.objects.filter(
-            user=user,
-            budget_date__range=[date.start_of('month').strftime('%Y-%m-%d'), date.end_of('month').strftime('%Y-%m-%d')]
-        )
-        self.group_transactions(transactions)
-        self.merge_data()
-        self.get_other_expenses()
-        return Response(self.data, status=status.HTTP_200_OK)
 
 
 class MonthlyBalance(APIView):

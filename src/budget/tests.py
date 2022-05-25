@@ -1,12 +1,12 @@
 from json import dumps
 
+import pendulum
+
 from django.test import TestCase, Client
 
 from rest_framework import status
 
 from budget.models import Budget
-
-import pendulum
 
 
 class BudgetsTestCase(TestCase):
@@ -25,15 +25,19 @@ class BudgetsTestCase(TestCase):
     DATE_MONTH = '?date_month={}'
 
     @property
-    def date_month(self):
+    def current_month(self):
+        return '{}-{}'.format(pendulum.now().year, pendulum.now().month)
+
+    @property
+    def previous_month(self):
         return '{}-{}'.format(pendulum.now().year, pendulum.now().month)
 
     def update_budgets_dates(self):
-        Budget.objects.all().update(budget_date='{}-01'.format(self.date_month))
+        Budget.objects.all().update(budget_date='{}-01'.format(self.current_month))
 
     def test_get_user_budgets_by_month(self):
         self.update_budgets_dates()
-        response = self.client.get(self.BASE_URL+self.DATE_MONTH.format(self.date_month))
+        response = self.client.get(self.BASE_URL+self.DATE_MONTH.format(self.current_month))
         # print(dumps(response.json(), indent=4))
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
@@ -59,6 +63,6 @@ class BudgetsTestCase(TestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_get_budgets_by_month_and_category(self):
-        response = self.client.get(self.BUDGET_CATEGORY+self.DATE_MONTH.format(self.date_month))
-        print(dumps(response.json(), indent=4))
+        response = self.client.get(self.BUDGET_CATEGORY+self.DATE_MONTH.format(self.current_month))
+        # print(dumps(response.json(), indent=4))
         self.assertEqual(response.status_code, status.HTTP_200_OK)

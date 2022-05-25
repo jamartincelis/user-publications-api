@@ -15,3 +15,9 @@
     id: '4625b3a0-b3dc-48e8-b495-1eda09e58222'
     catalog_name: 'budget_status'
     description: 'Estado del presupuesto'
+
+- model: 'catalog.Catalog'
+  fields:
+    id: 'f1895069-e723-4cc8-9331-d1cb4110ab7a'
+    catalog_name: 'accounts_types'
+    description: 'Tipos de cuentas'
