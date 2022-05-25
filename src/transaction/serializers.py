@@ -13,7 +13,20 @@ class TransactionSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
     transaction_type_catalogs = settings.TRANSACTION_TYPE_CATALOGS
-
+    sin_category_dict = {
+        "id": "f37b6770-7fc5-43e0-a837-50926e1ee459",
+        "name": "Sin categoría",
+        "description": "Transacción sin categoría",
+        "metadata": {
+            "icon": "/assets/xerpa/global/img/categories/ahorro.svg",
+            "color": "#9C9A9F",
+            "active": "false",
+            "short_name": "SIN_CATEGORIA"
+        },
+        "active": "true",
+        "process_name": "",
+        "catalog": "1ec6a6b5-65d5-4a8c-85d0-4364c141aefd"
+    }
     def validate(self, data):
         core_url = environ.get('CORE_SERVICE_URL')
         path = '{}users/{}/'.format(core_url,data['user'])
@@ -41,7 +54,7 @@ class TransactionSerializer(serializers.ModelSerializer):
         except TypeError:
             category = self.transaction_type_catalogs[(str(category_id))]
         except KeyError:
-            category = self.transaction_type_catalogs['f37b6770-7fc5-43e0-a837-50926e1ee459']
+            category = self.sin_category_dict
         return category
 
     def to_representation(self, instance):
@@ -54,7 +67,7 @@ class TransactionSerializer(serializers.ModelSerializer):
         # Reviso categoria ya que es un campo que puede ser nulo
         if data['category'] is None:
             # indica que una transacción tiene valor nulo como categoría
-            data['category'] = self.get_object_category('f37b6770-7fc5-43e0-a837-50926e1ee459')
+            data['category'] = self.sin_category_dict
             data.update(data)
         else:
             data['category'] = self.get_object_category(data['category'])
