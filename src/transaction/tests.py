@@ -26,6 +26,7 @@ class TransactionsTestCase(TestCase):
 
     BASE_URL = '/users/c9d29378-f4d6-46ca-9363-1d304e9fa133/transactions/'
     EXPENSES_SUMMARY_URL = BASE_URL + 'expenses/summary/'
+    TRANSACTION_DETAIL = BASE_URL + '0b0588dc-2020-4bac-a18f-52979efb41c2/'
     DATE_MONTH = '?date_month={}'
 
     @property
@@ -45,7 +46,7 @@ class TransactionsTestCase(TestCase):
         self.update_transactions_date()
         response = self.client.get(self.BASE_URL+self.DATE_MONTH.format(self.current_month))
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(len(response.json()), 1)
+        self.assertEqual(len(response.json()), 2)
         # print(dumps(response.json(), indent=4))
         Transaction.objects.all().update(transaction_date='{}-01'.format(self.previous_month))
         response = self.client.get(self.BASE_URL+self.DATE_MONTH.format(self.current_month))
@@ -56,6 +57,11 @@ class TransactionsTestCase(TestCase):
         Budget.objects.all().update(budget_date='{}-01'.format(self.current_month))
         Transaction.objects.all().update(transaction_date='{}-01'.format(self.current_month))
         response = self.client.get(self.EXPENSES_SUMMARY_URL+self.DATE_MONTH.format(self.current_month))
+        # print(dumps(response.json(), indent=4))
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_get_transaction_detail(self):
+        print(self.TRANSACTION_DETAIL)
+        response = self.client.get(self.TRANSACTION_DETAIL)
         print(dumps(response.json(), indent=4))
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(0, 0)

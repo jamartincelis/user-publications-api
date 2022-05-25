@@ -12,5 +12,5 @@ urlpatterns = [
     path('balance/', MonthlyBalance.as_view()),
     path('categories/<str:category>/', TransactionsByCategoryAndMonth.as_view()),
     path('balance/category/<str:category>/', MonthlyCategoriesBalance.as_view()),
-    path('<str:pk>/', TransactionDetail.as_view())
+    path('<str:transaction_id>/', TransactionDetail.as_view())
 ]

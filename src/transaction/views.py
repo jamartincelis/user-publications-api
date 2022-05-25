@@ -61,16 +61,15 @@ class TransactionDetail(RetrieveUpdateAPIView):
     """
     Permite retornar, actualizar o borrar una Transaccion.
     """
-    def get(self):
+    def get(self, user_id, transaction_id):
         try:
-            transaction = Transaction.objects.prefetch_related('transaction_category').get(
-                pk=self.kwargs['pk'],
-                user_id=self.kwargs['user_id']
+            transaction = Transaction.objects.select_related('category', 'account_type').get(
+                pk=transaction_id,
+                user_id=user_id
             )
             return Response(TransactionSerializer(transaction).data, status=status.HTTP_200_OK)
         except Transaction.DoesnotExist:
             return Response('Transaction not found', status=status.HTTP_404_NOT_FOUND)
-
 
 
 class TransactionsByCategoryAndMonth(ListAPIView):
