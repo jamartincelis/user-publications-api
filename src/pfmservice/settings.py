@@ -14,8 +14,6 @@ from pathlib import Path
 
 from os import environ
 
-import sentry_sdk
-
 import sys
 
 
@@ -33,7 +31,6 @@ DEBUG = True if environ.get('DEBUG') == 'True' else False
 
 ALLOWED_HOSTS = [environ.get('ALLOWED_HOSTS'), ]
 
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -46,11 +43,12 @@ INSTALLED_APPS = [
     'corsheaders',
     'rest_framework',
     'monitoring',
+    'catalog',
     'budget',
     'transaction',
     'faq',
     'tip',
-    'notification'    
+    'notification'
 ]
 
 MIDDLEWARE = [
@@ -88,29 +86,17 @@ WSGI_APPLICATION = 'pfmservice.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
-# se desactiva el uso de zona horaria
-# para evitar errores en los querys
-if 'test' in sys.argv or 'test_coverage' in sys.argv: #Covers regular testing and django-coverage
-    USE_TZ = False
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3'
-        }
-    }    
-else:
-    USE_TZ = True
-    TIME_ZONE = environ.get('TIME_ZONE')
-    
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'NAME': environ.get('DATABASE_NAME'),
-            'USER': environ.get('DATABASE_USER'),
-            'PASSWORD': environ.get('DATABASE_PASSWORD'),
-            'HOST': environ.get('DATABASE_HOST'),
-            'PORT': environ.get('DATABASE_PORT'),
-        }
-    } 
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': environ.get('DATABASE_NAME'),
+        'USER': environ.get('DATABASE_USER'),
+        'PASSWORD': environ.get('DATABASE_PASSWORD'),
+        'HOST': environ.get('DATABASE_HOST'),
+        'PORT': environ.get('DATABASE_PORT'),
+    }
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
@@ -153,7 +139,16 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CORS_ORIGIN_ALLOW_ALL = True
 
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'LOCATION': 'unique-snowflake',
+    }
+}
+
 if DEBUG is False:
+    import sentry_sdk
+    from sentry_sdk.integrations.django import DjangoIntegration
     sentry_sdk.init(
         dsn=environ.get('SENTRY_DSN'),
         integrations=[DjangoIntegration()],

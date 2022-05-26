@@ -1,10 +1,10 @@
 from django.db import models
 
+
 class Faq(models.Model):
-    
-    question         = models.CharField(max_length=200, blank=True, null=True)
-    answer           = models.TextField(blank=True, null=True)
-    
+    question = models.CharField(max_length=200)
+    answer = models.TextField()
+
     class Meta:
-        managed = True
         db_table = 'faqs'
+        managed = True

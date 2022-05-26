@@ -1,8 +1,4 @@
-from os import environ
-
 import pendulum
-
-import requests
 
 from django.db.models import Sum, Count, Q, Case, When, F, FloatField, IntegerField
 
@@ -11,320 +7,122 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 
-from helpers.helpers import validate_date, months_dict, catalog_to_dict, get_catalog
+from helpers.helpers import validate_date
+
+from catalog.models import Item
+from catalog.serializers import ItemSerializer
 
 from budget.models import Budget
 
 from transaction.models import Transaction
-from transaction.serializers import TransactionSerializer, TransactionSummarySerializer
+from transaction.serializers import TransactionSerializer
+from transaction.bussiness_rules import BuildExpensesSummaryByMonthResponse, BuildMonthlyBalanceResponse,\
+    BuildMonthlyBalanceByCategoryResponse
 
 
-expenses_categories = get_catalog('expenses_categories')
-
-
-class TransactionsBulkCreate(APIView):
-    def post(self, request):
-        return TransactionSerializer()
-
-
-class TransactionList(ListAPIView):
+class TransactionsByMonth(ListAPIView):
     """
-    Devuelve la lista de transacciones del usuario
+    Devuelve la lista de transacciones del usuario de un mes en específico
     """
-    serializer_class = TransactionSerializer
-    filterset_fields = ['date_month']
 
-    def get_queryset(self):
-        return Transaction.objects.filter(user=self.kwargs['user'])
-
-    def get(self, request, user):
+    def get(self, request, user_id):
         date = validate_date(self.request.query_params.get('date_month'))
         if not date:
             return Response({'400': "Invalid date format."}, status=status.HTTP_400_BAD_REQUEST)
-        transactions = self.get_queryset().filter(transaction_date__range=[date.start_of('month'), date.end_of('month')])
-        data = TransactionSerializer(transactions, many=True)
-        return Response(data=data.data, status=status.HTTP_200_OK)
+        transactions = Transaction.objects.select_related('category', 'account_type').filter(
+            user_id=user_id,
+            transaction_date__range=[date.start_of('month'), date.end_of('month')]
+        )
+        return Response(data=TransactionSerializer(transactions, many=True).data, status=status.HTTP_200_OK)
+
+
+class ExpensesSummarybyMonth(APIView):
+    """
+    Devuelve el resumen de egresos y presupuestos por categoría de un mes específico
+    """
+
+    def get(self, request, user_id):
+        date = validate_date(self.request.query_params.get('date_month'))
+        if not date:
+            return Response({'400': "Invalid date format."}, status=status.HTTP_400_BAD_REQUEST)
+        transactions = Transaction.objects.filter(
+            user_id=user_id,
+            transaction_date__range=[date.start_of('month'), date.end_of('month')],
+            amount__lt=0
+        ).values('amount', 'category').order_by('category')
+        budgets = Budget.objects.filter(
+            user_id=user_id,
+            budget_date__range=[date.start_of('month'), date.end_of('month')]
+        )
+        response = BuildExpensesSummaryByMonthResponse(transactions, budgets)
+        data = response.get_data()
+        return Response(data, status=status.HTTP_200_OK)
 
 
 class TransactionDetail(RetrieveUpdateAPIView):
     """
     Permite retornar, actualizar o borrar una Transaccion.
     """
-    queryset = Transaction.objects.all()
+
     serializer_class = TransactionSerializer
 
     def get_queryset(self):
-        return Transaction.objects.filter(user=self.kwargs['user'], pk=self.kwargs['pk'])
+        return Transaction.objects.select_related('category', 'account_type').all()
 
 
-class Category(ListAPIView):
+class TransactionsByCategoryAndMonth(APIView):
     """
     Devuelve las transacciones del usuario filtradas por mes y categoría
     """
-    serializer_class = TransactionSerializer
-    filterset_fields = ['date_month']
-    
-    def get_queryset(self):
-        return Transaction.objects.filter(user=self.kwargs['user'], 
-            category=self.kwargs['category'])
 
-    def get(self, request, user, category):
+    def get(self, request, user_id, category):
         date = validate_date(self.request.query_params.get('date_month'))
         if date is False:
             return Response({'400': 'Invalid date format.'}, status=status.HTTP_400_BAD_REQUEST)
-        transactions = self.get_queryset().filter(transaction_date__range=[date.start_of('month'), date.end_of('month')])
+        summary = Transaction.objects().filter(
+            transaction_date__range=[date.start_of('month'), date.end_of('month')]
+        )
         data = TransactionSerializer(transactions, many=True)
         return Response(data=data.data, status=status.HTTP_200_OK)
 
 
-class CategorySummary(ListAPIView):
+class TransactionsCategoriesSummarybyMonth(APIView):
     """
     Devuelve el resumen de transacciones por categorías del mes solicitado
     """
-    queryset = Transaction.objects.all()
-    filterset_fields = ['date_month']
-    serializer_class = TransactionSummarySerializer
 
-    def get(self, request, user):
+    def get(self, request, user_id):
         date = validate_date(self.request.query_params.get('date_month'))
         if not date:
             return Response({'400': "Invalid date format."}, status=status.HTTP_400_BAD_REQUEST)
-        transactions = self.get_queryset().filter(user=user,
+        summaries = Transaction.objects.filter(
+            user_id=user_id,
             transaction_date__range=[date.start_of('month'), date.end_of('month')]
-        ).values('category').order_by('category').annotate(total_spend=Sum('amount'),num_transaction=Count('category'))
-        data = TransactionSummarySerializer(transactions, many=True)
-        return Response(data=data.data, status=status.HTTP_200_OK)
+        ).values('category').order_by('category').annotate(total_spend=Sum('amount'), num_transaction=Count('category'))
+        # esto requiere refactor
+        for summary in summaries:
+            summary['category'] = ItemSerializer(Item.objects.get(id=summary['category'])).data
+        return Response(data=summaries, status=status.HTTP_200_OK)
 
 
-class ExpenseSummaryView(APIView):
-    """
-    Devuelve el resumen de egresos y presupuestos por categoría.
-    """
-    grouped_expenses = {}
-    budgets = []
-    data = {
-        'global_expenses': 0.0,
-        'categories': []
-    }
-
-    def group_transactions(self, transactions):
-        # Se genera un diccionario con la suma del monto y la suma del número de transacciones y se agrupan
-        # por categoría
-        for transaction in transactions:
-            amount = float(transaction['amount'])
-            category = str(transaction['category'])
-            try:
-                self.grouped_expenses[category]['amount'] += amount
-                self.grouped_expenses[category]['count'] += 1
-                self.grouped_expenses[category]['average'] = 1000 
-            except KeyError:
-                self.grouped_expenses[category] = {
-                    'amount': amount,
-                    'count': 1,
-                    'average': 1000
-                }
-            self.data['global_expenses'] += abs(amount)
-
-    def get_expenses(self, category):
-        try:
-            return self.grouped_expenses[category]
-        except KeyError:
-            return {
-                'amount': 0.0,
-                'count': 0
-            }
-
-    def get_budget(self, category, amount):
-        try:
-            budget = self.budgets.get(category=category)
-        except Budget.DoesNotExist:
-            budget = False
-        except Budget.MultipleObjectsReturned:
-            budget = False
-        return {
-            'id': str(budget.id) if budget else None,
-            'amount': budget.amount if budget else 0.0,
-            'budget_date': str(budget.budget_date) if budget else None,
-            'category': str(category) if budget else None,
-            'has_budget': True if budget else False,
-            'budget_spent': round(abs(amount/float(budget.amount))*100, 2) if budget and amount != 0 else 0.0
-        }
-
-    def merge_data(self):
-        # se obtiene las categorias de egresos
-        categories = expenses_categories['expenses_categories']
-        for category in categories:
-            expenses = self.get_expenses(category['id'])
-            budget = self.get_budget(category['id'], expenses['amount'])
-            percentage = expenses['amount'] / self.data['global_expenses'] if self.data['global_expenses'] != 0 else 0.0
-            self.data['categories'].append(
-                {
-                    'category': category,
-                    'budget': budget,
-                    'expenses': expenses,
-                    'percentage': round(abs(percentage)*100, 2),
-                    'disabled': True if abs(expenses['amount']) < 1 else False,
-                    'amount': expenses['amount']
-                }
-            )
-        self.data['categories'] = sorted(self.data['categories'], key=lambda x:x['amount'])
-
-    def get_other_expenses(self):
-        amount = 0.0
-        percentage = 0.0
-        if len(self.grouped_expenses) > 5:
-            for x in self.data['categories'][5:]:
-                amount += x['amount']
-            percentage = round(amount / self.data['global_expenses'] * 100, 2)
-        self.data['other_expenses'] = {
-            'amount': amount,
-            'percentage': percentage,
-            'disabled': True if amount == 0 else False
-        }
-
-    def get(self, request, user):
-        date = validate_date(self.request.query_params.get('date_month'))
-        if not date:
-            return Response({'400': "Invalid date format."}, status=status.HTTP_400_BAD_REQUEST)
-        self.grouped_expenses = {}
-        self.budgets = []
-        self.data = {
-            'global_expenses': 0.0,
-            'categories': []
-        }
-        transactions = Transaction.objects.filter(
-            user=user,
-            transaction_date__range=[date.start_of('month'), date.end_of('month')],
-            amount__lt=0
-        ).values('amount', 'category').order_by('category')
-        self.budgets = Budget.objects.filter(
-            user=user,
-            budget_date__range=[date.start_of('month').strftime('%Y-%m-%d'), date.end_of('month').strftime('%Y-%m-%d')]
-        )
-        self.group_transactions(transactions)
-        self.merge_data()
-        self.get_other_expenses()
-        return Response(self.data, status=status.HTTP_200_OK)
-
-
-class MonthlyBalanceView(APIView):
+class MonthlyBalance(APIView):
     """
     Permite retornar el balance mensual del usuario.
     """
 
-    def month_params(self, data, date):
-        incomes = 0.0 if data['incomes'] is None else data['incomes']
-        expenses = 0.0 if data['expenses'] is None else data['expenses']
-        return {
-            'year': date.year,
-            'month': months_dict[date.month],
-            'incomes': incomes,
-            'expenses': expenses,
-            'balance': incomes + expenses,
-            'disabled': True if (data['incomes'] or data['expenses']) is None else False
-        }
-
-    def get(self, request, user):
-        year = Transaction.objects.filter(user=user).order_by('transaction_date').first().transaction_date.year
-        start_date = pendulum.datetime(year, 1, 1)
-        end_date = pendulum.now().end_of('year')
-        dates = []
-        while start_date.year <= end_date.year:
-            dates.append(start_date)
-            start_date = start_date.add(months=1)
-        years_dict = {}
-        for date in dates:
-            data = Transaction.objects.filter(
-                transaction_date__range=[date.start_of('month'), date.end_of('month')],
-                    user=user,
-                ).aggregate(
-                incomes=Sum(Case(
-                    When(amount__gt=0, then=F('amount')),
-                    output_field=FloatField(),
-                )),
-                expenses=Sum(Case(
-                    When(amount__lt=0, then=F('amount')),
-                    output_field=FloatField(),
-                )),
-            )
-            try:
-                years_dict[date.year]['months'].append(self.month_params(data, date))
-            except KeyError:
-                years_dict[date.year] = {
-                    'year': date.year,
-                    'months': [
-                        self.month_params(data, date)
-                    ]
-                }
-        return Response([v for k, v in years_dict.items()], status=status.HTTP_200_OK)
+    def get(self, request, user_id):
+        response = BuildMonthlyBalanceResponse(user_id)
+        return Response(response.get_data(), status=status.HTTP_200_OK)
 
 
-class MonthlyCategoryBalanceView(APIView):
+class MonthlyBalanceByCategory(APIView):
     """
     Permite retornar el balance mensual por categoría del usuario.
     """
 
-    def month_params(self, data, date, budget):
-        expenses_sum = 0.0 if data['expenses_sum'] is None else abs(data['expenses_sum'])
-        expenses_count = 0 if data['expenses_count'] is None else abs(data['expenses_count'])
-        budget_spent = (abs(expenses_sum)*100)/float(budget.amount) if budget else 0
-        return {
-            'year': date.year,
-            'month': months_dict[date.month],
-            'expenses_sum': expenses_sum,
-            'expenses_count': expenses_count,
-            'average': 0.0 if expenses_count == 0 else float(expenses_sum/expenses_count),
-            'budget': budget.amount if budget else 0,
-            'budget_spent': round(budget_spent,2),
-            'has_budget': True if budget else False,
-            'budget_id': budget.id if budget else False,
-            'disabled': True if expenses_count == 0 else False
-        }
-
-    def get(self, request, user, category):
-        year = Transaction.objects.filter(
-            user=user, category=category).order_by('transaction_date').first().transaction_date.year
-        start_date = pendulum.datetime(year, 1, 1)
-        end_date = pendulum.now().end_of('year')
-        dates = []
-        while start_date.year <= end_date.year:
-            dates.append(start_date)
-            start_date = start_date.add(months=1)
-        years_dict = {}
-        month = 1
-        for date in dates:
-            try:
-                budget = Budget.objects.get(user=user, category=category, 
-                    budget_date__month=month)
-            except Budget.DoesNotExist:
-                budget = None
-            data = Transaction.objects.filter(
-                transaction_date__range=[date.start_of('month'), date.end_of('month')],
-                user=user,
-                category=category
-                ).aggregate(
-                expenses_sum=Sum(Case(
-                    When(amount__lt=0, then=F('amount')),
-                    output_field=FloatField(),
-                )),
-                expenses_count=Count(Case(
-                    When(amount__lt=0, then=1),
-                    output_field=IntegerField(),
-                ))
-            )
-            try:
-                years_dict[date.year]['months'].append(self.month_params(data, date, budget))
-            except KeyError:
-                years_dict[date.year] = {
-                    'year': date.year,
-                    'months': [
-                        self.month_params(data, date, budget)
-                    ]
-                }
-            month+=1
-            if month > 12:
-               month = 1 
-        return Response([v for k, v in years_dict.items()], status=status.HTTP_200_OK)
+    def get(self, request, user_id, category):
+        response = BuildMonthlyBalanceByCategoryResponse(user_id, category)
+        return Response(response.get_data(), status=status.HTTP_200_OK)
 
 
 class NewTransaction(APIView):
@@ -332,30 +130,20 @@ class NewTransaction(APIView):
     Permite crear una transacción a aprtir de un número de cuenta
     """
 
-    core_url = environ.get('CORE_SERVICE_URL')
-
-    def get_account_details(self, account_number):
-        try:
-            r = requests.get(self.core_url+'accounts/?number={}'.format(account_number), timeout=1)
-            if r.status_code == 200:
-                return r.json()
-            return False
-        except requests.exceptions.RequestException:
-            return False
-
     def post(self, request):
         data = request.data
-        account = self.get_account_details(data['account_number'])
+        account = validate_user_accounts(data['account_number'])
         if account is not False:
             try:
-                t = Transaction.objects.create(
+                transaction = Transaction.objects.create(
                     account=account['id'],
-                    user=account['user'],
+                    user_id=account['user_'],
                     amount=data['amount'],
                     description=data['description'],
-                    transaction_date=data['transaction_date']
+                    transaction_date=data['transaction_date'],
+                    category='f37b6770-7fc5-43e0-a837-50926e1ee459' # Sin categoría
                 )
-                return Response(TransactionSerializer(t).data, status=status.HTTP_201_CREATED)
+                return Response(TransactionSerializer(transaction).data, status=status.HTTP_201_CREATED)
             except KeyError:
                 return Response('Bad request', status=status.HTTP_400_BAD_REQUEST)
         return Response('Account not found', status=status.HTTP_404_NOT_FOUND)

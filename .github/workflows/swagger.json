@@ -1,11 +1,11 @@
 {
 	"openapi": "3.0.1",
 	"info": {
-		"title": "PFM",
-		"version": "v1.0.0"
+		"title": "Xerpa pfm-service",
+		"version": "v1.1"
 	},
 	"servers": [{
-		"url": "https://widgets.getxerpa.com/pfm-service/"
+		"url": "https://ciyu9u9i9l.execute-api.us-east-1.amazonaws.com/test/pfm-service/"
 	}],
 	"paths": {
 		"/monitoring/health-check/": {
@@ -56,7 +56,7 @@
 				]
 			}
 		},
-		"/user/{userID}/budgets/": {
+		"/users/{userID}/budgets/": {
 			"get": {
 				"summary": "Presupuestos del usuario filtrados por mes",
 				"operationId": "get_budgets_by_month",
@@ -69,7 +69,7 @@
 						},
 						"required": true,
 						"description": "Id del usuario",
-						"example": "479ec168013945d0b7042bc4e5d0c4fb"
+						"example": "b9e605ee-4cca-400e-99c5-ae24abca97d5"
 					},
 					{
 						"in": "query",
@@ -79,7 +79,7 @@
 						},
 						"required": true,
 						"description": "Fecha",
-						"example": "2021-09"
+						"example": "2022-05"
 					}
 				],
 				"responses": {
@@ -111,7 +111,7 @@
                         },
                         "required": true,
                         "description": "Id del usuario",
-                        "example": "479ec168013945d0b7042bc4e5d0c4fb"
+                        "example": "b9e605ee-4cca-400e-99c5-ae24abca97d5"
                     }
                 ],
 				"requestBody": {
@@ -122,14 +122,14 @@
 							},
                             "examples": {
                                 "Crear presupuesto": {
-                                  "summary": "Ejemplo crear presupuesto monto",
+                                  "summary": "Ejemplo para crear un presupuesto de la categoría shopping para el mes actual.",
                                   "value": {
-                                        "amount": 9000,
-										"user": "479ec168-0139-45d0-b704-2bc4e5d0c4fb",
+                                        "amount": 4000,
+										"user": "b9e605ee-4cca-400e-99c5-ae24abca97d5",
 										"category": "22118f55-e6a9-46b0-ae8f-a063dda396e0"
                                   }
-                                }                      
-                            }							
+                                }
+                            }
 						}
 					}
 				},	
@@ -143,7 +143,7 @@
                 ]
             } 
 		},			
-		"/user/{userID}/budgets/categories/{categoryID}/": {
+		"/users/{userID}/budgets/categories/{categoryID}/": {
 			"get": {
 				"summary": "Presupuestos del usuario filtrados por categoría y por mes",
 				"operationId": "get_budgets_by_category_month",
@@ -156,7 +156,7 @@
 						},
 						"required": true,
 						"description": "Id del usuario",
-						"example": "479ec168013945d0b7042bc4e5d0c4fb"
+						"example": "b9e605ee-4cca-400e-99c5-ae24abca97d5"
 					},
 					{
 						"in": "path",
@@ -175,8 +175,8 @@
 							"type": "string"
 						},
 						"required": true,
-						"description": "Fecha",
-						"example": "2021-09"
+						"description": "Mes a consultar",
+						"example": "2022-05"
 					}
 				],
 				"responses": {
@@ -197,7 +197,7 @@
 				]
 			}
 		},
-		"/user/{userID}/budgets/{budgetID}/": {
+		"/users/{userID}/budgets/{budgetID}/": {
 			"get": {
 				"summary": "Ver detalle del presupuesto",
 				"operationId": "get_budget_detail",
@@ -211,7 +211,7 @@
 						},
 						"required": true,
 						"description": "Id del usuario",
-						"example": "479ec168013945d0b7042bc4e5d0c4fb"
+						"example": "b9e605ee-4cca-400e-99c5-ae24abca97d5"
 					},
 					{
 						"in": "path",
@@ -221,7 +221,7 @@
 						},
 						"required": true,
 						"description": "Id del presupuesto",
-						"example": "45a80dbbea714ce390b3-6761bcbf365c"
+						"example": "ea6b42a9-cde1-4e03-94ba-6818c21e5328"
 					}
 				],
 				"responses": {
@@ -314,7 +314,7 @@
 						},
 						"required": true,
 						"description": "Id del usuario",
-						"example": "479ec168013945d0b7042bc4e5d0c4fb"
+						"example": "b9e605ee-4cca-400e-99c5-ae24abca97d5"
 					},
 					{
 						"in": "path",
@@ -324,7 +324,7 @@
 						},
 						"required": true,
 						"description": "Id del presupuesto",
-						"example": "45a80dbbea714ce390b3-6761bcbf365c"
+						"example": "ea6b42a9-cde1-4e03-94ba-6818c21e5328"
 					}
 				],
 				"requestBody": {
@@ -337,9 +337,7 @@
                                 "Actualizar monto": {
                                   "summary": "Ejemplo actualizar monto",
                                   "value": {
-									  "user": "479ec168013945d0b7042bc4e5d0c4fb",
-									  "amount": 10000,
-									  "category": "22118f55-e6a9-46b0-ae8f-a063dda396e0"
+									  "amount": 2000
                                   }
                                 }                      
                             }								
@@ -364,7 +362,7 @@
 				]
 			}			
 		},
-		"/user/{userID}/transactions/": {
+		"/users/{userID}/transactions/": {
 			"get": {
 				"summary": "Transacciones del usuario filtrados por mes",
 				"operationId": "get_transactions_by_month",
@@ -377,7 +375,7 @@
 						},
 						"required": true,
 						"description": "Id del usuario",
-						"example": "479ec168013945d0b7042bc4e5d0c4fb"
+						"example": "b9e605ee-4cca-400e-99c5-ae24abca97d5"
 					},
 					{
 						"in": "query",
@@ -387,7 +385,7 @@
 						},
 						"required": true,
 						"description": "Fecha",
-						"example": "2021-09"
+						"example": "2022-05"
 					}
 				],
 				"responses": {
@@ -408,7 +406,7 @@
 				]
 			}
 		},
-		"/user/{userID}/transactions/categories/{categoryID}/": {
+		"/users/{userID}/transactions/categories/{categoryID}/": {
 			"get": {
 				"summary": "Transacciones del usuario filtrados por categoría y por mes",
 				"operationId": "get_transactions_by_category_month",
@@ -421,7 +419,7 @@
 						},
 						"required": true,
 						"description": "Id del usuario",
-						"example": "479ec168013945d0b7042bc4e5d0c4fb"
+						"example": "b9e605ee-4cca-400e-99c5-ae24abca97d5"
 					},
 					{
 						"in": "path",
@@ -431,7 +429,7 @@
 						},
 						"required": true,
 						"description": "Id de la categoría",
-						"example": "9abd4759-ab14-4e09-adc2-9c5dea1041b1"
+						"example": "22118f55-e6a9-46b0-ae8f-a063dda396e0"
 					},
 					{
 						"in": "query",
@@ -441,7 +439,7 @@
 						},
 						"required": true,
 						"description": "Fecha",
-						"example": "2021-09"
+						"example": "2022-05"
 					}
 				],
 				"responses": {
@@ -462,7 +460,7 @@
 				]
 			}
 		},		
-		"/user/{userID}/transactions/{transactionID}/": {
+		"/users/{userID}/transactions/{transactionID}/": {
 			"get": {
 				"summary": "Ver detalle de la transacción",
 				"operationId": "get_transaction_detail",
@@ -486,7 +484,7 @@
 						},
 						"required": true,
 						"description": "Id de la transacción",
-						"example": "c7e78eb2-4bef-4dde-b61c-822fe0257003"
+						"example": "f1b95404-f638-4a26-b19b-6f3c8a29e115"
 					}
 				],
 				"responses": {
@@ -529,7 +527,7 @@
 						},
 						"required": true,
 						"description": "Id de la transacción",
-						"example": "c7e78eb2-4bef-4dde-b61c-822fe0257003"
+						"example": "f1b95404-f638-4a26-b19b-6f3c8a29e115"
 					}
 				],
 				"requestBody": {
@@ -540,9 +538,9 @@
 							},
                             "examples": {
                                 "Actualizar nota": {
-                                  "summary": "Ejemplo actualizar nota",
+                                  "summary": "Ejemplo para actualizar nota",
                                   "value": {
-                                        "user_note": "Nota del usuario"
+                                        "user_note": "Estoy agregando una nota."
                                   }
                                 }                      
                             }							
@@ -565,73 +563,9 @@
 				"tags": [
 					"Transacciones"
 				]
-			},
-			"put": {
-				"summary": "Actualizar presupuesto.",
-				"operationId": "update_transaction_put",
-				"description": "",
-				"parameters": [
-					{
-						"in": "path",
-						"name": "userID",
-						"schema": {
-							"type": "string"
-						},
-						"required": true,
-						"description": "Id del usuario",
-						"example": "b9e605ee-4cca-400e-99c5-ae24abca97d5"
-					},
-					{
-						"in": "path",
-						"name": "transactionID",
-						"schema": {
-							"type": "string"
-						},
-						"required": true,
-						"description": "Id de la transacción",
-						"example": "c7e78eb2-4bef-4dde-b61c-822fe0257003"
-					}
-				],
-				"requestBody": {
-					"content": {
-						"application/json": {
-							"schema": {
-								"$ref": "#/components/schemas/Transaccion"
-							},
-                            "examples": {
-                                "Actualizar descripcion": {
-                                  	"summary": "Ejemplo actualizar monto",
-                                  	"value": {
-									  	"category": "22118f55-e6a9-46b0-ae8f-a063dda396e0",
-										"description": "Descripción transacción.",
-										"transaction_date": "2021-09-09T15:20:30-04:00",
-										"account": "910e8abd-1265-41ba-8125-f6c720bacde9",
-										"amount": 4000
-                                  	}
-                                }                      
-                            }								
-						}
-					}
-				},				
-				"responses": {
-					"200": {
-						"content": {
-							"application/json": {
-								"schema": {
-									"type": "array",
-									"items": {}
-								}
-							}
-						},
-						"description": "Actualizar transacción"
-					}
-				},
-				"tags": [
-					"Transacciones"
-				]
-			}			
+			}
 		},
-		"/user/{userID}/transactions/summary/": {
+		"/users/{userID}/transactions/summary/": {
 			"get": {
 				"summary": "Gasto Total mensual",
 				"operationId": "get_summary",
@@ -645,7 +579,7 @@
 						},
 						"required": true,
 						"description": "Id del usuario",
-						"example": "479ec168013945d0b7042bc4e5d0c4fb"
+						"example": "b9e605ee-4cca-400e-99c5-ae24abca97d5"
 					},
 					{
 						"in": "query",
@@ -655,7 +589,7 @@
 						},
 						"required": true,
 						"description": "Fecha",
-						"example": "2021-09"
+						"example": "2022-05"
 					}					
 				],
 				"responses": {
@@ -699,11 +633,11 @@
 					}
                 },
                 "tags": [
-                    "Transaction"
+                    "Transacciones"
                 ]
             } 
 		},
-		"/user/{userID}/transactions/expenses/summary/": {
+		"/users/{userID}/transactions/expenses/summary/": {
 			"get": {
 				"summary": "Gasto Total de egresos",
 				"operationId": "get_expenses_summary",
@@ -717,7 +651,7 @@
 						},
 						"required": true,
 						"description": "Id del usuario",
-						"example": "479ec168013945d0b7042bc4e5d0c4fb"
+						"example": "b9e605ee-4cca-400e-99c5-ae24abca97d5"
 					},
 					{
 						"in": "query",
@@ -727,7 +661,7 @@
 						},
 						"required": true,
 						"description": "Fecha",
-						"example": "2021-09"
+						"example": "2022-05"
 					}					
 				],
 				"responses": {
@@ -748,7 +682,7 @@
 				]
 			}
 		},
-		"/user/{userID}/transactions/balance/": {
+		"/users/{userID}/transactions/balance/": {
 			"get": {
 				"summary": "Balance Mensual",
 				"operationId": "get_balance",
@@ -762,7 +696,7 @@
 						},
 						"required": true,
 						"description": "Id del usuario",
-						"example": "479ec168013945d0b7042bc4e5d0c4fb"
+						"example": "b9e605ee-4cca-400e-99c5-ae24abca97d5"
 					},
 					{
 						"in": "query",
@@ -772,7 +706,7 @@
 						},
 						"required": true,
 						"description": "Fecha",
-						"example": "2021"
+						"example": "2022-05"
 					}					
 				],
 				"responses": {
@@ -793,11 +727,11 @@
 				]
 			}
 		},
-		"/user/{userID}/transactions/balance/category/{categoryID}": {
+		"/users/{userID}/transactions/balance/category/{categoryID}/": {
 			"get": {
-				"summary": "Balance Mensual por categoria",
+				"summary": "Balance Mensual por categoría",
 				"operationId": "get_balance_category",
-				"description": "Balance mensual por categoria",
+				"description": "Balance mensual por categoría",
 				"parameters": [
 					{
 						"in": "path",
@@ -807,7 +741,7 @@
 						},
 						"required": true,
 						"description": "Id del usuario",
-						"example": "479ec168013945d0b7042bc4e5d0c4fb"
+						"example": "b9e605ee-4cca-400e-99c5-ae24abca97d5"
 					},
 					{
 						"in": "path",
@@ -817,8 +751,8 @@
 						},
 						"required": true,
 						"description": "Id de categoria",
-						"example": "479ec168013945d0b7042bc4e5d0c4fb"
-					}					
+						"example": "22118f55-e6a9-46b0-ae8f-a063dda396e0"
+					}
 				],
 				"responses": {
 					"200": {
@@ -840,9 +774,9 @@
 		},
 		"/tips/": {
 			"get": {
-				"summary": "Get all tips",
+				"summary": "Obtiene el listado de tips",
 				"operationId": "get_tips",
-				"description": "Get all tips",
+				"description": "Obtiene el listado de tips",
 				"parameters": [
 				],
 				"responses": {
@@ -855,19 +789,19 @@
 								}
 							}
 						},
-						"description": "Lista de tips"
+						"description": "Listado de tips"
 					}
 				},
 				"tags": [
-					"Transacciones"
+					"Tips"
 				]
 			}
 		},
 		"/faqs/": {
 			"get": {
-				"summary": "Get all FAQ",
+				"summary": "Obtiene el listado de preguntas frecuentes",
 				"operationId": "get_faqs",
-				"description": "Get all FAQS",
+				"description": "Obtiene el listado de preguntas frecuentes",
 				"parameters": [
 				],
 				"responses": {
@@ -880,19 +814,19 @@
 								}
 							}
 						},
-						"description": "Lista de FAQS"
+						"description": "Listado de preguntas frecuentes"
 					}
 				},
 				"tags": [
-					"Transacciones"
+					"Preguntas frecuentes"
 				]
 			}
 		},
 		"/notifications/": {
 			"get": {
-				"summary": "Get all notifications",
+				"summary": "Obtiene un listado de notificaciones",
 				"operationId": "get_notifications",
-				"description": "Get all notifications",
+				"description": "Obtiene un listado de notificaciones",
 				"parameters": [
 				],
 				"responses": {
@@ -905,11 +839,11 @@
 								}
 							}
 						},
-						"description": "Lista de notificaciones"
+						"description": "Listado de notificaciones"
 					}
 				},
 				"tags": [
-					"Transacciones"
+					"Notificaciones"
 				]
 			}
 		}

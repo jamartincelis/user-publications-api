@@ -4,10 +4,18 @@ services:
     pfm-service:
         container_name: pfm-service
         build: .
-        command: "python manage.py runserver 0.0.0.0:8000"
+        command: 'python manage.py runserver 0.0.0.0:8000'
         volumes:
             - ./src/:/code
         env_file:
             - .env
         ports:
             - 8000:8000
+    pfmdb:
+        container_name: pfmdb
+        image: postgres:13
+        environment:
+          - POSTGRES_USER=django
+          - POSTGRES_PASSWORD=pass
+        expose:
+          - 5432

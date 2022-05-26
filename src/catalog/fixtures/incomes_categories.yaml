@@ -1,0 +1,105 @@
+- model: 'catalog.Item'
+  fields:
+    id: '5f342655-bf27-4523-aa32-40d7cb48ae38'
+    catalog_id: 'c2a07389-da13-4420-9060-c6bef2d6bd03'
+    item_name: 'Subvención'
+    description: 'Pensión, becas, subvención y ayudas familiares'
+    metadata: {
+      "icon":
+      "assets/img/category/income.svg",
+      "color": "#0E891A",
+      "active": true,
+      "short_name": "SUBVENCION"
+    }
+    active: true
+    process_name: null
+
+- model: 'catalog.Item'
+  fields:
+    id: '763d39ca-45e8-4171-8a97-29ba9a37665c'
+    catalog_id: 'c2a07389-da13-4420-9060-c6bef2d6bd03'
+    item_name: 'Regalos y otros ingresos'
+    description: 'Regalos hechos por transferencias y otros ingresos'
+    metadata: {
+      "icon": "assets/img/category/income.svg",
+      "color": "#0E891A",
+      "active": true,
+      "short_name": "REGALOS_OTROS_INGRESOS"
+    }
+    active: true
+    process_name: null
+
+- model: 'catalog.Item'
+  fields:
+    id: '3954361d-ddf5-46dc-a8f8-af98ee9811da'
+    catalog_id: 'c2a07389-da13-4420-9060-c6bef2d6bd03'
+    item_name: 'Sueldo'
+    description: 'Sueldos, salarios, honorarios e ingresos por trabajo'
+    metadata: {
+      "icon": "assets/img/category/income.svg",
+      "color": "#0E891A",
+      "active": true,
+      "short_name": "SUELDO"
+    }
+    active: true
+    process_name: null
+
+- model: 'catalog.Item'
+  fields:
+    id: '8ebba319-0042-41ff-bdbb-ba05cd824d52'
+    catalog_id: 'c2a07389-da13-4420-9060-c6bef2d6bd03'
+    item_name: 'Transferencias'
+    description: 'Transferencias, depósitos y reembolsos recibidos'
+    metadata: {
+      "icon": "assets/img/category/income.svg",
+      "color": "#0E891A",
+      "active": true,
+      "short_name": "TRANSFERENCIAS"
+    }
+    active: true
+    process_name: null
+
+- model: 'catalog.Item'
+  fields:
+    id: 'e131ca4e-28d2-48fc-ab73-ea92e48b084f'
+    catalog_id: 'c2a07389-da13-4420-9060-c6bef2d6bd03'
+    item_name: 'Rendimientos'
+    description: 'Pago de dividendos e intereses ganados'
+    metadata: {
+      "icon": "assets/img/category/income.svg",
+      "color": "#0E891A",
+      "active": true,
+      "short_name": "RENDIMIENTOS"
+    }
+    active: true
+    process_name: null
+
+- model: 'catalog.Item'
+  fields:
+    id: '9abd4759-ab14-4e09-adc2-9c5dea1041b2'
+    catalog_id: 'c2a07389-da13-4420-9060-c6bef2d6bd03'
+    item_name: 'Rentas y arriendos'
+    description: 'Ingresos por arriendos de muebles e inmuebles'
+    metadata: {
+      "icon": "assets/img/category/income.svg",
+      "color": "#0E891A",
+      "active": true,
+      "short_name": "RENTAS_ARRIENDOS"
+    }
+    active: true
+    process_name: null
+
+- model: 'catalog.Item'
+  fields:
+    id: '593cea05-8f4d-4b40-ad1b-d73e43c8d53d'
+    catalog_id: 'c2a07389-da13-4420-9060-c6bef2d6bd03'
+    item_name: 'Devolución de impuestos'
+    description: 'Devoluciones del Servicio de Impuestos Internos'
+    metadata: {
+      "icon": "assets/img/category/income.svg",
+      "color": "#0E891A",
+      "active": true,
+      "short_name": "DEVOLUCION_IMPUESTOS"
+    }
+    active: true
+    process_name: null
