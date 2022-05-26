@@ -12,11 +12,3 @@ class TransactionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Transaction
         fields = '__all__'
-
-
-class TransactionSummarySerializer(serializers.Serializer):
-    """
-    Permite acceder al monto total de transacciones por categoria.
-    """
-    total_spend = serializers.IntegerField()
-    num_transaction = serializers.IntegerField()

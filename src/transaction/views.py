@@ -10,12 +10,13 @@ from rest_framework import status
 from helpers.helpers import validate_date
 
 from catalog.models import Item
+from catalog.serializers import ItemSerializer
 
 from budget.models import Budget
 
 from transaction.models import Transaction
-from transaction.serializers import TransactionSerializer, TransactionSummarySerializer
-from transaction.helpers import BuildExpensesSummaryByMonthResponse
+from transaction.serializers import TransactionSerializer
+from transaction.bussiness_rules import BuildExpensesSummaryByMonthResponse, BuildMonthlyBalanceResponse
 
 
 class TransactionsByMonth(ListAPIView):
@@ -61,56 +62,46 @@ class TransactionDetail(RetrieveUpdateAPIView):
     """
     Permite retornar, actualizar o borrar una Transaccion.
     """
-    def get(self, user_id, transaction_id):
-        try:
-            transaction = Transaction.objects.select_related('category', 'account_type').get(
-                pk=transaction_id,
-                user_id=user_id
-            )
-            return Response(TransactionSerializer(transaction).data, status=status.HTTP_200_OK)
-        except Transaction.DoesnotExist:
-            return Response('Transaction not found', status=status.HTTP_404_NOT_FOUND)
+
+    serializer_class = TransactionSerializer
+
+    def get_queryset(self):
+        return Transaction.objects.select_related('category', 'account_type').all()
 
 
-class TransactionsByCategoryAndMonth(ListAPIView):
+class TransactionsByCategoryAndMonth(APIView):
     """
     Devuelve las transacciones del usuario filtradas por mes y categoría
     """
-    serializer_class = TransactionSerializer
-    filterset_fields = ['date_month']
 
-    def get_queryset(self):
-        return Transaction.objects.filter(
-            user_id=self.kwargs['user_id'], 
-            category_id=self.kwargs['category_id']
-        )
-
-    def get(self, request, user, category):
+    def get(self, request, user_id, category):
         date = validate_date(self.request.query_params.get('date_month'))
         if date is False:
             return Response({'400': 'Invalid date format.'}, status=status.HTTP_400_BAD_REQUEST)
-        transactions = self.get_queryset().filter(transaction_date__range=[date.start_of('month'), date.end_of('month')])
+        summary = Transaction.objects().filter(
+            transaction_date__range=[date.start_of('month'), date.end_of('month')]
+        )
         data = TransactionSerializer(transactions, many=True)
         return Response(data=data.data, status=status.HTTP_200_OK)
 
 
-class TransactionsCategoriesSummarybyMonth(ListAPIView):
+class TransactionsCategoriesSummarybyMonth(APIView):
     """
     Devuelve el resumen de transacciones por categorías del mes solicitado
     """
-    queryset = Transaction.objects.all()
-    filterset_fields = ['date_month']
-    serializer_class = TransactionSummarySerializer
 
-    def get(self, request, user):
+    def get(self, request, user_id):
         date = validate_date(self.request.query_params.get('date_month'))
         if not date:
             return Response({'400': "Invalid date format."}, status=status.HTTP_400_BAD_REQUEST)
-        transactions = self.get_queryset().filter(user=user,
+        summaries = Transaction.objects.filter(
+            user_id=user_id,
             transaction_date__range=[date.start_of('month'), date.end_of('month')]
         ).values('category').order_by('category').annotate(total_spend=Sum('amount'), num_transaction=Count('category'))
-        data = TransactionSummarySerializer(transactions, many=True)
-        return Response(data=data.data, status=status.HTTP_200_OK)
+        # esto requiere refactor
+        for summary in summaries:
+            summary['category'] = ItemSerializer(Item.objects.get(id=summary['category'])).data
+        return Response(data=summaries, status=status.HTTP_200_OK)
 
 
 class MonthlyBalance(APIView):
@@ -118,51 +109,9 @@ class MonthlyBalance(APIView):
     Permite retornar el balance mensual del usuario.
     """
 
-    def month_params(self, data, date):
-        incomes = 0.0 if data['incomes'] is None else data['incomes']
-        expenses = 0.0 if data['expenses'] is None else data['expenses']
-        return {
-            'year': date.year,
-            'month': months_dict[date.month],
-            'incomes': incomes,
-            'expenses': expenses,
-            'balance': incomes + expenses,
-            'disabled': True if (data['incomes'] or data['expenses']) is None else False
-        }
-
-    def get(self, request, user):
-        now = pendulum.now().subtract(years=1)
-        start_date = pendulum.datetime(now.year, now.month, 1)
-        end_date = pendulum.now().subtract(months=1).end_of('month')
-        dates = []
-        while start_date < end_date:
-            dates.append(start_date)
-            start_date = start_date.add(months=1)
-        years_dict = {}
-        for date in dates:
-            data = Transaction.objects.filter(
-                transaction_date__range=[date.start_of('month'), date.end_of('month')],
-                    user=user,
-                ).aggregate(
-                incomes=Sum(Case(
-                    When(amount__gt=0, then=F('amount')),
-                    output_field=FloatField(),
-                )),
-                expenses=Sum(Case(
-                    When(amount__lt=0, then=F('amount')),
-                    output_field=FloatField(),
-                )),
-            )
-            try:
-                years_dict[date.year]['months'].append(self.month_params(data, date))
-            except KeyError:
-                years_dict[date.year] = {
-                    'year': date.year,
-                    'months': [
-                        self.month_params(data, date)
-                    ]
-                }
-        return Response([v for k, v in years_dict.items()], status=status.HTTP_200_OK)
+    def get(self, request, user_id):
+        response = BuildMonthlyBalanceResponse(user_id)
+        return Response(response.get_data(), status=status.HTTP_200_OK)
 
 
 class MonthlyCategoriesBalance(APIView):
@@ -247,7 +196,8 @@ class NewTransaction(APIView):
                     user_id=account['user_'],
                     amount=data['amount'],
                     description=data['description'],
-                    transaction_date=data['transaction_date']
+                    transaction_date=data['transaction_date'],
+                    category='f37b6770-7fc5-43e0-a837-50926e1ee459' # Sin categoría
                 )
                 return Response(TransactionSerializer(transaction).data, status=status.HTTP_201_CREATED)
             except KeyError:

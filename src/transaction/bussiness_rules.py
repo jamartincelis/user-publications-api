@@ -2,8 +2,16 @@ from os import environ
 
 import requests
 
+import pendulum
+
+from django.db.models import Sum, Count, Q, Case, When, F, FloatField, IntegerField
+
+from helpers.helpers import months_dict
+
 from catalog.models import Item
 from catalog.serializers import ItemSerializer
+
+from transaction.models import Transaction
 
 
 def validate_user_accounts(data):
@@ -112,3 +120,56 @@ class BuildExpensesSummaryByMonthResponse:
         self.merge_data()
         self.other_expenses()
         return self.data
+
+
+class BuildMonthlyBalanceResponse:
+
+    def __init__(self, user_id):
+        self.user_id = user_id
+
+
+    def month_params(self, data, date):
+        incomes = 0.0 if data['incomes'] is None else data['incomes']
+        expenses = 0.0 if data['expenses'] is None else data['expenses']
+        return {
+            'year': date.year,
+            'month': months_dict[date.month],
+            'incomes': incomes,
+            'expenses': expenses,
+            'balance': incomes + expenses,
+            'disabled': True if (data['incomes'] or data['expenses']) is None else False
+        }
+
+    def get_data(self):
+        start_date = pendulum.now().subtract(months=int(environ.get('MAX_MONTHS'))-1)
+        end_date = pendulum.now().end_of('month')
+        dates = []
+        while start_date < end_date:
+            dates.append(start_date)
+            start_date = start_date.add(months=1)
+
+        years_dict = {}
+        for date in dates:
+            data = Transaction.objects.filter(
+                transaction_date__range=[date.start_of('month'), date.end_of('month')],
+                    user_id=self.user_id,
+                ).aggregate(
+                incomes=Sum(Case(
+                    When(amount__gt=0, then=F('amount')),
+                    output_field=FloatField(),
+                )),
+                expenses=Sum(Case(
+                    When(amount__lt=0, then=F('amount')),
+                    output_field=FloatField(),
+                )),
+            )
+            try:
+                years_dict[date.year]['months'].append(self.month_params(data, date))
+            except KeyError:
+                years_dict[date.year] = {
+                    'year': date.year,
+                    'months': [
+                        self.month_params(data, date)
+                    ]
+                }
+        return [v for k, v in years_dict.items()]

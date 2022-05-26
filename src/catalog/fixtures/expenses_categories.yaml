@@ -135,7 +135,7 @@
 
 - model: 'catalog.Item'
   fields:
-    id: 'a249c468-bb4d-4365-83f4-108d456bb494'
+    id: 'ab0e1c52-4ab1-46b3-9384-7db452b282b2'
     catalog_id: '1ec6a6b5-65d5-4a8c-85d0-4364c141aefd'
     item_name: 'Supermercados'
     description: 'Tienda de comestibles, panaderia, pasteleria'

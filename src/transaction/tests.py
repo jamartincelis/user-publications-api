@@ -27,6 +27,8 @@ class TransactionsTestCase(TestCase):
     BASE_URL = '/users/c9d29378-f4d6-46ca-9363-1d304e9fa133/transactions/'
     EXPENSES_SUMMARY_URL = BASE_URL + 'expenses/summary/'
     TRANSACTION_DETAIL = BASE_URL + '0b0588dc-2020-4bac-a18f-52979efb41c2/'
+    TRANSACTIONS_BY_MONTH_AND_CATEGORY = BASE_URL + 'summary/'
+    MONTHLY_BALANCE = BASE_URL + 'balance/'
     DATE_MONTH = '?date_month={}'
 
     @property
@@ -61,7 +63,26 @@ class TransactionsTestCase(TestCase):
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
     def test_get_transaction_detail(self):
-        print(self.TRANSACTION_DETAIL)
         response = self.client.get(self.TRANSACTION_DETAIL)
-        print(dumps(response.json(), indent=4))
+        # print(dumps(response.json(), indent=4))
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_update_transaction_category(self):
+        body = {
+            'category': 'a249c468-bb4d-4365-83f4-108d456bb494' # Actualziar a Supermercados
+        }
+        response = self.client.patch(self.TRANSACTION_DETAIL, data=body, content_type='application/json')
+        # print(dumps(response.json(), indent=4))
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_get_transactions_by_category_and_month(self):
+        Transaction.objects.all().update(transaction_date='{}-01'.format(self.current_month))
+        response = self.client.get(self.TRANSACTIONS_BY_MONTH_AND_CATEGORY+self.DATE_MONTH.format(self.current_month))
+        # print(dumps(response.json(), indent=4))
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_get_monthly_balance(self):
+        Transaction.objects.all().update(transaction_date='{}-01'.format(self.current_month))
+        response = self.client.get(self.MONTHLY_BALANCE)
+        # print(dumps(response.json(), indent=4))
         self.assertEqual(response.status_code, status.HTTP_200_OK)
