@@ -1,7 +1,7 @@
 from django.urls import path, include
 
 from transaction.views import TransactionsByMonth, TransactionDetail, TransactionsByCategoryAndMonth,\
-    TransactionsCategoriesSummarybyMonth, ExpensesSummarybyMonth, MonthlyBalance, MonthlyCategoriesBalance
+    TransactionsCategoriesSummarybyMonth, ExpensesSummarybyMonth, MonthlyBalance, MonthlyBalanceByCategory
 
 
 urlpatterns = [
@@ -13,8 +13,10 @@ urlpatterns = [
     path('summary/', TransactionsCategoriesSummarybyMonth.as_view()),
     # regresa el balance mensual con de los último n meses según la variable de entorno
     path('balance/', MonthlyBalance.as_view()),
+    # regresa un balance mensual de transacciones
     path('categories/<str:category>/', TransactionsByCategoryAndMonth.as_view()),
-    path('balance/category/<str:category>/', MonthlyCategoriesBalance.as_view()),
+    # Regresa un balance mensual de castos de una categoría en específico
+    path('balance/category/<str:category>/', MonthlyBalanceByCategory.as_view()),
     # Detalle de la transacción
     path('<str:pk>/', TransactionDetail.as_view())
 ]

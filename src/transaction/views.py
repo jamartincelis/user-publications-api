@@ -16,7 +16,8 @@ from budget.models import Budget
 
 from transaction.models import Transaction
 from transaction.serializers import TransactionSerializer
-from transaction.bussiness_rules import BuildExpensesSummaryByMonthResponse, BuildMonthlyBalanceResponse
+from transaction.bussiness_rules import BuildExpensesSummaryByMonthResponse, BuildMonthlyBalanceResponse,\
+    BuildMonthlyBalanceByCategoryResponse
 
 
 class TransactionsByMonth(ListAPIView):
@@ -114,71 +115,14 @@ class MonthlyBalance(APIView):
         return Response(response.get_data(), status=status.HTTP_200_OK)
 
 
-class MonthlyCategoriesBalance(APIView):
+class MonthlyBalanceByCategory(APIView):
     """
     Permite retornar el balance mensual por categoría del usuario.
     """
 
-    def month_params(self, data, date, budget):
-        expenses_sum = 0.0 if data['expenses_sum'] is None else abs(data['expenses_sum'])
-        expenses_count = 0 if data['expenses_count'] is None else abs(data['expenses_count'])
-        budget_spent = (abs(expenses_sum)*100)/float(budget.amount) if budget else 0
-        return {
-            'year': date.year,
-            'month': months_dict[date.month],
-            'expenses_sum': expenses_sum,
-            'expenses_count': expenses_count,
-            'average': 0.0 if expenses_count == 0 else float(expenses_sum/expenses_count),
-            'budget': budget.amount if budget else 0,
-            'budget_spent': round(budget_spent,2),
-            'has_budget': True if budget else False,
-            'budget_id': budget.id if budget else False,
-            'disabled': True if expenses_count == 0 else False
-        }
-
-    def get(self, request, user, category):
-        now = pendulum.now().subtract(years=1)
-        start_date = pendulum.datetime(now.year, now.month, 1)
-        end_date = pendulum.now().subtract(months=1).end_of('month')
-        dates = []
-        while start_date < end_date:
-            dates.append(start_date)
-            start_date = start_date.add(months=1)
-        years_dict = {}
-        month = 1
-        for date in dates:
-            try:
-                budget = Budget.objects.get(user=user, category=category, 
-                    budget_date__month=month)
-            except Budget.DoesNotExist:
-                budget = None
-            data = Transaction.objects.filter(
-                transaction_date__range=[date.start_of('month'), date.end_of('month')],
-                user=user,
-                category=category
-                ).aggregate(
-                expenses_sum=Sum(Case(
-                    When(amount__lt=0, then=F('amount')),
-                    output_field=FloatField(),
-                )),
-                expenses_count=Count(Case(
-                    When(amount__lt=0, then=1),
-                    output_field=IntegerField(),
-                ))
-            )
-            try:
-                years_dict[date.year]['months'].append(self.month_params(data, date, budget))
-            except KeyError:
-                years_dict[date.year] = {
-                    'year': date.year,
-                    'months': [
-                        self.month_params(data, date, budget)
-                    ]
-                }
-            month+=1
-            if month > 12:
-               month = 1 
-        return Response([v for k, v in years_dict.items()], status=status.HTTP_200_OK)
+    def get(self, request, user_id, category):
+        response = BuildMonthlyBalanceByCategoryResponse(user_id, category)
+        return Response(response.get_data(), status=status.HTTP_200_OK)
 
 
 class NewTransaction(APIView):

@@ -29,6 +29,7 @@ class TransactionsTestCase(TestCase):
     TRANSACTION_DETAIL = BASE_URL + '0b0588dc-2020-4bac-a18f-52979efb41c2/'
     TRANSACTIONS_BY_MONTH_AND_CATEGORY = BASE_URL + 'summary/'
     MONTHLY_BALANCE = BASE_URL + 'balance/'
+    MONTHLY_BALANCE_BY_CATEGORY = BASE_URL + 'balance/category/22118f55-e6a9-46b0-ae8f-a063dda396e0/'
     DATE_MONTH = '?date_month={}'
 
     @property
@@ -84,5 +85,11 @@ class TransactionsTestCase(TestCase):
     def test_get_monthly_balance(self):
         Transaction.objects.all().update(transaction_date='{}-01'.format(self.current_month))
         response = self.client.get(self.MONTHLY_BALANCE)
+        # print(dumps(response.json(), indent=4))
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_get_monthly_balance_by_category(self):
+        Transaction.objects.all().update(transaction_date='{}-01'.format(self.current_month))
+        response = self.client.get(self.MONTHLY_BALANCE_BY_CATEGORY+self.DATE_MONTH.format(self.current_month))
         # print(dumps(response.json(), indent=4))
         self.assertEqual(response.status_code, status.HTTP_200_OK)
