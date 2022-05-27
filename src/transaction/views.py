@@ -137,7 +137,7 @@ class NewTransaction(APIView):
             try:
                 transaction = Transaction.objects.create(
                     account=account['id'],
-                    user_id=account['user_'],
+                    user_id=account['user_id'],
                     amount=data['amount'],
                     description=data['description'],
                     transaction_date=data['transaction_date'],

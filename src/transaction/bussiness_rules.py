@@ -19,8 +19,7 @@ from transaction.models import Transaction
 def validate_user_accounts(account):
     try:
         core_url = environ.get('CORE_SERVICE_URL')
-        print(account)
-        response = requests.get(core_url+'accounts/?number={}'.format(account), timeout=5)
+        response = requests.get(core_url+'accounts/?account_number={}'.format(account), timeout=1)
         if response.status_code == 200:
             return response.json()
     except requests.exceptions.RequestException:
