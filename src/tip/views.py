@@ -1,13 +1,12 @@
-from tip.models import Tip
 from rest_framework.generics import ListAPIView
 from rest_framework.response import Response
 from rest_framework import status
+
+from tip.models import Tip
 from tip.serializers import TipSerializer
 
+
 class TipList(ListAPIView):
-    """
-    Devuelve la lista de consejos.
-    """
     queryset = Tip.objects.all()
     serializer_class = TipSerializer
 

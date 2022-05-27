@@ -1,0 +1,29 @@
+- model: 'catalog.Item'
+  fields:
+    id: 'cbf5eacb-6b1c-42f4-bdba-5a6f6276e0ac'
+    catalog_id: '4625b3a0-b3dc-48e8-b495-1eda09e58222'
+    item_name: 'Activo'
+    description: 'Presupuesto activo'
+    metadata: {
+      "icon": "/assets/xerpa/global/img/categories/shopping.svg",
+      "color": "#7C2582",
+      "active": true,
+      "short_name": "ACTIVE"
+    }
+    active: true
+    process_name: null
+
+- model: 'catalog.Item'
+  fields:
+    id: 'f1ba1236-b4fd-4ed6-9d35-8114ed66726f'
+    catalog_id: '4625b3a0-b3dc-48e8-b495-1eda09e58222'
+    item_name: 'Eliminado'
+    description: 'Presupuesto eliminado'
+    metadata: {
+      "icon": "/assets/xerpa/global/img/categories/shopping.svg",
+      "color": "#7C2582",
+      "active": true,
+      "short_name": "DELETED"
+    }
+    active: true
+    process_name: null

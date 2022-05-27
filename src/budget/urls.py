@@ -1,11 +1,13 @@
 from django.urls import path
 
-from budget.views import BudgetList, BudgetDetail, Category
+from budget.views import BudgetsList, BudgetDetail, BudgetsByMonthAndCategory
 
-app_name = "budget"
 
 urlpatterns = [
-    path('', BudgetList.as_view(), name="list"),
-    path('<str:pk>/', BudgetDetail.as_view(), name="detail"),
-    path('categories/<str:category>/', Category.as_view())
+    # retorna los presupuestos del usuario
+    path('', BudgetsList.as_view()),
+    # retorna el detalle de un presupuesto y permite la actualziación de su estado
+    path('<str:pk>/', BudgetDetail.as_view()),
+    # retorna los presupuestos por mes y categoría
+    path('categories/<str:category_id>/', BudgetsByMonthAndCategory.as_view())
 ]

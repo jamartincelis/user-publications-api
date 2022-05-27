@@ -1,0 +1,23 @@
+- model: 'catalog.Catalog'
+  fields:
+    id: 'c2a07389-da13-4420-9060-c6bef2d6bd03'
+    catalog_name: 'incomes_categories'
+    description: 'Categorías de ingresos'
+
+- model: 'catalog.Catalog'
+  fields:
+    id: '1ec6a6b5-65d5-4a8c-85d0-4364c141aefd'
+    catalog_name: 'expenses_categories'
+    description: 'Categorías de egresos'
+
+- model: 'catalog.Catalog'
+  fields:
+    id: '4625b3a0-b3dc-48e8-b495-1eda09e58222'
+    catalog_name: 'budget_status'
+    description: 'Estado del presupuesto'
+
+- model: 'catalog.Catalog'
+  fields:
+    id: 'f1895069-e723-4cc8-9331-d1cb4110ab7a'
+    catalog_name: 'accounts_types'
+    description: 'Tipos de cuentas'

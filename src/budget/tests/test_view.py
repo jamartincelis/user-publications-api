@@ -1,58 +1,68 @@
 from json import dumps
-from django.test import TestCase, Client
-from budget.models import Budget
-from rest_framework import status
-from django.urls import reverse
-from django.utils.http import urlencode
-import budget.tests.constants as constants
 
-class BudgetTestCase(TestCase):
+import pendulum
+
+from django.test import TestCase, Client
+
+from rest_framework import status
+
+from budget.models import Budget
+
+
+class BudgetsTestCase(TestCase):
 
     client = Client()
     fixtures = [
+        'catalog/fixtures/catalogs.yaml',
+        'catalog/fixtures/expenses_categories.yaml',
+        'catalog/fixtures/incomes_categories.yaml',
+        'catalog/fixtures/budget_status.yaml',
         'budget/fixtures/budgets.yaml'
     ]
+    BASE_URL = '/users/c9d29378-f4d6-46ca-9363-1d304e9fa133/budgets/'
+    BUDGET_DETAIL = BASE_URL + '45a80dbb-ea71-4ce3-90b3-6761bcbf365c/'
+    BUDGET_CATEGORY = BASE_URL + 'categories/9abd4759-ab14-4e09-adc2-9c5dea1041b1/' # entretenimiento
+    DATE_MONTH = '?date_month={}'
 
-    USER_ID = constants.USER_ID
-    BUDGET_ID = constants.BUDGET_ID
+    @property
+    def current_month(self):
+        return '{}-{}'.format(pendulum.now().year, pendulum.now().month)
 
-    def test_budgets_list(self):
-        budgets = Budget.objects.filter(user=self.USER_ID,
-            budget_date__range=['2021-09-01', '2021-09-30']
-        )
-        date_month = "2021-09"
-        query_kwargs={'date_month': date_month}
-        url = '{}?{}'.format(
-            reverse(constants.URL_BUDGET_LIST,kwargs={'user':self.USER_ID}), 
-            urlencode(query_kwargs)
-        )        
-        response = self.client.get(url)
+    @property
+    def previous_month(self):
+        return '{}-{}'.format(pendulum.now().year, pendulum.now().month)
 
-        data = response.json()
+    def update_budgets_dates(self):
+        Budget.objects.all().update(budget_date='{}-01'.format(self.current_month))
+
+    def test_get_user_budgets_by_month(self):
+        self.update_budgets_dates()
+        response = self.client.get(self.BASE_URL+self.DATE_MONTH.format(self.current_month))
+        # print(dumps(response.json(), indent=4))
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(budgets.count(), len(data))
 
-    def test_budget_detail(self):
-        budget = Budget.objects.get(user=self.USER_ID,id=self.BUDGET_ID)
-        url = reverse(constants.URL_BUDGET_DETAIL,kwargs={'user':self.USER_ID, 'pk': self.BUDGET_ID})
-
-        response = self.client.get(url)
-        data = response.json()
+    def test_get_budget_detail(self):
+        response = self.client.get(self.BUDGET_DETAIL)
+        # print(dumps(response.json(), indent=4))
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(data['id'], str(budget.id))
-        self.assertEqual(data['user'], str(budget.user))
-        self.assertEqual(data['category']['id'], str(budget.category))
 
-    def test_add_budget(self):
-        payload = {
-            "amount": 3000,
-            "budget_date": "2021-09-09T15:20:30-04:00",
-            "user": "479ec168-0139-45d0-b704-2bc4e5d0c4fb",
-            "category": "22118f55-e6a9-46b0-ae8f-a063dda396e0"
+    def test_update_budget_status(self):
+        body = {
+            'status': 'f1ba1236-b4fd-4ed6-9d35-8114ed66726f' # eliminado
         }
-        response = self.client.post(
-            reverse(constants.URL_BUDGET_LIST,kwargs={'user':self.USER_ID}),
-            data=dumps(payload),
-            content_type='application/json'            
-        )
-        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        response = self.client.patch(self.BUDGET_DETAIL, data=body, content_type='application/json')
+        # print(dumps(response.json(), indent=4))
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_update_budget_amount(self):
+        body = {
+            'amount': 100.0
+        }
+        response = self.client.patch(self.BUDGET_DETAIL, data=body, content_type='application/json')
+        # print(dumps(response.json(), indent=4))
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_get_budgets_by_month_and_category(self):
+        response = self.client.get(self.BUDGET_CATEGORY+self.DATE_MONTH.format(self.current_month))
+        # print(dumps(response.json(), indent=4))
+        self.assertEqual(response.status_code, status.HTTP_200_OK)

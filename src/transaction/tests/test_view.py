@@ -1,107 +1,95 @@
 from json import dumps
+
+import pendulum
+
 from django.test import TestCase, Client
+
 from rest_framework import status
+
+from budget.models import Budget
+
 from transaction.models import Transaction
-from django.urls import reverse
-from django.utils.http import urlencode
-import transaction.tests.constants as constants
+
 
 class TransactionsTestCase(TestCase):
 
     client = Client()
     fixtures = [
-        'transaction/fixtures/transactions.yaml'
-    ]
-    USER_ID = 'b9e605ee-4cca-400e-99c5-ae24abca97d5'
-    
-    def test_budgets_without_date_month_param(self):
-        user_id = '0390a508-dba5-4344-b77f-93e1227d42f4'
-
-        response = self.client.get(reverse(constants.URL_TRANSACTION_LIST,kwargs={'user':user_id}))
-        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
-        self.assertJSONEqual(str(response.content, encoding='utf8'), {'400': "Invalid date format."})
-
-    def invalid_date_month_param_base(self,date_month):
-        """
-        Funcion base para las pruebas 
-        """
-        query_kwargs={'date_month': date_month}
-        url = '{}?{}'.format(
-            reverse(constants.URL_TRANSACTION_LIST,kwargs={'user':self.USER_ID}), 
-            urlencode(query_kwargs)
-        )
-        response = self.client.get(url)
-        self.assertEqual(response.status_code, status.HTTP_400_BAD_REQUEST)
-        return self.assertJSONEqual(str(response.content, encoding='utf8'), {'400': 'Invalid date format.'})
-
-    def test_invalid_date_month_param_1(self):
-        date_month = "2021-13"
-        self.invalid_date_month_param_base(date_month)
-
-    def test_invalid_date_month_param_2(self):
-        date_month = "12-2021"
-        self.invalid_date_month_param_base(date_month)
-
-    def test_get_transaction_detail(self):
-        transactions_id = "203a1ace-8a57-4d49-ae8d-699221e9f3cb"
-        response = self.client.get(
-            reverse(constants.URL_TRANSACTION_DETAIL,kwargs={'user':self.USER_ID, 'pk': transactions_id}),
-        )
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
-
-    def test_get_transactions_list_by_date(self):
-        query_kwargs={'date_month': '2021-09'}
-        url = '{}?{}'.format(reverse(constants.URL_TRANSACTION_LIST,kwargs={'user':self.USER_ID}), urlencode(query_kwargs))
-
-        transactions = Transaction.objects.filter(user=self.USER_ID,
-            transaction_date__range=['2021-09-01', '2021-09-30'])
-        response = self.client.get(url)
-        
-        data = response.json()
-        self.assertEqual(transactions.count(), len(data))
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
-
-    def test_add_note_to_transaction(self):
-        transactions_id = '68e18783-8b51-4618-af83-50c77f25871d'
-        user_note = 'Esta es una nota'
-        payload = {
-            'user_note' : user_note
-        }
-        response = self.client.patch(
-            reverse(constants.URL_TRANSACTION_DETAIL,kwargs={'user':self.USER_ID, 'pk': transactions_id}),
-            data=dumps(payload),
-            content_type='application/json'
-        )
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(response.json()['user_note'], user_note)
-
-    def test_add_category_to_transaction(self):
-        transactions_id = '72ad54c2-e3cd-4a11-86e3-767f34728a04'
-        category_id = '9abd4759-ab14-4e09-adc2-9c5dea1041b1'
-        payload = {'category' : category_id}
-
-        response = self.client.patch(
-            reverse(constants.URL_TRANSACTION_DETAIL,kwargs={'user':self.USER_ID, 'pk': transactions_id}),
-            data=dumps(payload),
-            content_type='application/json'            
-        )
-        self.assertEqual(response.status_code, status.HTTP_200_OK)
-
-class ExpensesSummaryTestCase(TestCase):
-
-    client = Client()
-    fixtures = [
-        'transaction/fixtures/transactions.yaml'
+        'catalog/fixtures/catalogs.yaml',
+        'catalog/fixtures/account_types.yaml',
+        'catalog/fixtures/expenses_categories.yaml',
+        'catalog/fixtures/incomes_categories.yaml',
+        'catalog/fixtures/budget_status.yaml',
+        'budget/fixtures/budgets.yaml',
+        'transaction/fixtures/transactions.yaml',
     ]
 
-    USER_ID = '0390a508-dba5-4344-b77f-93e1227d42f4'
+    BASE_URL = '/users/c9d29378-f4d6-46ca-9363-1d304e9fa133/transactions/'
+    EXPENSES_SUMMARY_URL = BASE_URL + 'expenses/summary/'
+    TRANSACTION_DETAIL = BASE_URL + '0b0588dc-2020-4bac-a18f-52979efb41c2/'
+    TRANSACTIONS_BY_MONTH_AND_CATEGORY = BASE_URL + 'summary/'
+    MONTHLY_BALANCE = BASE_URL + 'balance/'
+    MONTHLY_BALANCE_BY_CATEGORY = BASE_URL + 'balance/category/22118f55-e6a9-46b0-ae8f-a063dda396e0/'
+    DATE_MONTH = '?date_month={}'
+
+    @property
+    def current_month(self):
+        date = pendulum.now()
+        return '{}-{}'.format(date.year, date.month)
+
+    @property
+    def previous_month(self):
+        date = pendulum.now().subtract(months=1)
+        return '{}-{}'.format(date.year, date.month)
+
+    def update_transactions_date(self):
+        Transaction.objects.all().update(transaction_date='{}-01'.format(self.current_month))
+
+    def test_get_transactions_by_month(self):
+        self.update_transactions_date()
+        response = self.client.get(self.BASE_URL+self.DATE_MONTH.format(self.current_month))
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(len(response.json()), 2)
+        # print(dumps(response.json(), indent=4))
+        Transaction.objects.all().update(transaction_date='{}-01'.format(self.previous_month))
+        response = self.client.get(self.BASE_URL+self.DATE_MONTH.format(self.current_month))
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(len(response.json()), 0)
 
     def test_get_expenses_summary_by_month(self):
+        Budget.objects.all().update(budget_date='{}-01'.format(self.current_month))
+        Transaction.objects.all().update(transaction_date='{}-01'.format(self.current_month))
+        response = self.client.get(self.EXPENSES_SUMMARY_URL+self.DATE_MONTH.format(self.current_month))
+        # print(dumps(response.json(), indent=4))
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
 
-        query_kwargs={'date_month': '2021-09'}
-        url = '{}?{}'.format(
-            reverse('transaction:expenses_summary',kwargs={'user':self.USER_ID}), 
-            urlencode(query_kwargs)
-        )
-        response = self.client.get(url)
+    def test_get_transaction_detail(self):
+        response = self.client.get(self.TRANSACTION_DETAIL)
+        # print(dumps(response.json(), indent=4))
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_update_transaction_category(self):
+        body = {
+            'category': 'a249c468-bb4d-4365-83f4-108d456bb494' # Actualziar a Supermercados
+        }
+        response = self.client.patch(self.TRANSACTION_DETAIL, data=body, content_type='application/json')
+        # print(dumps(response.json(), indent=4))
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_get_transactions_by_category_and_month(self):
+        Transaction.objects.all().update(transaction_date='{}-01'.format(self.current_month))
+        response = self.client.get(self.TRANSACTIONS_BY_MONTH_AND_CATEGORY+self.DATE_MONTH.format(self.current_month))
+        # print(dumps(response.json(), indent=4))
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_get_monthly_balance(self):
+        Transaction.objects.all().update(transaction_date='{}-01'.format(self.current_month))
+        response = self.client.get(self.MONTHLY_BALANCE)
+        # print(dumps(response.json(), indent=4))
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+
+    def test_get_monthly_balance_by_category(self):
+        Transaction.objects.all().update(transaction_date='{}-01'.format(self.current_month))
+        response = self.client.get(self.MONTHLY_BALANCE_BY_CATEGORY+self.DATE_MONTH.format(self.current_month))
+        # print(dumps(response.json(), indent=4))
         self.assertEqual(response.status_code, status.HTTP_200_OK)
