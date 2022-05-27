@@ -16,10 +16,10 @@ from budget.models import Budget
 from transaction.models import Transaction
 
 
-def validate_user_accounts(data):
+def validate_user_accounts(account):
     try:
         core_url = environ.get('CORE_SERVICE_URL')
-        response = requests.get(core_url+'accounts/?number={}'.format(account_number), timeout=1)
+        response = requests.get(core_url+'accounts/?number={}'.format(account), timeout=1)
         if response.status_code == 200:
             return response.json()
     except requests.exceptions.RequestException:
