@@ -2,36 +2,55 @@
   fields:
     id: '64aad0df2597443a90527be5a283ab7d'
     budget_date: '2021-09-09'
-    user: '479ec168013945d0b7042bc4e5d0c4fb'
-    category: '9abd4759ab144e09adc29c5dea1041b1' # Entretenimiento
+    user_id: 'c9d29378-f4d6-46ca-9363-1d304e9fa133'
+    category: 'cf01dce7-6d5e-4ad6-8e5a-8ba5c6d6f94c' # Gastos financieros
+    status: 'cbf5eacb-6b1c-42f4-bdba-5a6f6276e0ac' # Activo
+    amount: 5000
+    budget_date: '2022-05-21'
+    created_at: '2021-05-01T13:20:30-06:00'
+    updated_at: '2021-05-01T13:20:30-06:00'
 
 - model: 'budget.Budget'
   fields:
     id: '45a80dbb-ea71-4ce3-90b3-6761bcbf365c'
     budget_date: '2021-09-09'
-    user: '479ec168013945d0b7042bc4e5d0c4fb'
-    category: '22118f55e6a946b0ae8fa063dda396e0' # Shopping
+    user_id: 'c9d29378-f4d6-46ca-9363-1d304e9fa133'
+    category: '22118f55-e6a9-46b0-ae8f-a063dda396e0' # Shopping
+    status: 'cbf5eacb-6b1c-42f4-bdba-5a6f6276e0ac' # Activo
+    amount: 5000
+    budget_date: '2022-05-21'
+    created_at: '2021-05-01T13:20:30-06:00'
+    updated_at: '2021-05-01T13:20:30-06:00'
 
 - model: 'budget.Budget'
   fields:
     id: '46a80dbb-ea71-4ce3-90b3-6761bcbf365c'
-    user: '479ec168013945d0b7042bc4e5d0c4fb'
-    category: '22118f55-e6a9-46b0-ae8f-a063dda396e0' # Shopping
+    user_id: 'c9d29378-f4d6-46ca-9363-1d304e9fa133'
+    category: 'a249c468-bb4d-4365-83f4-108d456bb494' # Restaurantes
+    status: 'cbf5eacb-6b1c-42f4-bdba-5a6f6276e0ac' # Activo
     amount: 5000
-    budget_date: '2021-09-09'
+    budget_date: '2022-05-21'
+    created_at: '2021-05-01T13:20:30-06:00'
+    updated_at: '2021-05-01T13:20:30-06:00'
 
 - model: 'budget.Budget'
   fields:
     id: '64aad0df-2597-443a-9052-7be5a283ab7d'
-    user: '479ec168013945d0b7042bc4e5d0c4fb'
+    user_id: 'c9d29378-f4d6-46ca-9363-1d304e9fa133'
     category: '9abd4759-ab14-4e09-adc2-9c5dea1041b1' # Entretenimiento
+    status: 'cbf5eacb-6b1c-42f4-bdba-5a6f6276e0ac' # Activo
     amount: 2400
-    budget_date: '2021-09-21'
+    budget_date: '2022-05-21'
+    created_at: '2021-05-01T13:20:30-06:00'
+    updated_at: '2021-05-01T13:20:30-06:00'
 
 - model: 'budget.Budget'
   fields:
     id: '64aad0df-2597-443a-9052-7be5a283ab7e'
-    user: '479ec168013945d0b7042bc4e5d0c4fb'
-    category: 'cde589f3-6281-4671-9bb2-333168d5971d' # Hogar y familia
+    user_id: 'c9d29378-f4d6-46ca-9363-1d304e9fa133'
+    category: '72fb8abb-d236-469d-a511-0e7d81c4af1e' # Hogar y familia
+    status: 'cbf5eacb-6b1c-42f4-bdba-5a6f6276e0ac' # Activo
     amount: 100
-    budget_date: '2021-09-21'
+    budget_date: '2022-05-21'
+    created_at: '2021-05-01T13:20:30-06:00'
+    updated_at: '2021-05-01T13:20:30-06:00'

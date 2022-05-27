@@ -16,10 +16,6 @@ from os import environ
 
 import sys
 
-import sentry_sdk
-
-from sentry_sdk.integrations.django import DjangoIntegration
-from helpers.helpers import catalog_to_dict, get_catalog
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -35,7 +31,6 @@ DEBUG = True if environ.get('DEBUG') == 'True' else False
 
 ALLOWED_HOSTS = [environ.get('ALLOWED_HOSTS'), ]
 
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -48,11 +43,12 @@ INSTALLED_APPS = [
     'corsheaders',
     'rest_framework',
     'monitoring',
+    'catalog',
     'budget',
     'transaction',
     'faq',
     'tip',
-    'notification'    
+    'notification'
 ]
 
 MIDDLEWARE = [
@@ -89,30 +85,18 @@ WSGI_APPLICATION = 'pfmservice.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
-# transactions categories
 
-TRANSACTION_CATEGORIES = get_catalog('expenses_categories,incomes_categories')
-TRANSACTION_TYPE_CATALOGS = catalog_to_dict('expenses_categories,incomes_categories')
 
-if 'test' in sys.argv or 'test_coverage' in sys.argv: #Covers regular testing and django-coverage
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3'
-        }
-    }  
-else:
-    TIME_ZONE = environ.get('TIME_ZONE')
-    
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'NAME': environ.get('DATABASE_NAME'),
-            'USER': environ.get('DATABASE_USER'),
-            'PASSWORD': environ.get('DATABASE_PASSWORD'),
-            'HOST': environ.get('DATABASE_HOST'),
-            'PORT': environ.get('DATABASE_PORT'),
-        }
-    } 
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': environ.get('DATABASE_NAME'),
+        'USER': environ.get('DATABASE_USER'),
+        'PASSWORD': environ.get('DATABASE_PASSWORD'),
+        'HOST': environ.get('DATABASE_HOST'),
+        'PORT': environ.get('DATABASE_PORT'),
+    }
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/3.2/ref/settings/#auth-password-validators
@@ -137,9 +121,11 @@ AUTH_PASSWORD_VALIDATORS = [
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
+
 USE_I18N = True
+
 USE_L10N = True
-USE_TZ = True
+
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.2/howto/static-files/
@@ -153,7 +139,16 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CORS_ORIGIN_ALLOW_ALL = True
 
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+        'LOCATION': 'unique-snowflake',
+    }
+}
+
 if DEBUG is False:
+    import sentry_sdk
+    from sentry_sdk.integrations.django import DjangoIntegration
     sentry_sdk.init(
         dsn=environ.get('SENTRY_DSN'),
         integrations=[DjangoIntegration()],
