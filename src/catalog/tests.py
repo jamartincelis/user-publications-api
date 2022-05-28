@@ -16,7 +16,7 @@ class CatalogTestCase(TestCase):
         'catalog/fixtures/incomes_categories.yaml',
         'catalog/fixtures/budget_status.yaml',
     ]
-    BASE_URL = '/catalogs/'
+    BASE_URL = '/pfm-service/catalogs/'
 
     def test_get_all_catalogs(self):
         response = self.client.get(self.BASE_URL + 'all/')

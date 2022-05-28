@@ -1,9 +1,10 @@
-from faq.serializers import FaqSerializer
-from faq.models import Faq
-from django.shortcuts import render
 from rest_framework.generics import ListAPIView
 from rest_framework.response import Response
 from rest_framework import status
+
+from faq.serializers import FaqSerializer
+from faq.models import Faq
+
 
 class FaqList(ListAPIView):
     """

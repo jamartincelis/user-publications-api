@@ -1,8 +1,8 @@
 from django.urls import path
-from . import views
 
-app_name = "faq"
+from faq.views import FaqList
+
 
 urlpatterns = [
-    path('', views.FaqList.as_view(), name = "list"),
+    path('', FaqList.as_view()),
 ]

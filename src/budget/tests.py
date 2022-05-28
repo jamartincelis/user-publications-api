@@ -19,7 +19,7 @@ class BudgetsTestCase(TestCase):
         'catalog/fixtures/budget_status.yaml',
         'budget/fixtures/budgets.yaml'
     ]
-    BASE_URL = '/users/c9d29378-f4d6-46ca-9363-1d304e9fa133/budgets/'
+    BASE_URL = '/pfm-service/users/c9d29378-f4d6-46ca-9363-1d304e9fa133/budgets/'
     BUDGET_DETAIL = BASE_URL + '45a80dbb-ea71-4ce3-90b3-6761bcbf365c/'
     BUDGET_CATEGORY = BASE_URL + 'categories/9abd4759-ab14-4e09-adc2-9c5dea1041b1/' # entretenimiento
     DATE_MONTH = '?date_month={}'
@@ -30,7 +30,7 @@ class BudgetsTestCase(TestCase):
 
     @property
     def previous_month(self):
-        return '{}-{}'.format(pendulum.now().year, pendulum.now().month)
+        return '{}-{}'.format(pendulum.now().subtract(months=1).year, pendulum.now().month)
 
     def update_budgets_dates(self):
         Budget.objects.all().update(budget_date='{}-01'.format(self.current_month))

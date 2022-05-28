@@ -20,6 +20,7 @@ from transaction.bussiness_rules import BuildExpensesSummaryByMonthResponse, Bui
     BuildMonthlyBalanceByCategoryResponse
 from transaction.bussiness_rules import validate_user_accounts
 
+
 class TransactionsByMonth(ListAPIView):
     """
     Devuelve la lista de transacciones del usuario de un mes en específico

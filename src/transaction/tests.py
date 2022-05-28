@@ -24,7 +24,7 @@ class TransactionsTestCase(TestCase):
         'transaction/fixtures/transactions.yaml',
     ]
 
-    BASE_URL = '/users/c9d29378-f4d6-46ca-9363-1d304e9fa133/transactions/'
+    BASE_URL = '/pfm-service/users/c9d29378-f4d6-46ca-9363-1d304e9fa133/transactions/'
     EXPENSES_SUMMARY_URL = BASE_URL + 'expenses/summary/'
     TRANSACTION_DETAIL = BASE_URL + '0b0588dc-2020-4bac-a18f-52979efb41c2/'
     TRANSACTIONS_BY_MONTH_AND_CATEGORY = BASE_URL + 'summary/'

@@ -1,5 +1,7 @@
-from faq.models import Faq
 from rest_framework import serializers
+
+from faq.models import Faq
+
 
 class FaqSerializer(serializers.ModelSerializer):
     """
