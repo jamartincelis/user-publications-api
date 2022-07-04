@@ -1,57 +1,48 @@
 # Project name
 
-Finanzas personales.
+Clima api.
 
 # Version 
 
-Versión en desarrollo v.0.133
+Versión en desarrollo v.0.1
 
 ## Description
 
-Desarrollo de endpoints para el proyecto finanzas personales.
+Desarrollo de endpoints para la app de clima.
 
 ## Requirements and Installation
 
-Se pueden ver en el archivo common.txt y requeriments-dev.txt.
+Se pueden ver en el archivo requirements.txt.
 
-## Build
-
-Para el ambiente de desarrollo
+## Ejecutar la app
 
 ```bash
-docker-compose -f local.yaml build
+docker-compose build
 ```
 
-Para producción
+luego
 
 ```bash
 docker-compose up
 ```
 
-## Development Run
+## Ejecutar las pruebas unitarias
 
 ```bash
-docker-compose -f local.yaml up
+docker exec -it weather-app sh
 ```
 
-## Production Run
+luego
 
 ```bash
-docker-compose up
+python manage.py test
 ```
+
 
 ### Api Rest Docs
 
-Los enpoints se encuentran publicados en http://ec2-54-166-147-4.compute-1.amazonaws.com/. En el siguiente apartado, se puede ver la documentación de la api.
+En el siguiente apartado, se puede ver la documentación de la api.
 
-[Coopeuch Salud Financiera Api](API.md)
+[Weather Api](API.md)
 
-### Tech docs
-
-#### Crear un usuario de pruebas. 
-
-Una vez que al contenedor esté desplegado, ejecutar:
-
-```bash
-docker exec -it pfm_api python manage.py createsuperuser
-```
+Así mismo, cuenta con su archivo **swagger.json**

@@ -1,0 +1,74 @@
+openapi: 3.0.1
+info:
+  title: Weather api
+  version: v1.0.0
+servers:
+  - url: http://localhost:8000/
+paths:
+  /api/weather/cities:
+    get:
+      summary: Retorna el clima de las ciudades
+      operationId: weather_cities
+      description: ''
+      responses:
+        '200':
+          description: Lista de presupuestos.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/CityResponse'
+      tags:
+        - Clima
+    post:
+      summary: Crear ciudad
+      requestBody:
+        $ref: '#/components/requestBodies/CityBody'
+      responses:
+        '201':
+          description: Presupuesto creado.
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: '#/components/schemas/CityResponse'
+      tags:
+        - Clima
+components:
+  requestBodies:
+    CityBody:
+      description: Objeto JSON que contiene información de la ciudad
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CityRequest'
+  schemas:
+    CityRequest:
+      title: CityRequest
+      type: object
+      properties:
+        name:
+          type: string
+          description: Ciudad
+          example: Medellín
+    CityResponse:
+      title: CityResponse
+      type: object
+      properties:
+        city:
+          type: array
+          description: Ciudad
+          items:
+            example: Medellín
+        temperature:
+          type: array
+          description: Temperatura
+          items:
+            example: 292.17
+        description:
+          type: array
+          description: Descripción
+          items:
+            example: Clouds
