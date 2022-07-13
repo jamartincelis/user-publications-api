@@ -48,5 +48,5 @@ docker exec -it weather-app sh
 luego
 
 ```bash
-python manage.py test
+pytest
 ```
