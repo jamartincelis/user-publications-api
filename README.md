@@ -1,6 +1,6 @@
 # Project name
 
-Clima api.
+User publications api.
 
 # Version 
 
@@ -8,7 +8,7 @@ Versión en desarrollo v.0.1
 
 ## Description
 
-Desarrollo de endpoints para la app de clima.
+Desarrollo de endpoints para la app de publicaciones de usuarios.
 
 ## Requirements and Installation
 
@@ -26,10 +26,23 @@ luego
 docker-compose up
 ```
 
+## Ejecutar las migraciones
+
+```bash
+docker exec -it flask-app sh
+```
+
+y luego 
+
+```bash
+flask db upgrade
+```
+
 ## Ejecutar las pruebas unitarias
 
 ```bash
 docker exec -it weather-app sh
+
 ```
 
 luego
@@ -37,12 +50,3 @@ luego
 ```bash
 python manage.py test
 ```
-
-
-### Api Rest Docs
-
-En el siguiente apartado, se puede ver la documentación de la api.
-
-[Weather Api](API.md)
-
-Así mismo, cuenta con su archivo **swagger.json**

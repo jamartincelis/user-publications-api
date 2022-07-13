@@ -1,5 +1,7 @@
-django
-djangorestframework
+flask
+flask-jwt-extended
+Flask-SQLAlchemy
+Flask-Migrate
+flask-restful
+pytest-flask
 psycopg2-binary
-pyyaml # para poder trabajar con archivos .yaml
-requests

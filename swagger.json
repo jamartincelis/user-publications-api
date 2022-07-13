@@ -1,30 +1,30 @@
 openapi: 3.0.1
 info:
-  title: Weather api
+  title: User Publications api
   version: v1.0.0
 servers:
-  - url: http://localhost:8000/
+  - url: http://localhost:5000/
 paths:
-  /api/weather/cities:
+  /api/users:
     get:
-      summary: Retorna el clima de las ciudades
-      operationId: weather_cities
+      summary: Retorna los usuarios
+      operationId: user_list
       description: ''
       responses:
         '200':
-          description: Lista de presupuestos.
+          description: Lista de usuarios.     
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/CityResponse'
+                  $ref: '#/components/schemas/UserResponse'
       tags:
-        - Clima
+        - Usuarios
     post:
-      summary: Crear ciudad
+      summary: Crear usuario
       requestBody:
-        $ref: '#/components/requestBodies/CityBody'
+        $ref: '#/components/requestBodies/UserBody'
       responses:
         '201':
           description: Presupuesto creado.
@@ -32,43 +32,310 @@ paths:
             application/json:
               schema:
                 type: object
-                $ref: '#/components/schemas/CityResponse'
+                $ref: '#/components/schemas/UserResponse'
       tags:
-        - Clima
+        - Usuarios
+  /api/users/{userID}:
+    get:
+      summary: Ver detalle del usuario
+      operationId: get_user_detail
+      description: ''
+      parameters:
+        - in: path
+          name: userID
+          schema:
+            type: string
+          required: true
+          description: User ID
+          example: 1
+      responses:
+        '200':
+          description: Get User detail
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: '#/components/schemas/UserResponse'
+      tags:
+        - Usuarios
+    put:
+      summary: Actualizar usuario.
+      operationId: update_user_put
+      description: ''
+      parameters:
+        - in: path
+          name: userID
+          schema:
+            type: string
+          required: true
+          description: User ID
+          example: 1
+      requestBody:
+        $ref: '#/components/requestBodies/UserBody'
+      responses:
+        '200':
+          description: Actulizar Usuario
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: '#/components/schemas/UserResponse'
+      tags:
+        - Usuarios
+    delete:
+      summary: Borrar usuario
+      parameters:
+        - in: path
+          name: userID
+          schema:
+            type: string
+          required: true
+          description: User ID
+          example: 1      
+      responses:
+        '204':
+          description: Deleted
+        '404':
+          description: id not found
+        '401':
+          description: Unauthorized
+      tags:
+        - Usuarios
+
+  /api/users/{userID}/publications:
+    get:
+      summary: Retorna las publicaciones del usuario.
+      parameters:
+        - in: path
+          name: userID
+          schema:
+            type: string
+          required: true
+          description: User ID
+          example: 1      
+
+      operationId: publications_list
+      description: ''
+      responses:
+        '200':
+          description: Lista de publicaciones del usuario.     
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PublicationResponse'
+      tags:
+        - Publicaciones
+    post:
+      summary: Crear un publicacion
+      parameters:
+        - in: path
+          name: userID
+          schema:
+            type: string
+          required: true
+          description: User ID
+          example: 1      
+      
+      requestBody:
+        $ref: '#/components/requestBodies/PublicationBody'
+      responses:
+        '201':
+          description: Publicacion creada.
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: '#/components/schemas/PublicationResponse'
+      tags:
+        - Publicaciones
+  /api/users/{userID}/publications/{publicationID}:
+    get:
+      summary: Retorna el detalle de la publicacion del usuario.
+      parameters:
+        - in: path
+          name: userID
+          schema:
+            type: string
+          required: true
+          description: User ID
+          example: 1      
+        - in: path
+          name: publicationID
+          schema:
+            type: string
+          required: true
+          description: Id de la publicacion
+          example: 1      
+      operationId: publication_detail
+      description: ''
+      responses:
+        '200':
+          description: Detalle de la publicacion del usuario.     
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: '#/components/schemas/PublicationResponse'
+      tags:
+        - Publicaciones
+    put:
+      summary: Actualizar usuario.
+      operationId: update_publication_put
+      description: ''
+      parameters:
+        - in: path
+          name: userID
+          schema:
+            type: string
+          required: true
+          description: User ID
+          example: 1
+        - in: path
+          name: publicationID
+          schema:
+            type: string
+          required: true
+          description: Id de la publicacion
+          example: 1    
+      requestBody:
+        $ref: '#/components/requestBodies/PublicationBody'
+      responses:
+        '200':
+          description: Actulizar Usuario
+          content:
+            application/json:
+              schema:
+                type: object
+                $ref: '#/components/schemas/PublicationResponse'
+      tags:
+        - Publicaciones        
+    delete:
+      summary: Borrar la publicacion
+      parameters:
+        - in: path
+          name: userID
+          schema:
+            type: string
+          required: true
+          description: User ID
+          example: 1
+        - in: path
+          name: publicationID
+          schema:
+            type: string
+          required: true
+          description: Id de la publicacion
+          example: 1          
+      responses:
+        '204':
+          description: Deleted
+        '404':
+          description: id not found
+        '401':
+          description: Unauthorized
+      tags:
+        - Publicaciones
 components:
   requestBodies:
-    CityBody:
-      description: Objeto JSON que contiene información de la ciudad
+    UserBody:
+      description: Objeto JSON que contiene información del usuario
       required: true
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/CityRequest'
+            $ref: '#/components/schemas/UsuarioRequest'
+    PublicationBody:
+      description: Objeto JSON que contiene información de la publicacion
+      required: true
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/PublicationRequest'
   schemas:
-    CityRequest:
-      title: CityRequest
+    UsuarioRequest:
+      title: UsuarioRequest
       type: object
       properties:
-        name:
+        full_name:
           type: string
-          description: Ciudad
-          example: Medellín
-    CityResponse:
-      title: CityResponse
+          description: Nombre completo
+          example: John Smith
+        email:
+          type: string
+          description: Correo
+          example: johnsmith@correo.com
+        password:
+          type: string
+          description: Password
+          example: 123456
+        status:
+          type: string
+          description: Status
+          example: 'A'
+    UserResponse:
+      title: UserResponse
       type: object
       properties:
-        city:
-          type: array
-          description: Ciudad
-          items:
-            example: Medellín
-        temperature:
-          type: array
-          description: Temperatura
-          items:
-            example: 292.17
+        id:
+          type: string
+          description: Id del Usuario
+          example: 1
+        email:
+          type: string
+          description: Email
+          example: johnsmith@correo.com
+        full_name:
+          type: string
+          description: Nombre completo
+          example: John Smith
+    PublicationRequest:
+      title: PublicationRequest
+      type: object
+      properties:
+        user:
+          type: string
+          description: Id del usuario
+          example: 1
+        title:
+          type: string
+          description: Titulo de la publicacion
+          example: Mi publicacion de prueba
         description:
-          type: array
-          description: Descripción
-          items:
-            example: Clouds
+          type: string
+          description: Descripcion de la publicacion
+          example: Mi publicacion de prueba descripcion
+        priority:
+          type: string
+          description: Prioridad de la publicacion
+          example: high
+        status:
+          type: string
+          description: Estatus de la publicacion
+          example: A          
+    PublicationResponse:
+      title: PublicationResponse
+      type: object
+      properties:
+        id:
+          type: string
+          description: Id de la publicacion
+          example: 1
+        title:
+          type: string
+          description: Titulo de la publicacion
+          example: Mi publicacion de prueba
+        description:
+          type: string
+          description: Descripcion de la publicacion
+          example: Mi publicacion de prueba descripcion
+        priority:
+          type: string
+          description: Prioridad de la publicacion
+          example: high
+        status:
+          type: string
+          description: Estatus de la publicacion
+          example: A
+      
